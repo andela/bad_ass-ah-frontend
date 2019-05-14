@@ -1,13 +1,16 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
+import {Provider} from "react-redux";
+import Store from "./Store";
 import './App.css';
-
+//load Routes
+import Routers from "./routes/routes";
 const App = () => {
   return (
-    <div className="App">
-      <h2>Hello home page</h2>
-      <Link to="/login">Login</Link>
-    </div>
+  <Provider store={Store}>
+      <div className="App">
+      <Routers />
+      </div>
+  </Provider>
   );
 }
 
