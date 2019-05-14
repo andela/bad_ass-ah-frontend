@@ -1,0 +1,9 @@
+.navbar {
+  padding: 0.7rem 2rem;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  background: #333;
+  opacity: 0.9;
+  color: #fff; }
