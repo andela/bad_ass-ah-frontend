@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/andela/bad_ass-ah-frontend.svg?branch=develop)](https://travis-ci.org/andela/bad_ass-ah-frontend)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/743f5c942df30e8fa3e1/test_coverage)](https://codeclimate.com/github/andela/bad_ass-ah-frontend/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/743f5c942df30e8fa3e1/maintainability)](https://codeclimate.com/github/andela/bad_ass-ah-frontend/maintainability)
 
 
 ## Author's Haven Front-end
