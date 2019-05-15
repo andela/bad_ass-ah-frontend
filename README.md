@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/andela/bad_ass-ah-frontend.svg?branch=develop)](https://travis-ci.org/andela/bad_ass-ah-frontend)
+
+
 ## Author's Haven Front-end
 
 ## Vision
