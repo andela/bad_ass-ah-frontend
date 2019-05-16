@@ -12,14 +12,17 @@
     "react-scripts": "3.0.1",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
-    "redux-thunk": "^2.3.0"
+    "redux-thunk": "^2.3.0",
+    "serve": "^11.0.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "serve -s build",
+    "dev":"react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --coverage",
     "eject": "react-scripts eject",
-    "sass": "node-sass -w src/assets/scss -o src/assets/css --recursive"
+    "sass": "node-sass -w src/assets/scss -o src/assets/css --recursive",
+    "heroku-postbuild": "npm run build"
   },
   "eslintConfig": {
     "extends": "react-app"
