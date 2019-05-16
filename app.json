@@ -1,0 +1,9 @@
+{
+    "name": "bad_ass-ah-frontend",
+    "scripts": {},
+    "env": {},
+    "formation": {},
+    "addons": [],
+    "buildpacks": [],
+    "stack": "heroku-18"
+  }
