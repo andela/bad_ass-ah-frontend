@@ -11,6 +11,8 @@ import Index from '../components/Index';
 import CreateArticle from '../components/articles/CreateArticle';
 // eslint-disable-next-line import/no-named-as-default
 import SingleArticle from '../components/articles/SingleArticle';
+import ViewProfile from '../components/users/profile/ViewProfile';
+import EditProfile from '../components/users/profile/EditProfile';
 
 const Routes = () => (
   <Router>
@@ -21,6 +23,8 @@ const Routes = () => (
       <Route exact path="/reset-password/:token" component={ResetPassword} />
       <Route exact path="/story/new-story" component={CreateArticle} />
       <Route exact path="/story/:handle" component={SingleArticle} />
+      <Route exact path="/view-profile" component={ViewProfile} />
+      <Route exact path="/edit-profile" component={EditProfile} />
     </Switch>
   </Router>
 );

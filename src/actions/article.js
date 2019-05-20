@@ -6,7 +6,7 @@ import dotenv from 'dotenv';
 import {
   GET_ALL_ARTICLE, CREATE_ARTICLE, ARTICLE_FAILURE, LOADING, ADD_TAG, REMOVE_TAG,
   GET_SINGLE_ARTICLE
-} from './type';
+} from './types';
 import Config, { PassDispatch } from '../helpers/Config';
 
 dotenv.config();

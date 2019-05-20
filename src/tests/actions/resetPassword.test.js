@@ -12,7 +12,7 @@ describe('resetPassword actions', () => {
     store.clearActions();
   });
   afterEach(() => {
-    moxios.install();
+    moxios.uninstall();
   });
 
   it('should send the email', () => {

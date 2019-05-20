@@ -8,7 +8,7 @@ import {
 import { setAlert } from './alert';
 import { setContentType } from '../utils/setContentType';
 
-const config = setContentType();
+const config = setContentType('application/json');
 const performAction = (type, payload) => ({
   type,
   payload
@@ -18,7 +18,7 @@ export const sendEmail = email => async (dispatch) => {
   const body = JSON.stringify({ email });
 
   try {
-    const res = await axios.post(`${BACKEND_URL}/api/users/password`, body, config);
+    const res = await axios.post('/api/users/password', body, config);
 
     dispatch(performAction(SEND_LINK_SUCCESS, res.data));
     dispatch(setAlert('Check your email to continue', 'success'));

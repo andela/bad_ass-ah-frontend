@@ -16,7 +16,7 @@ export const login = (email, password) => (dispatch) => {
     email,
     password
   };
-  return axios.post('https://badass-ah-backend-staging.herokuapp.com/api/users/login', data)
+  return axios.post('/api/users/login', data)
     .then((response) => {
       localStorage.setItem('token', response.data.token);
       dispatch(loginSuccess(response.data.token));
