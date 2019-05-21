@@ -10,6 +10,10 @@ import Home from '../components/home/Home';
 import SendEmail from '../components/users/forgotPassword/SendEmail';
 import ResetPassword from '../components/users/forgotPassword/ResetPassword';
 import Authenticate from '../components/users/authenticate/Authenticate';
+import Login from '../components/users/login';
+import Article from '../components/articles/AllArticles';
+// eslint-disable-next-line import/no-named-as-default
+import CreateArticle from '../components/articles/CreateArticle';
 
 const Routes = () => (
   <Router>
@@ -18,6 +22,9 @@ const Routes = () => (
       <Route exact path="/forgot-password" component={SendEmail} />
       <Route exact path="/reset-password/:token" component={ResetPassword} />
       <Route exact path="/" component={Home} />
+      <Route exact path="/" component={Login} />
+      <Route exact path="/stories" component={Article} />
+      <Route exact path="/story/new-story" component={CreateArticle} />
     </Switch>
   </Router>
 );

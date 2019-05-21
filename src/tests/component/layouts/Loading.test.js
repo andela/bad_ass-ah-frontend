@@ -1,10 +1,10 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import App from '../App';
+import Loading from '../../../components/layouts/Loading';
 
-describe('Main Component', () => {
+describe('<Loading /> component', () => {
   test('renders without crashing', () => {
-    const component = shallow(<App />);
+    const component = shallow(<Loading />);
     expect(component).toMatchSnapshot();
   });
 });
