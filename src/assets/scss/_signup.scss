@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css?family=Comfortaa:300&display=swap');
+body{
+  margin: 0;
+  padding: 0;
+  font-family: 'Comfortaa', cursive;
+}
+.App {
+    height: 100vh;
+    display: flex;
+    color: $whitecolour;
+    font-size: 12px;
+  }
+
+  .App__Aside {
+    width: 50%;
+    background-color: $blackcolour;
+    background-size: 100% auto;
+  }
+  .App-back{
+    position: relative;
+    width: 100%;
+    height: 100vh;
+  }
+  .App-back img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .App-back::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: $blackishcoulor;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+  }
+
+  @media only screen and (max-width: 600px) {
+    .App__Aside {
+      display: none
+    }
+
+    .App__Form {
+      width: 100% !important;
+      margin: 0 auto;
+      padding: 20px 33px !important
+    }
+  }
+
+  .logo {
+    margin: 25px;
+  }
+
+  @media only screen and (max-width: 601px) {}
+
+  .App__Logo {
+    margin: 5px 0 0 5px;
+    width: 250px;
+    height: 80px;
+    position: absolute;
+    top: 0;
+    z-index: 100;
+  }
+
+  .App__Form {
+    width: 50%;
+    background-color: $blacktwocoulor;
+    padding: 25px 40px;
+    overflow: auto;
+  }
+
+  .PageSwitcher {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 10%;
+  }
+
+  .PageSwitcher__Item {
+    background-color: $whitishcoulor;
+    color: $blackswitchcoulor;
+    padding: 10px 25px;
+    cursor: pointer;
+    font-size: .9em;
+    border: none;
+    outline: none;
+    display: inline-block;
+    text-decoration: none;
+  }
+
+  .PageSwitcher__Item--Active {
+    background-color: $bluecoulor;
+    color: $whitecolour;
+  }
+
+  .PageSwitcher__Item:first-child {
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+  }
+
+  .PageSwitcher__Item:last-child {
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+  }
+
+  .FormCenter {
+    margin-bottom: 100px;
+  }
+
+  .FormTitle {
+    color: $greycoulor;
+    font-weight: 300;
+    margin-bottom: 50px;
+  }
+
+  .FormTitle__Link {
+    color: $greycoulor;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.7em;
+    margin: 0 10px;
+    padding-bottom: 5px;
+  }
+
+  .FormTitle__Link:first-child {
+    margin-left: 0;
+  }
+
+  .FormTitle__Link--Active {
+    color: $whitecolour;
+    border-bottom: 1px solid $bluecoulor;
+  }
+
+  .FormField {
+    margin-bottom: 40px;
+  }
+
+  .FormField__Label {
+    display: block;
+    text-transform: uppercase;
+    font-size: 10px;
+    color: $whitecolour;
+    font-family: 'Comfortaa', cursive;
+  }
+
+  .FormField__Input {
+    width: 85%;
+    background-color: transparent;
+    border: none;
+    color: $whitecolour;
+    outline: none;
+    border-bottom: 1px solid $greycoulor;
+    font-size: 12px;
+    font-weight: 300;
+    padding-bottom: 10px;
+    margin-top: 10px;
+    font-family: 'Comfortaa', cursive;
+  }
+
+  .FormField__Input::placeholder {
+    color: #616E7F;
+  }
+
+  .FormField__Button {
+    background-color: $bluecoulor;
+    color: $whitecolour;
+    border: none;
+    outline: none;
+    border-radius: 25px;
+    padding: 15px 70px;
+    font-size: .8em;
+    font-weight: 500;
+  }
+
+  .FormField__Link {
+    color: $greycoulor;
+    text-decoration: none;
+    display: inline-block;
+    border-bottom: 1.5px solid $blueishcoulor;
+    padding-bottom: 5px;
+  }
+
+  .FormField__CheckboxLabel {
+    color: $greycoulor;
+    font-size: .9em;
+  }
+
+  .FormField__Checkbox {
+    position: relative;
+    top: 1.5px;
+  }
+  .FormField__TermsLink {
+    color: $whitecolour;
+    border-bottom: 1px solid $bluecoulor;
+    text-decoration: none;
+    display: inline-block;
+    padding-bottom: 2px;
+    margin-left: 5px;
+  }
+  .C-validationError{
+    color: $pinkcoulor;
+    display: block;
+    margin-top: 5px;
+  }
+  .hide {
+    display: none !important;
+  }
+  .C-popUp{
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    background: $popUpBack;
+    z-index: 100;
+  }

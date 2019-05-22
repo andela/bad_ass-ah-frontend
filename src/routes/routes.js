@@ -10,6 +10,7 @@ import Home from '../components/home/Home';
 // @load component
 import SendEmail from '../components/users/forgotPassword/SendEmail';
 import ResetPassword from '../components/users/forgotPassword/ResetPassword';
+import Auth from '../components/auth/Auth';
 
 const Routes = () => (
   <Router>
@@ -18,6 +19,9 @@ const Routes = () => (
       <Route exact path="/login" component={Login} />
       <Route exact path="/forgot-password" component={SendEmail} />
       <Route exact path="/reset-password/:token" component={ResetPassword} />
+      <Route exact path="/register" component={Auth} />
+      <Route exact path="/verify/:token" component={Auth} />
+      <Route exact path="/signup" component={Auth} />
     </Switch>
   </Router>
 );

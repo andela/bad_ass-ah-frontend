@@ -1,6 +1,6 @@
 import {
   SOCIAL_LOGIN_FAILURE, SOCIAL_LOGIN_SUCCESS
-} from '../actions/type';
+} from '../actions/types';
 
 const initialState = {
   token: null,

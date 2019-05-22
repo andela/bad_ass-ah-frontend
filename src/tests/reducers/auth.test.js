@@ -1,5 +1,5 @@
 import auth from '../../reducers/socialAuth';
-import { SOCIAL_LOGIN_SUCCESS, SOCIAL_LOGIN_FAILURE } from '../../actions/type';
+import { SOCIAL_LOGIN_SUCCESS, SOCIAL_LOGIN_FAILURE } from '../../actions/types';
 
 const username = 'EmaBush';
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9';
