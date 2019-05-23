@@ -1,19 +1,19 @@
 // @here we will combine all reducers file
 import { combineReducers } from 'redux';
 import socialAuth from './socialAuth';
-import getAllArticle from './article';
 import forgotPassword from './forgotPassword';
 import resetPassword from './resetPassword';
 import alert from './alert';
+import loginReducer from './login';
 
 // @create root reducer
 
 const rootReducer = combineReducers({
   socialAuth,
-  articles: getAllArticle,
   alert,
   forgotPassword,
-  resetPassword
+  resetPassword,
+  login: loginReducer
 });
 
 export default rootReducer;

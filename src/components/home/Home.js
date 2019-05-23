@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 export class Home extends Component {
   state = {};
 
+  // eslint-disable-next-line class-methods-use-this
   render() {
     return (
       <div>

@@ -65,6 +65,5 @@
     "redux-mock-store": "^1.5.3",
     "sinon": "^7.3.2",
     "moxios": "^0.4.0"
-  },
-  "proxy": "https://badass-ah-backend-staging.herokuapp.com"
+  }
 }

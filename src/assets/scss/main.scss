@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css?family=Raleway');
 @import url('https://fonts.googleapis.com/css?family=Montserrat|PT+Sans|Slabo+27px');
 @import url('https://fonts.googleapis.com/css?family=Anton|Cantora+One');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&display=swap');
 
 @import 'config';
 @import 'socialMediaButton';
@@ -9,6 +10,9 @@
 @import 'footer';
 @import 'forgotPassword';
 @import 'alert';
+@import 'button';
+@import 'auth';
+@import 'form';
 
 *,
 body {
@@ -25,3 +29,4 @@ body {
     text-decoration: none;
   }
 }
+

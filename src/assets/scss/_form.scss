@@ -1,0 +1,63 @@
+.form {
+  &__group {
+    margin-top: 30px;
+  }
+
+  &__input {
+    font-size: 15px;
+    color: $whitecolour;
+    font-weight: 400;
+    padding: 15px 20px;
+    background-color: rgba($whitecolour, .5);
+    display: block;
+    border: none;
+
+    &:focus {
+      outline: none;
+    }
+    
+    &::-webkit-input-placeholder {
+      color: $color-grey-dark-2;
+    }
+  }
+  
+  &__input-login {
+    width: 100%;
+    background-color: transparent;
+    border-bottom: 1px solid $color-grey-dark-1;
+    padding: 10px 0;
+
+    &--invalid {
+      border-bottom: 1px solid red;
+    }
+  }
+
+  &__label {
+    display: block;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    color: $whitecolour;
+  }
+
+  &__error {
+    color: red;
+    padding: 5px 5px;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    padding: 0;
+  }
+
+  &__forget-password {
+    margin: 15px 0 25px 0;
+
+    & a {
+      color: $color-blue-light-1;
+      letter-spacing: 0.1em;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
