@@ -12,6 +12,8 @@ before_script:
   - ./cc-test-reporter before-build
 script:
   - npm test -- -u
+after_script:
+  - npm run coveralls
 after_success:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 notifications:

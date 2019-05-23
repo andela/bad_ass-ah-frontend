@@ -20,6 +20,7 @@
     "dev": "react-scripts start",
     "build": "react-scripts build",
     "test": "cross-env CI=true react-scripts test --coverage --env=jsdom",
+    "coveralls": "cat ./coverage/lcov.info | node node_modules/.bin/coveralls",
     "eject": "react-scripts eject",
     "sass": "node-sass -w src/assets/scss -o src/assets/css --recursive",
     "lint": "eslint src",
@@ -47,6 +48,7 @@
     ]
   },
   "devDependencies": {
+    "coveralls": "^3.0.3",
     "cross-env": "^5.2.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.13.0",
