@@ -46,4 +46,4 @@ package-lock.json
 #VScode configuration
 .vscode
 
-src/tests/__snapshots__
+src/tests/**/__snapshots__
