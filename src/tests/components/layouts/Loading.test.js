@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import Loading from '../../../components/layouts/Loading';
 
 describe('<Loading /> component', () => {
-  test('renders without crashing', () => {
+  it('renders without crashing', () => {
     const component = shallow(<Loading />);
     expect(component).toMatchSnapshot();
   });

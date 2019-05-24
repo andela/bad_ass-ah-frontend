@@ -7,11 +7,11 @@ const props = {
   children: jest.fn()
 };
 describe('<Layout /> render layout without crashing', () => {
-  test('renders without crashing', () => {
+  it('renders without crashing', () => {
     const component = shallow(<Layout {...props} />);
     expect(component).toMatchSnapshot();
   });
-  test('should renders without error from prop children', () => {
+  it('should renders without error from prop children', () => {
     // eslint-disable-next-line react/forbid-foreign-prop-types
     const result = checkPropTypes(Layout.propTypes, { name: 'julia' }, 'prop', Layout.name);
     expect(result)

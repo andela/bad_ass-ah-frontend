@@ -49,12 +49,12 @@ export class Authenticate extends Component {
             <Button
               disabled={false}
               btnClass={`btn auth__switcher-btn${currentForm === 'login' ? ' auth__switcher-btn--active' : ''}`}
-              clicked={() => this.switchForm('login')}
+              onClick={() => this.switchForm('login')}
               btnType='button'>Sign In</Button>
             <Button
               disabled={false}
               btnClass={`btn auth__switcher-btn${currentForm === 'register' ? ' auth__switcher-btn--active' : ''}`}
-              clicked={() => this.switchForm('register')}
+              onClick={() => this.switchForm('register')}
               btnType='button'>Sign Up</Button>
           </div>
           <div className='auth__form-wrapper'>

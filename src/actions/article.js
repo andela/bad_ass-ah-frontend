@@ -1,32 +1,27 @@
 import axios from 'axios';
+import Hashid from 'hashids';
+import dotenv from 'dotenv';
+
 // @call type we are going to use
 import {
-  GET_ALL_ARTICLE, CREATE_ARTICLE, ARTICLE_ERROR, LOADING, ADD_TAG, REMOVE_TAG
+  GET_ALL_ARTICLE, CREATE_ARTICLE, ARTICLE_FAILURE, LOADING, ADD_TAG, REMOVE_TAG,
+  GET_SINGLE_ARTICLE
 } from './type';
+import Config, { PassDispatch } from '../helpers/Config';
 
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTYsImVtYWlsIjoiZ3JhY2lhbjIwMjBAZ21haWwuY29tIiwiaXNBZG1pbiI6ZmFsc2UsImlhdCI6MTU1ODYxNTczNCwiZXhwIjoxNTYyOTM1NzM0fQ.zRM27LSAYifXieVs06dG6S3HaJPJjwnP6wA7WpFNKJA';
-const config = {
-  headers: {
-    'Content-Type': 'multipart/form-data',
-    Authorization: `Bearer ${token}`
-  }
-};
-const articles = [{
-  id: Math.random(),
-  title: 'this is article1',
-  author: 'gracian'
-},
-{
-  id: Math.random(),
-  title: 'this is article2',
-  author: 'gracian'
-}];
+dotenv.config();
+const hashids = new Hashid('', 10);
+const BACKEND_URL = 'https://badass-ah-backend-staging.herokuapp.com';
 // @get all article actions
 const getAllArticle = () => (dispatch) => {
-  dispatch({
-    type: GET_ALL_ARTICLE,
-    payload: articles
-  });
+  const url = `${BACKEND_URL}/api/articles`;
+  axios.get(url)
+    .then((response) => {
+      dispatch(PassDispatch(GET_ALL_ARTICLE, response.data));
+    })
+    .catch((error) => {
+      dispatch(PassDispatch(ARTICLE_FAILURE, error.response));
+    });
 };
 // @loading
 const loading = () => ({
@@ -34,8 +29,8 @@ const loading = () => ({
 });
 // @create article
 const createArticle = data => async (dispatch) => {
-  const url = '/api/articles';
-  const arr = data.tag.join(',');
+  const url = `${BACKEND_URL}/api/articles`;
+  const arr = data.tag ? data.tag.join(',') : '';
   const formData = new FormData();
   formData.append('image', data.image);
   formData.append('title', data.title);
@@ -43,16 +38,10 @@ const createArticle = data => async (dispatch) => {
   formData.append('tag', arr);
   await dispatch(loading());
   try {
-    const send = await axios.post(url, formData, config);
-    await dispatch({
-      type: CREATE_ARTICLE,
-      payload: send.data
-    });
+    const Addarticle = await axios.post(url, formData, Config);
+    await dispatch(PassDispatch(CREATE_ARTICLE, Addarticle.data));
   } catch (error) {
-    await dispatch({
-      type: ARTICLE_ERROR,
-      payload: error.response
-    });
+    await dispatch(PassDispatch(ARTICLE_FAILURE, error.response));
   }
 };
 
@@ -64,15 +53,22 @@ const addTag = data => (dispatch) => {
   });
 };
 const removeTag = data => (dispatch) => {
-  dispatch({
-    type: REMOVE_TAG,
-    payload: data
-  });
+  dispatch(PassDispatch(REMOVE_TAG, data));
 };
-
+// @single article
+const singleArticle = handle => async (dispatch) => {
+  const url = `${BACKEND_URL}/api/articles/${hashids.decode(handle)}`;
+  try {
+    const getArticle = await axios.get(url, Config);
+    dispatch(PassDispatch(GET_SINGLE_ARTICLE, getArticle.data));
+  } catch (error) {
+    dispatch(PassDispatch(ARTICLE_FAILURE, error.response.data));
+  }
+};
 export {
   getAllArticle as default,
   createArticle,
   addTag,
-  removeTag
+  removeTag,
+  singleArticle
 };

@@ -1,14 +1,16 @@
 // @call type going to be used..
 import {
-  GET_ALL_ARTICLE, CREATE_ARTICLE, ARTICLE_ERROR, LOADING, ADD_TAG, REMOVE_TAG
+  GET_ALL_ARTICLE, CREATE_ARTICLE, LOADING, ADD_TAG, REMOVE_TAG,
+  GET_SINGLE_ARTICLE, ARTICLE_FAILURE
 } from '../actions/type';
 
 const initialState = {
-  articles: null,
+  allArticles: [],
   newArticle: null,
   loading: true,
   error: {},
-  newTag: []
+  newTag: [],
+  article: null
 };
 
 const getAllArticle = (state = initialState, action) => {
@@ -17,7 +19,7 @@ const getAllArticle = (state = initialState, action) => {
     case GET_ALL_ARTICLE:
       return {
         ...state,
-        articles: payload
+        allArticles: [...state.allArticles, payload]
       };
     case CREATE_ARTICLE:
       return {
@@ -25,7 +27,7 @@ const getAllArticle = (state = initialState, action) => {
         newArticle: payload,
         loading: false
       };
-    case ARTICLE_ERROR:
+    case ARTICLE_FAILURE:
       return {
         ...state,
         error: payload === 'Unauthorized' ? { unauthorized: 'Unauthorized' } : payload
@@ -44,6 +46,11 @@ const getAllArticle = (state = initialState, action) => {
       return {
         ...state,
         newTag: [...state.newTag.filter(tag => tag !== payload)]
+      };
+    case GET_SINGLE_ARTICLE:
+      return {
+        ...state,
+        article: payload
       };
     default:
       return state;
