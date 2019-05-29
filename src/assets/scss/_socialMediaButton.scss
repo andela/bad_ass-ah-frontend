@@ -1,0 +1,31 @@
+
+.socialMediaButtons {
+ 
+  .mr-20 {
+    margin-right: 20px !important;
+  }
+  
+  .socialMedia {
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    /* padding: 15px 70px; */
+    height: 40px;
+    width: 40px;
+    font-size: .8em;
+    font-weight: 500;
+  }
+  
+  .facebook {
+      background: url('../img/socialMediaIcons/facebook.svg');
+  }
+  .twitter {
+    background: url('../img/socialMediaIcons/twitter.svg');
+  }
+  .gmail {
+    background: url('../img/socialMediaIcons/gmail.svg');
+  }
+}
+
+
+

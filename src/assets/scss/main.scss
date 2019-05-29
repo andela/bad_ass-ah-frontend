@@ -1,2 +1,23 @@
+@import url('https://fonts.googleapis.com/css?family=Amiri|Arapey|Fredoka+One|Lobster+Two|Miriam+Libre');
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Montserrat|PT+Sans|Slabo+27px');
+@import url('https://fonts.googleapis.com/css?family=Anton|Cantora+One');
+
 @import 'config';
-@import 'navbar';
+@import 'socialMediaButton';
+
+*,
+body {
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: 'Arapey', serif;
+
+  ul {
+    list-style-type: none;
+  }
+  a {
+    text-decoration: none;
+  }
+}

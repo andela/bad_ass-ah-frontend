@@ -1,7 +1,3 @@
-@import url("https://fonts.googleapis.com/css?family=Amiri|Arapey|Fredoka+One|Lobster+Two|Miriam+Libre");
-@import url("https://fonts.googleapis.com/css?family=Raleway");
-@import url("https://fonts.googleapis.com/css?family=Montserrat|PT+Sans|Slabo+27px");
-@import url("https://fonts.googleapis.com/css?family=Anton|Cantora+One");
 .socialMediaButtons .mr-20 {
   margin-right: 20px !important; }
 
@@ -23,15 +19,3 @@
 
 .socialMediaButtons .gmail {
   background: url("../img/socialMediaIcons/gmail.svg"); }
-
-*,
-body {
-  margin: 0;
-  padding: 0; }
-
-body {
-  font-family: 'Arapey', serif; }
-  body ul {
-    list-style-type: none; }
-  body a {
-    text-decoration: none; }
