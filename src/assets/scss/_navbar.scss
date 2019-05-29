@@ -1,0 +1,128 @@
+.top-header {
+  position: relative;
+  background: $maincolor;
+  padding: 20px;
+  padding-left: 50px;
+
+  .top-icon {
+    display: grid;
+    grid-template-columns: 20px 20px 20px;
+    grid-gap: 50px;
+    margin-top: 8px;
+
+    .img-icon img {
+      width: 100%;
+    }
+  }
+
+  .top-search {
+    position: absolute;
+    right: 0;
+    margin-top: 5px;
+    top: 0;
+    margin-right: 20px;
+    width: 20%;
+
+    .top-search-grid {
+      display: grid;
+      grid-template-columns: 80% 20%;
+
+      .search-input {
+        height: 50px;
+        border: none;
+        background: none;
+        color: $whitecolor;
+        padding: 5px;
+        box-shadow: none;
+        outline: none;
+        font-size: 14px;
+        font-family: 'comfortaa', cursive;
+        display: inline-block;
+        text-transform: capitalize;
+      }
+
+      .search-icon {
+        width: 15px;
+        margin-top: 23px;
+      }
+    }
+  }
+
+  ::-webkit-input-placeholder {
+    color: $whitecolor;
+    font-size: 13px;
+  }
+  ::-moz-placeholder {
+    color: $whitecolor;
+    font-size: 13px;
+  }
+  :-ms-input-placeholder {
+    color: peachpuff;
+    font-size: 13px;
+  }
+  ::placeholder {
+    color: $whitecolor;
+    font-size: 13px;
+  }
+}
+
+.top-menu-section {
+  position: relative;
+  padding: 30px;
+  padding-bottom: 0px;
+
+  .logo {
+    position: absolute;
+    top: 0;
+    width: 60px;
+    margin-left: 65px;
+    margin-top: 50px;
+  }
+
+  .top-menus {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+
+    .title h1 {
+      font-family: 'Fredoka one', cursive;
+      font-weight: bold;
+    }
+
+    .navigation {
+      li {
+        float: left;
+        margin: 20px;
+      }
+
+      a {
+        color: #000000;
+        font-size: 16px;
+        font-weight: bold;
+      }
+
+      .auth-link {
+        position: absolute;
+        right: 0;
+        margin-right: 150px !important;
+
+        a {
+          padding: 15px;
+          border-radius: 2px;
+          padding-left: 30px;
+          padding-right: 30px;
+          color: $whitecolor;
+          margin-left: 20px;
+          padding-bottom: 12px;
+          padding-top: 12px;
+        }
+
+        .headerIcon {
+          width: 30px;
+        }
+      }
+    }
+  }
+}

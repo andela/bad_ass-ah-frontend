@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import queryString from 'query-string';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { loadUser } from '../../../actions/socialAuth';
 import SocialLogin from '../sociaLogin/SociaLogin';
 
@@ -20,7 +20,12 @@ export class Login extends Component {
     if (props.isAuthenticated && props.token) {
       return <Redirect to="/" />;
     }
-    return <SocialLogin />;
+    return (
+      <Fragment>
+        <SocialLogin />
+        <Link to="/forgot-password">Forgot Password</Link>
+      </Fragment>
+    );
   }
 }
 const mapStateToProps = state => ({
