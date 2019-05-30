@@ -1,0 +1,76 @@
+.auth {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  color: $whitecolour;
+  font-size: 12px;
+  font-family: 'Open Sans', sans-serif;
+
+  &__left-side {
+    flex: 0 0 50%;
+    background-image: linear-gradient(to right bottom, rgba($whitecolour, .8), rgba($blackcolour, .7)),url(../img/jon-tyson-762619-unsplash.jpg);
+    background-size: cover;
+    background-position: top;
+    position: relative;
+  }
+
+  &__right-side {
+    flex: 1;
+    background-color: black;
+    padding: 6%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__logo-box {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+  }
+
+  &__logo {
+    width: 100px;
+  }
+
+  &__switcher {
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 10px;
+
+    &-btn {
+      background-color: $whitishcoulor;
+      color: $blackswitchcoulor;
+      border-radius: 25px 0 0 25px;
+      font-size: 1em;
+      padding: 13px 32px;
+
+      &:last-child {
+        border-radius: 0 25px 25px 0;
+      }
+
+      &--active {
+        background-color: $bluecoulor;
+        color: $whitecolour;
+
+         &:hover {
+           opacity: 1;
+           cursor: not-allowed;
+         }
+      }
+    }
+  }
+
+  &__form-error {
+    height: 20px;
+    margin-bottom: 20px;
+  }
+
+  &__form-wrapper {
+    flex: 0 0 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 20px;
+    padding: 10px;
+  }
+}
