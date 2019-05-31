@@ -6,6 +6,7 @@ import resetPassword from './resetPassword';
 import alert from './alert';
 import loginReducer from './login';
 import getAllArticle from './article';
+import profile from './profile';
 
 // @create root reducer
 
@@ -16,6 +17,7 @@ const rootReducer = combineReducers({
   resetPassword,
   login: loginReducer,
   articles: getAllArticle,
+  profile
 });
 
 export default rootReducer;

@@ -1,8 +1,8 @@
 /* eslint-disable import/prefer-default-export */
-export const setContentType = () => {
+export const setContentType = (type) => {
   const headers = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': type
     }
   };
 

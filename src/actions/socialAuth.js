@@ -1,5 +1,5 @@
 /* eslint-disable import/prefer-default-export */
-import { SOCIAL_LOGIN_SUCCESS, SOCIAL_LOGIN_FAILURE } from './type';
+import { SOCIAL_LOGIN_SUCCESS, SOCIAL_LOGIN_FAILURE } from './types';
 
 export const loadUser = (token, username) => async (dispatch) => {
   if (token) {

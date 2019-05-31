@@ -102,7 +102,7 @@ class Navbar extends Component {
 
                 {localStorage.getItem('token') ? <ul><li><Link to="/story/new-story"><i className="icofont-artichoke"></i>New Article</Link></li>
                 <li><Link to="/"><i className="icofont-brand-appstore"></i>Articles</Link></li>
-                <li><Link to="/"><i className="icofont-ui-user"></i>My Profile</Link></li>
+                <li><Link to="/view-profile"><i className="icofont-ui-user"></i>My Profile</Link></li>
                 <li><Link to="/"><i className="icofont-settings"></i>Settings</Link></li>
                 <li onClick={ this.logout } data-test="logout" className="logout"><Link to="/"><i className="icofont-logout"></i>Logout</Link></li></ul>
                   : <ul><li><Link to="/login"><i className="icofont-sign-in"></i>SignIn</Link></li>
