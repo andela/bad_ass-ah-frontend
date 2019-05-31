@@ -8,7 +8,7 @@
 
   &__left-side {
     flex: 0 0 50%;
-    background-image: linear-gradient(to right bottom, rgba($whitecolour, .8), rgba($blackcolour, .7)),url(../img/jon-tyson-762619-unsplash.jpg);
+    background-image: linear-gradient(to right bottom, rgba($whitecolor, 0.8), rgba($blackcolour, 0.7)), url($backImage);
     background-size: cover;
     background-position: top;
     position: relative;

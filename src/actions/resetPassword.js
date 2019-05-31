@@ -13,12 +13,12 @@ const performAction = (type, payload) => ({
   type,
   payload
 });
-
+const BACKEND_URL = 'https://badass-ah-backend-staging.herokuapp.com';
 export const sendEmail = email => async (dispatch) => {
   const body = JSON.stringify({ email });
 
   try {
-    const res = await axios.post('https://badass-ah-backend-staging.herokuapp.com/api/users/password', body, config);
+    const res = await axios.post(`${BACKEND_URL}/api/users/password`, body, config);
 
     dispatch(performAction(SEND_LINK_SUCCESS, res.data));
     dispatch(setAlert('Check your email to continue', 'success'));
@@ -34,7 +34,7 @@ export const resetPassword = (token, password) => async (dispatch) => {
   const body = JSON.stringify({ token, password });
 
   try {
-    const res = await axios.put('/api/users/password', body, config);
+    const res = await axios.put(`${BACKEND_URL}/api/users/password`, body, config);
 
     dispatch(performAction(RESET_PASSWORD_SUCCESS, res.data));
   } catch (error) {

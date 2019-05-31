@@ -1,6 +1,4 @@
-/* eslint-disable react/prefer-stateless-function */
 import React, { Fragment } from 'react';
-import { Link } from 'react-router-dom';
 import logo from '../../assets/Images/icons/world.svg';
 import instagram from '../../assets/Images/icons/instagram.svg';
 import twitter from '../../assets/Images/icons/twitter.svg';
@@ -16,19 +14,19 @@ const Footer = () => (
         </div>
         <div className="top-icon">
           <div className="img-icon">
-            <Link to="https://www.instagram.com">
+            <a href="#D" target="_blank">
               <img src={instagram} alt="Instagram" />
-            </Link>
+            </a>
           </div>
           <div className="img-icon">
-            <Link to="https://www.twitter.com">
+            <a href="#D" target="_blank">
               <img src={twitter} alt="Twitter" />
-            </Link>
+            </a>
           </div>
           <div className="img-icon">
-            <Link to="https://www.facebook.com">
+            <a href="#D" target="_blank">
               <img src={facebook} alt="Facebook" />
-            </Link>
+            </a>
           </div>
         </div>
       </div>

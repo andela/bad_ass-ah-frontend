@@ -1,0 +1,247 @@
+@import url('https://fonts.googleapis.com/css?family=Amiri|Arapey|Fredoka+One|Lobster+Two|Miriam+Libre');
+@import url('https://fonts.googleapis.com/css?family=Raleway');
+@import url('https://fonts.googleapis.com/css?family=Montserrat|PT+Sans|Slabo+27px');
+@import url('https://fonts.googleapis.com/css?family=Anton|Cantora+One');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
+
+/*@gratian*/
+.G-showcase{
+    position: relative;
+    margin-top: 40px;
+    font-family: $robotFontFamily;
+    .G-create-article{
+        display: flex;
+        width: 45%;
+        flex-direction: column;
+        margin: auto;  
+        padding-left: 95px;
+        .G-containers{
+            box-shadow: 0px 0px 500px 0px #dddddda6;
+        }
+        .G-form-group{
+            margin-bottom: 0.5rem;
+            padding: 10px;
+            position: relative;
+            label{
+                position: absolute;
+                left: 0;
+                margin-left: -100px;
+                color: #656060;
+            }
+        }
+        .G-image-display{
+            width: 100%;
+            height: 300px;
+            margin-top: 20px;
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
+        .G-input{
+            border: none;
+            font-size: 30px;
+            font-weight: normal;
+            width: 100%;
+            min-height: 50px;
+            outline: none;
+            box-shadow: none;
+            font-family:$rokitFont;
+        }
+        .titleLabel{
+            margin-top: 15px;
+        }
+       ::placeholder{
+            font-size: 14px;
+            text-transform: capitalize;
+        }
+        #texteditor{
+            width: 100%;
+            min-height: 40vh;
+            overflow: auto;
+            font-family:  $rokitFont!important;
+            outline: none;
+            box-shadow: none;
+            font-size: 20px;
+        }
+        #texteditor:empty::before{
+            content:"start writting here ...";
+            color: $editorContent;
+            font-size: 14px;
+        }
+        .G-displayTag{
+            padding-left: 40px;
+            padding-right: 40px;
+            border-radius: 20px;
+            position: relative;
+            padding-top: 7px;
+            padding-bottom: 7px;
+            box-shadow: 0px 0px 50px 0px #e0dede;
+            font-size: $size12;
+            margin:2px;
+            float: left;
+        }
+        .G-tagName{
+            color: $tagColor;
+            font-size: 13px;
+            text-transform: capitalize;
+        }
+        .G-removeTag{
+            position: absolute;
+            top: 0;
+            right: 0;
+            padding-top: 7px;
+            margin-right: 10px;
+            cursor: pointer;
+            font-size: $size12;
+            color:$black;
+            z-index: 10;
+        }
+        .trashBtn{
+            border:none;
+            outline: none;
+            box-shadow: none;
+            cursor: pointer;
+        }
+        .G-actionType{
+            position: relative;
+            left: 0;
+            width: 100%;
+            display: flex;
+            box-shadow: 0px 0px 100px 0px #dddddd26;
+            .G-tags, .G-links{
+                position: absolute;
+                width: 60%;
+                background: $white-color;
+                height: 55px;
+                right: 0;
+                input{
+                    border: none;
+                    padding-left: 10px;
+                    font-size: 13px;
+                    height: 55px;
+                    outline: none;
+                    box-shadow: none;
+                    font-family: $robotFontFamily;
+                    width: 75%;
+                }
+                .G-tagBtn{
+                    position: absolute;
+                    top: 0;
+                    right: 0;
+                    padding: 20px;
+                    padding-left: 30px;
+                    padding-right: 30px;
+                    cursor: pointer;
+                    background: $blackColor;
+                    border: none;
+                    outline: none;
+                    box-shadow: none;
+                    text-transform: uppercase;
+                    font-weight: bold;
+                    z-index: 10;
+                    color: #fff;
+                }
+            }
+            .G-links{
+                z-index: 100;
+            }
+        }
+        .G-action{
+            padding: 10px;
+        }
+        .G-action button{
+            cursor: pointer;
+            border: none;
+            outline: none;
+            box-shadow: none;
+            font-size: 10px;
+           width: 35px;
+           height: 35px;
+           border-radius: 5px;
+           border: 1px solid #000000fa;
+        }
+        .uploadImageIcon{
+            font-size: 16px;
+        }
+        .G-publish{
+            position: relative;
+        }
+        .G-publish button{
+            padding: 17px;
+            padding-left: 20px;
+            padding-right: 20px;
+            cursor: pointer;
+            font-size: 15px;
+            background: none;
+            font-family: $robotFontFamily;
+            outline: none;
+            box-shadow: none;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px;
+            .worldIcon{
+                padding-right: 5px;
+            }
+        }
+        .G-storyTitle{
+            font-size: 50px;
+            padding-top: 16px;
+            font-size: 40px;
+            padding-top: 0px;
+            font-family: $rokitFont;
+            font-weight: bold;
+            padding: 10px;
+            padding-left: 0;
+            padding-top: 0;
+        }
+    }
+    .G-notFound{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 50vh;
+        img{
+            width: 70px;
+            margin-bottom: 30px;
+            font-family: $robotFontFamily;
+        }
+       }
+    .G-displayValidation{
+        position: absolute;
+        right: 0;
+        top: 0;
+        .G-displayError{
+            position: relative;
+            margin-top: 100px;
+            // transform: translatex(100%);
+            // transition: 0.5s transform;
+            .G-errors{
+                padding: 25px;
+                background: #dddddd4f;
+                color: #ef649b;
+                margin: 5px;
+                padding-left: 20px;
+                padding-right: 50px;
+                border-radius: 1px;
+                font-size: 12px;
+                min-width: 60%;
+                float: right;
+                position: relative;
+                box-shadow: 0px 0px 50px 0px #4e469e2e;
+            }
+        }  
+    }
+    @keyframes shine {
+		to {
+			background-position:
+				0 0,
+				100% 0, /* move highlight to right */
+				120px 0,
+				120px 40px,
+				120px 80px,
+				120px 120px;
+		}
+	}
+}
