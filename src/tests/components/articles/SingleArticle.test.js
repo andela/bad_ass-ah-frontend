@@ -15,7 +15,8 @@ const props = {
     }
   },
   likeArticle: jest.fn(),
-  dislikeArticle: jest.fn()
+  dislikeArticle: jest.fn(),
+  bookmarkArticle: jest.fn()
 };
 
 describe('<SingleArticle />', () => {
@@ -52,5 +53,18 @@ describe('<SingleArticle />', () => {
     component.instance().forceUpdate();
     await component.instance().componentWillReceiveProps({ articles: { voteMessage: 'You have disliked this article.' } });
     expect(spy).toHaveBeenCalled();
+  });
+  it('should call dislikeArticle method when the dislike button is clicked', async () => {
+    const spy = jest.spyOn(component.instance(), 'dislikeArticle');
+    component.instance().forceUpdate();
+    await component.instance().componentWillReceiveProps({ articles: { bookmarkMessage: 'Successfully bookmarked.' } });
+    expect(spy).toHaveBeenCalled();
+  });
+  it('should call bookmarkArticle method when the like button is clicked', async () => {
+    const spy = jest.spyOn(component.instance(), 'bookmarks');
+    component.instance().forceUpdate();
+    await component.instance().bookmarks();
+    expect(spy).toHaveBeenCalled();
+    expect(props.bookmarkArticle).toHaveBeenCalled();
   });
 });

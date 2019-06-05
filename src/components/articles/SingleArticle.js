@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import htmlParser from 'html-react-parser';
 import { singleArticle } from '../../actions/article';
 import { likeArticle, dislikeArticle } from '../../actions/voteArticle';
+import bookmarkArticle from '../../actions/bookmarkArticle';
 import Layout from '../layouts/Layout';
 import NotFound from '../NotFound';
 import Comment from '../comment/comments';
@@ -15,12 +16,8 @@ export class SingleArticle extends Component {
     articleId: '',
     hasLikedClass: null,
     hasDilikedClass: null,
-    articleId2: null
-  }
-
-  componentWillMount() {
-    const { match: { params } } = this.props;
-    this.setState({ articleId2: params.handle });
+    bookmarkArticle: null,
+    hasbookmarkedClass: null
   }
 
   getArticle = () => {
@@ -34,12 +31,15 @@ export class SingleArticle extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { voteMessage } = nextProps.articles;
+    const { voteMessage, bookmarkMessage } = nextProps.articles;
     if (voteMessage === 'thanks for the support.') {
       this.setState({ hasLikedClass: 'changeColor', hasDilikedClass: null });
     }
     if (voteMessage === 'You have disliked this article.') {
       this.setState({ hasLikedClass: null, hasDilikedClass: 'changeColor' });
+    }
+    if (bookmarkMessage === 'Successfully bookmarked.') {
+      this.setState({ hasbookmarkedClass: 'changeColor' });
     }
   }
 
@@ -57,15 +57,26 @@ export class SingleArticle extends Component {
     this.getArticle();
   };
 
-  render() {
-    const { articleId } = this.state;
-    let single;
-    const {
-      articles: { article, error }
-    } = this.props;
-    if (article !== null) if (article && article.article !== undefined) single = article.article;
 
-    return (
+bookmarks = async () => {
+  const { articleId } = this.state;
+  const { bookmarkArticle } = this.props;
+  await bookmarkArticle(articleId);
+  this.getArticle();
+}
+
+render() {
+  const { articleId } = this.state;
+  let single;
+  const {
+    articles: {
+      article,
+      error,
+    }
+  } = this.props;
+  if (article !== null) if (article && article.article !== undefined) single = article.article;
+
+  return (
       <Layout>
         <div className="G-showcase">
           <div>
@@ -109,6 +120,9 @@ export class SingleArticle extends Component {
                       {article.votes.hasDisliked === true ? <i className="icofont-ui-love-broken changeColor"></i> : <i className="icofont-ui-love-broken"></i>}
                       <div>{article.votes.dislikes}</div>
                     </div>
+                    <div id="bookmark-btn" className={`btn-bookmark ${this.state.hasbookmarkedClass}`} title="bookmark" onClick= {this.bookmarks}>
+          {article.hasBookmarked === true ? <i class="icofont-book-mark changeColor"></i> : <i class="icofont-book-mark"></i>}
+          </div>
                   </div>
                 </div>
                 <Comment articleId={articleId} />
@@ -122,8 +136,8 @@ export class SingleArticle extends Component {
           </div>
         </div>
       </Layout>
-    );
-  }
+  );
+}
 }
 const mapStateToProps = state => ({
   articles: state.articles
@@ -133,10 +147,14 @@ SingleArticle.propTypes = {
   articles: PropTypes.objectOf(PropTypes.object).isRequired,
   match: PropTypes.objectOf(PropTypes.object).isRequired,
   likeArticle: PropTypes.func.isRequired,
-  dislikeArticle: PropTypes.func.isRequired
+  dislikeArticle: PropTypes.func.isRequired,
+  bookmarkArticle: PropTypes.func.isRequired
+
 };
 // eslint-disable-next-line max-len
-export default connect(
-  mapStateToProps,
-  { singleArticle, likeArticle, dislikeArticle }
-)(SingleArticle);
+export default connect(mapStateToProps, {
+  singleArticle,
+  likeArticle,
+  dislikeArticle,
+  bookmarkArticle
+})(SingleArticle);

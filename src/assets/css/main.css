@@ -1588,8 +1588,9 @@ footer h1 {
     z-index: 100; }
   .G-showcase .c-like-grid {
     display: grid;
-    grid-template-columns: 0fr 0fr;
-    grid-gap: 10px; }
+    grid-template-columns: 50px 50px 50px;
+    grid-gap: 10px;
+    text-align: center; }
   .G-showcase .turnLike {
     border: 1px solid red !important; }
   .G-showcase .turnBlack {
@@ -1613,3 +1614,17 @@ footer h1 {
 
 .G-singleEditor {
   min-height: auto !important; }
+  .G-showcase .btn-bookmark {
+    font-family: "Rokkitt", serif;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    background: #ffff;
+    line-height: 36px;
+    width: 20px;
+    padding-left: 10px;
+    padding-right: 10px; }
+    .G-showcase .btn-bookmark i {
+      padding-right: 2px; }
+    .G-showcase .btn-bookmark div {
+      display: inline-block; }
