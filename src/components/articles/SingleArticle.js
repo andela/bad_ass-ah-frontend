@@ -3,21 +3,62 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import htmlParser from 'html-react-parser';
 import { singleArticle } from '../../actions/article';
+import { likeArticle, dislikeArticle } from '../../actions/voteArticle';
 import Layout from '../layouts/Layout';
 import NotFound from '../NotFound';
 
 export class SingleArticle extends Component {
-  componentDidMount() {
-    // eslint-disable-next-line react/prop-types
+  state={
+    articleId: '',
+    hasLikedClass: null,
+    hasDilikedClass: null
+  }
+
+  getArticle = () => {
     const { match: { params }, singleArticle } = this.props;
+    this.setState({ articleId: params.handle });
     singleArticle(params.handle);
   }
 
-  render() {
-    let single;
-    const { articles: { article, error } } = this.props;
-    if (article !== null) if (article && article.article !== undefined) single = article.article;
-    return (
+  componentDidMount() {
+    this.getArticle();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { voteMessage } = nextProps.articles;
+    if (voteMessage === 'thanks for the support.') {
+      this.setState({ hasLikedClass: 'changeColor', hasDilikedClass: null });
+    }
+    if (voteMessage === 'You have disliked this article.') {
+      this.setState({ hasLikedClass: null, hasDilikedClass: 'changeColor' });
+    }
+  }
+
+likeArticle = async () => {
+  const { articleId } = this.state;
+  const { likeArticle } = this.props;
+  await likeArticle(articleId);
+  this.getArticle();
+}
+
+dislikeArticle = async () => {
+  const { articleId } = this.state;
+  const { dislikeArticle } = this.props;
+  await dislikeArticle(articleId);
+  this.getArticle();
+}
+
+render() {
+  let single;
+  const {
+    articles: {
+      article,
+      error,
+    }
+  } = this.props;
+  if (article !== null) if (article && article.article !== undefined) single = article.article;
+
+  return (
       <Layout>
         <div className="G-showcase">
           <div>
@@ -54,6 +95,16 @@ export class SingleArticle extends Component {
                 <div className="G-form-group">
                   <div id="texteditor" name="body">{htmlParser(single.body)}</div>
                 </div>
+                <div className="C-like c-like-grid">
+          <div id="like-btn" className={`btn-heart ${this.state.hasLikedClass}`} title="likes" onClick={this.likeArticle} >
+          {article.votes.hasLiked === true ? <i className="icofont-heart changeColor"></i> : <i className="icofont-heart"></i>}
+          <div>{article.votes.likes}</div>
+          </div>
+          <div id="dislike-btn" className={`btn-heart ${this.state.hasDilikedClass}`} title="dislikes" onClick= {this.dislikeArticle}>
+          {article.votes.hasDisliked === true ? <i className="icofont-ui-love-broken changeColor"></i> : <i className="icofont-ui-love-broken"></i>}
+          <div>{article.votes.dislikes}</div>
+          </div>
+          </div>
               </div>
             ) : (
               <center>
@@ -64,14 +115,19 @@ export class SingleArticle extends Component {
           </div>
         </div>
       </Layout>
-    );
-  }
+  );
+}
 }
 const mapStateToProps = state => ({
   articles: state.articles
 });
 SingleArticle.propTypes = {
   singleArticle: PropTypes.func.isRequired,
-  articles: PropTypes.objectOf(PropTypes.object).isRequired
+  articles: PropTypes.objectOf(PropTypes.object).isRequired,
+  match: PropTypes.objectOf(PropTypes.object).isRequired,
+  likeArticle: PropTypes.func.isRequired,
+  dislikeArticle: PropTypes.func.isRequired
+
 };
-export default connect(mapStateToProps, { singleArticle })(SingleArticle);
+// eslint-disable-next-line max-len
+export default connect(mapStateToProps, { singleArticle, likeArticle, dislikeArticle })(SingleArticle);

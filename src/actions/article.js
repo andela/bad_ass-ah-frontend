@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 // @call type we are going to use
 import {
   GET_ALL_ARTICLE, CREATE_ARTICLE, ARTICLE_FAILURE, LOADING, ADD_TAG, REMOVE_TAG,
-  GET_SINGLE_ARTICLE
+  GET_SINGLE_ARTICLE, VOTE_ARTICLES,
 } from './types';
 import Config, { PassDispatch } from '../helpers/Config';
 
@@ -60,11 +60,14 @@ const singleArticle = handle => async (dispatch) => {
   const url = `${BACKEND_URL}/api/articles/${hashids.decode(handle)}`;
   try {
     const getArticle = await axios.get(url, Config);
-    dispatch(PassDispatch(GET_SINGLE_ARTICLE, getArticle.data));
+    await dispatch(PassDispatch(VOTE_ARTICLES, getArticle.data.votes));
+    await dispatch(PassDispatch(GET_SINGLE_ARTICLE, getArticle.data));
   } catch (error) {
     dispatch(PassDispatch(ARTICLE_FAILURE, error.response.data));
   }
 };
+// @Liking article
+
 export {
   getAllArticle as default,
   createArticle,

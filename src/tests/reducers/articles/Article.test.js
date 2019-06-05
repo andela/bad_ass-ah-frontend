@@ -3,6 +3,7 @@ import {
   GET_ALL_ARTICLE, CREATE_ARTICLE, ARTICLE_FAILURE, LOADING, ADD_TAG,
   REMOVE_TAG
 } from '../../../actions/type';
+import { VOTE_ARTICLES } from '../../../actions/types';
 
 // @test
 describe('Article reducer', () => {
@@ -82,5 +83,26 @@ describe('Article reducer', () => {
       payload: [...initialState.newTag.filter(tag => tag !== payload)]
     });
     expect(state).toEqual({ newTag: [{ tag: payload }] });
+  });
+  it('should like an article when VOTE_ARTICLE is called', () => {
+    const initialState = {
+      allArticles: [],
+      newArticle: null,
+      loading: true,
+      error: {},
+      newTag: [],
+      article: null,
+      likes: null,
+      dislikes: null
+    };
+    const payload = {
+      likes: 1,
+      dislikes: 0
+    };
+    const state = getAllArticle(initialState, {
+      type: VOTE_ARTICLES,
+      payload
+    });
+    expect(state.voteMessage).toEqual(payload.message);
   });
 });

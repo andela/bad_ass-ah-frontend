@@ -1,8 +1,8 @@
 // @call type going to be used..
 import {
   GET_ALL_ARTICLE, CREATE_ARTICLE, LOADING, ADD_TAG, REMOVE_TAG,
-  GET_SINGLE_ARTICLE, ARTICLE_FAILURE
-} from '../actions/type';
+  GET_SINGLE_ARTICLE, ARTICLE_FAILURE, VOTE_ARTICLES
+} from '../actions/types';
 
 const initialState = {
   allArticles: [],
@@ -10,7 +10,12 @@ const initialState = {
   loading: true,
   error: {},
   newTag: [],
-  article: null
+  article: null,
+  likes: null,
+  dislikes: null,
+  hasLiked: false,
+  hasDisLiked: false,
+  voteMessage: null
 };
 
 const getAllArticle = (state = initialState, action) => {
@@ -51,6 +56,11 @@ const getAllArticle = (state = initialState, action) => {
       return {
         ...state,
         article: payload
+      };
+    case VOTE_ARTICLES:
+      return {
+        ...state,
+        voteMessage: payload.message,
       };
     default:
       return state;
