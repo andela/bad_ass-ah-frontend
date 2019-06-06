@@ -28,3 +28,5 @@ export const ADD_TAG = ' TAG ';
 export const ALL_TAG = 'ALL_TAG ';
 export const DELETE_TAG = 'DELETE_TAG';
 export const REMOVE_TAG = 'REMOVE_TAG';
+export const VOTE_ARTICLES = 'VOTE_ARTICLES';
+export const VOTE_FAILURE = 'VOTE_FAILURE';
