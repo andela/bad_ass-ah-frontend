@@ -5,17 +5,17 @@ import dotenv from 'dotenv';
 // @call type we are going to use
 import {
   GET_ALL_ARTICLE, CREATE_ARTICLE, ARTICLE_FAILURE, LOADING, ADD_TAG, REMOVE_TAG,
-  GET_SINGLE_ARTICLE, VOTE_ARTICLES,
+  GET_SINGLE_ARTICLE, VOTE_ARTICLES, UPDATE_ARTICLE, DELETE_ARTICLE
 } from './types';
 import Config, { PassDispatch } from '../helpers/Config';
 
 dotenv.config();
 const hashids = new Hashid('', 10);
+const BACKEND_URL = 'https://badass-ah-backend-staging.herokuapp.com';
 // @get all article actions
 const getAllArticle = () => (dispatch) => {
-  const url = '/api/articles';
-  axios
-    .get(url)
+  const url = `${BACKEND_URL}/api/articles`;
+  axios.get(url)
     .then((response) => {
       dispatch(PassDispatch(GET_ALL_ARTICLE, response.data));
     })
@@ -29,7 +29,7 @@ const loading = () => ({
 });
 // @create article
 const createArticle = data => async (dispatch) => {
-  const url = '/api/articles';
+  const url = `${BACKEND_URL}/api/articles`;
   const arr = data.tag ? data.tag.join(',') : '';
   const formData = new FormData();
   formData.append('image', data.image);
@@ -57,19 +57,48 @@ const removeTag = data => (dispatch) => {
 };
 // @single article
 const singleArticle = handle => async (dispatch) => {
-  const url = `/api/articles/${hashids.decode(handle)}`;
+  const url = `${BACKEND_URL}/api/articles/${hashids.decode(handle)}`;
   try {
     const getArticle = await axios.get(url, Config);
     await dispatch(PassDispatch(VOTE_ARTICLES, getArticle.data.votes));
     await dispatch(PassDispatch(GET_SINGLE_ARTICLE, getArticle.data));
   } catch (error) {
-    if (error.response) {
-      dispatch(PassDispatch(ARTICLE_FAILURE, error.response.data));
-    }
+    dispatch(PassDispatch(ARTICLE_FAILURE, error.response));
   }
 };
 // @Liking article
 
+// @update article
+const updateArticle = (handle, data) => async (dispatch) => {
+  const url = `${BACKEND_URL}/api/articles/${hashids.decode(handle)}`;
+  const formData = new FormData();
+  formData.append('image', data.image);
+  formData.append('title', data.title);
+  formData.append('body', data.body);
+  try {
+    const update = await axios.put(url, formData, Config);
+    dispatch(PassDispatch(UPDATE_ARTICLE, update.data));
+  } catch (error) {
+    dispatch(PassDispatch(ARTICLE_FAILURE, error.response));
+  }
+};
+// @delete article
+const deleteArticle = id => async (dispatch) => {
+  const url = `${BACKEND_URL}/api/articles/${hashids.decode(id)}`;
+  await axios.delete(url, Config)
+    .then((res) => {
+      dispatch(PassDispatch(DELETE_ARTICLE, res.data));
+    })
+    .catch((error) => {
+      dispatch(PassDispatch(ARTICLE_FAILURE, error.response));
+    });
+};
 export {
-  getAllArticle as default, createArticle, addTag, removeTag, singleArticle
+  getAllArticle as default,
+  createArticle,
+  addTag,
+  removeTag,
+  singleArticle,
+  updateArticle,
+  deleteArticle
 };

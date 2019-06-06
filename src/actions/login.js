@@ -1,6 +1,7 @@
 import axios from 'axios';
 import * as actionTypes from './types';
 
+
 export const loginFail = error => ({
   type: actionTypes.LOGIN_FAIL,
   error
@@ -19,6 +20,7 @@ export const login = (email, password) => (dispatch) => {
   return axios.post('/api/users/login', data)
     .then((response) => {
       localStorage.setItem('token', response.data.token);
+      // localStorage.setItem('openId', hash.encode(response.data.user.id));
       dispatch(loginSuccess(response.data.token));
     })
     .catch((error) => {

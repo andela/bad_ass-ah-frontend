@@ -1,21 +1,47 @@
+/* eslint-disable no-unused-expressions */
 import React from 'react';
 import { shallow } from 'enzyme';
-
-
 import { SingleArticle } from '../../../components/articles/SingleArticle';
 
+jest.mock('../../../helpers/Config', () => ({
+  isAuthenticated: () => {
+    // eslint-disable-next-line no-lone-blocks
+    { 1; }
+  }
+}));
 const props = {
   singleArticle: jest.fn(),
+  deleteArticle: jest.fn(),
   match: { params: jest.fn() },
   addTag: jest.fn(),
   articles: {
     voteMessage: 'thanks for the support.',
     article: {
-      title: 'my title', body: '`article body', taglist: ['tag1', 'tag2'], votes: { hasLiked: true }
-    }
+      article: {
+        title: 'title',
+        body: 'body',
+        taglist: ['list'],
+        image: 'image',
+        authorfkey: {
+          id: 10,
+          username: 'gram'
+        }
+      },
+      votes: { hasLiked: true }
+    },
+    error: {
+      errors: {
+        body: ['error']
+      }
+    },
+    message: 'welcome'
   },
   likeArticle: jest.fn(),
-  dislikeArticle: jest.fn()
+  dislikeArticle: jest.fn(),
+  isAuthenticated: jest.fn(),
+  payload: {
+    id: 1
+  }
 };
 
 describe('<SingleArticle />', () => {

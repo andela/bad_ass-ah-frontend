@@ -4,7 +4,22 @@ import { Index } from '../../../components/Index';
 
 const props = {
   getAllArticle: jest.fn(),
-  allArticle: jest.fn()
+  allArticle: {
+    allArticles: [{
+      articles: [
+        {
+          title: 'this is title',
+          body: 'body',
+          taglist: ['this is tag'],
+          image: 'this is image',
+          authorfkey: {
+            image: 'avatar',
+            username: 'username'
+          }
+        }
+      ]
+    }]
+  }
 };
 describe('<AllArticle />', () => {
   const component = shallow(<Index {...props} />);
