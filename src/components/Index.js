@@ -3,6 +3,7 @@ import Slider from 'react-animated-slider';
 import { connect } from 'react-redux';
 import htmlParser from 'html-react-parser';
 import stringParser from 'react-to-string';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Hashid from 'hashids';
 import getAllArticle from '../actions/article';
@@ -10,9 +11,8 @@ import Layout from './layouts/Layout';
 import LeftIcon from '../assets/Images/icons/back.svg';
 import RightIcon from '../assets/Images/icons/next.svg';
 import playIcon from '../assets/Images/icons/play-button.svg';
-import blog2 from '../assets/Images/blog2.jpg';
 import blog3 from '../assets/Images/entertainment.jpeg';
-import blog1 from '../assets/Images/blog3.jpg';
+import spinner from '../assets/Images/spinner.gif';
 import defaultAvatar from '../assets/Images/icons/boy.svg';
 import 'react-animated-slider/build/horizontal.css';
 
@@ -26,59 +26,61 @@ export class Index extends Component {
     const hashid = new Hashid('', 10);
     const defaultImageUrl = 'https://res.cloudinary.com/badass/image/upload/v1559138338/defaultImage.jpg';
     let all;
+    const size = 5;
+    let slide;
     const { allArticle: { allArticles } } = this.props;
-    if (allArticles && allArticles.length !== 0) all = allArticles[0].articles;
+    if (allArticles && allArticles.length !== 0) {
+      all = allArticles[0].articles;
+      slide = allArticles[0].articles.slice(0, size);
+    }
     return (
     <Layout>
       <Fragment>
-        {all
+        {all !== undefined
           ? (
             <Fragment>
               <section className="showcase showslide">
                 <Slider autoplay={3000}>
-                  <div className="slides">
+                  {slide !== undefined ? slide.map(slid => (
+                    <div className="slides">
                     <div className="slide-container">
                       <div className="slide-image">
                         <div className="imgSlide">
                           <div className="blog-desc">
                             <p>
-                          Eating healthy does NOT have to be boring.
-                            There is a massive amount of foods out there that are both healthy
-                            and tasty. Here are 50 incredibly healthy foods. Most of them
-                            are surprisingly delicious.
+                            {stringParser(htmlParser(slid.title)).substring(0, 100)}
                             </p>
-                            <a href="#data" className="moreBtn">
+                            <Link to={`/story/${hashid.encode(slid.article_id)}`} className="moreBtn">
                               <img src={playIcon} alt="read" className="small-icon" />
                             Read more
-                            </a>
+                            </Link>
                           </div>
-                          <img src={blog2} alt="slide1" className="slid" />
+                          <img src={slid.image ? slid.image : defaultImageUrl}
+                                alt={slid.image} className="slid" />
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="slides">
+                  ))
+                    : <div className="slides">
                     <div className="slide-container">
                       <div className="slide-image">
                         <div className="imgSlide">
                           <div className="blog-desc">
                             <p>
-                            Are you looking for a free, easy, step-by-step guide on how to start a
-                            blog?
-                            My free guide on this page will show you how to create a blog
-                            that is beautiful and functional, all in an easy step-by-step
-                            tutorial (with pictures).
+                             No Story Found
                             </p>
-                            <a href="#data" className="moreBtn">
+                            <Link to="#notfound" className="moreBtn">
                               <img src={playIcon} alt="read" className="small-icon" />
                             Read more
-                            </a>
+                            </Link>
                           </div>
-                          <img src={blog1} alt="slide1" className="slid" />
+                          <img src={defaultImageUrl }
+                                alt="default image" className="slid" />
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div>}
                 </Slider>
                 <div className="slides">
                   <div className="slide-container">
@@ -112,7 +114,10 @@ export class Index extends Component {
                     <div className="article-grid">
                       {all.map(item => (
                         <div className="b-article" key={item.article_id}>
-                          <a href={`/story/${hashid.encode(item.article_id)}`}>
+                          <Link to={{
+                            pathname: `/story/${hashid.encode(item.article_id)}`,
+                            state: { prevPath: window.location.pathname }
+                          }}>
                             <div className="article-img">
                               <img
                                 src={item.image ? item.image : defaultImageUrl}
@@ -122,12 +127,12 @@ export class Index extends Component {
                             <div className="b-article-desc">
                               <div className="descriptions">
                                 <div className="art-title">
-                                  {item.title.substring(0, 90)}
+                                  {stringParser(htmlParser(item.title)).substring(0, 90)}
                                 </div>
                                 <div className="art-author">
                                   <div className="authors-av">
                                     <div>
-                                      <img src={defaultAvatar} alt="" />
+                                      <img src={item.authorfkey.image !== null ? item.authorfkey.image : defaultAvatar} alt="" />
                                       <h5 className="author-name">{item.authorfkey.username}</h5>
                                     </div>
                                     <h5>{new Date(item.createdAt).toDateString()}</h5>
@@ -140,7 +145,7 @@ export class Index extends Component {
                                 </div>
                               </div>
                             </div>
-                          </a>
+                          </Link>
                         </div>
                       ))}
                     </div>
@@ -149,7 +154,11 @@ export class Index extends Component {
               </section>
             </Fragment>
           )
-          : 'please wait ....'}
+          : <Fragment>
+            <div className='loadingSpinner'>
+            <img src={spinner} alt='spinner'/>
+            </div>
+          </Fragment>}
       </Fragment>
     </Layout>
     );
@@ -157,7 +166,8 @@ export class Index extends Component {
 }
 Index.propTypes = {
   getAllArticle: PropTypes.func.isRequired,
-  allArticle: PropTypes.objectOf(PropTypes.object).isRequired
+  allArticle: PropTypes.objectOf(PropTypes.object).isRequired,
+  allArticles: PropTypes.objectOf(PropTypes.object).isRequired
 };
 const mapStateToProps = state => ({
   allArticle: state.articles,

@@ -116,6 +116,7 @@
         padding-top: 15px;
 
         .blogs-avatar-info {
+          position: relative;
           width: 100%;
           margin-bottom: 4px;
 
@@ -149,7 +150,6 @@
             }
           }
         }
-
         .blogs-descriptive {
           .desc-image {
             width: 100%;
@@ -187,7 +187,8 @@
             cursor: pointer;
 
             h1 {
-              font-family: 'Cantora One', sans-serif;
+              font-family: $rokitFont;
+              font-size: 20px;
             }
 
             div {
@@ -280,4 +281,33 @@
       color: $whitecolor;
     }
   }
+}
+.drop-article{
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: -5px;
+  button{
+    padding: 15px;
+    padding-left: 20px;
+    padding-right: 20px;
+    margin-left: 4px;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0px 0px 10px 0px #dddddd61;
+    .editIcon{
+      color: blue;
+      padding-left: 5px;
+    }
+    .deleteIcon{
+      color: #ff00a1;
+      padding-left: 5px;
+    }
+  }
+}
+.singleDrop{
+  right: 0;
+  margin-top: -10px;
+  top: inherit;
 }
