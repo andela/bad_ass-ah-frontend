@@ -37,7 +37,7 @@ export class ViewProfile extends Component {
     return (
       <Fragment>
         <Navbar />
-        {loading === true || profile === null ? (
+        {loading === true && profile === null ? (
           <section className="profile-section">
             <Spinner />
           </section>

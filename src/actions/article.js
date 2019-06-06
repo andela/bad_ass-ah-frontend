@@ -11,11 +11,11 @@ import Config, { PassDispatch } from '../helpers/Config';
 
 dotenv.config();
 const hashids = new Hashid('', 10);
+const BACKEND_URL = 'https://badass-ah-backend-staging.herokuapp.com';
 // @get all article actions
 const getAllArticle = () => (dispatch) => {
-  const url = '/api/articles';
-  axios
-    .get(url)
+  const url = `${BACKEND_URL}/api/articles`;
+  axios.get(url)
     .then((response) => {
       dispatch(PassDispatch(GET_ALL_ARTICLE, response.data));
     })
@@ -29,7 +29,7 @@ const loading = () => ({
 });
 // @create article
 const createArticle = data => async (dispatch) => {
-  const url = '/api/articles';
+  const url = `${BACKEND_URL}/api/articles`;
   const arr = data.tag ? data.tag.join(',') : '';
   const formData = new FormData();
   formData.append('image', data.image);
@@ -57,19 +57,21 @@ const removeTag = data => (dispatch) => {
 };
 // @single article
 const singleArticle = handle => async (dispatch) => {
-  const url = `/api/articles/${hashids.decode(handle)}`;
+  const url = `${BACKEND_URL}/api/articles/${hashids.decode(handle)}`;
   try {
     const getArticle = await axios.get(url, Config);
     await dispatch(PassDispatch(VOTE_ARTICLES, getArticle.data.votes));
     await dispatch(PassDispatch(GET_SINGLE_ARTICLE, getArticle.data));
   } catch (error) {
-    if (error.response) {
-      dispatch(PassDispatch(ARTICLE_FAILURE, error.response.data));
-    }
+    dispatch(PassDispatch(ARTICLE_FAILURE, error.response.data));
   }
 };
 // @Liking article
 
 export {
-  getAllArticle as default, createArticle, addTag, removeTag, singleArticle
+  getAllArticle as default,
+  createArticle,
+  addTag,
+  removeTag,
+  singleArticle
 };

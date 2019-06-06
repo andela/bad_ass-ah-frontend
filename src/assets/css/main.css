@@ -1372,7 +1372,7 @@ footer h1 {
       box-shadow: none;
       font-size: 20px; }
     .G-showcase .G-create-article #texteditor:empty::before {
-      content: 'start writting here ...';
+      content: "start writting here ...";
       color: #0a05058c;
       font-size: 14px; }
     .G-showcase .G-create-article .G-displayTag {
@@ -1550,6 +1550,3 @@ footer h1 {
       padding-right: 2px; }
     .G-showcase .btn-heart div {
       display: inline-block; }
-
-.G-singleEditor {
-  min-height: auto !important; }
