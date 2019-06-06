@@ -85,7 +85,7 @@ export class Login extends Component {
     return (
       <>
         {loginRedirect}
-        <form onSubmit={this.submitHandler}>
+        <form onSubmit={this.submitHandler} id='login-form'>
           <div className={'form__group'}>
             <label className={'form__label'} htmlFor='email'>E-Mail Address</label>
             <Input

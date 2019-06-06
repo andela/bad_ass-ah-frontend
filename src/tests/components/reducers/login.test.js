@@ -1,6 +1,5 @@
 import reducer from '../../../reducers/login';
 import * as actionTypes from '../../../actions/types';
-// import { updateObject } from '../../../reducers/helpers/utility';
 
 describe('Login reducer', () => {
   let initialState;
@@ -50,10 +49,12 @@ describe('Login reducer', () => {
   it('should check if a user has logged in', () => {
     expect(reducer(initialState, {
       type: actionTypes.LOGIN_CHECK_STATE,
-      isAuthenticated: 'authenticated'
+      isAuthenticated: 'authenticated',
+      token: 'a-token'
     })).toEqual({
       ...initialState,
-      isAuthenticated: 'authenticated'
+      isAuthenticated: 'authenticated',
+      token: 'a-token'
     });
   });
 });

@@ -101,7 +101,8 @@ describe('Login actions', () => {
     let token;
     const expectedState = {
       type: actionTypes.LOGIN_CHECK_STATE,
-      isAuthenticated: token !== null
+      isAuthenticated: token !== null,
+      token: 'a-token'
     };
     expect(actions.loginCheckState()).toEqual(expectedState);
   });

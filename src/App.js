@@ -3,7 +3,6 @@ import { Provider } from 'react-redux';
 import axios from 'axios';
 import dotenv from 'dotenv';
 import 'moment-timezone';
-
 import Store from './Store';
 import Routers from './routes/routes';
 import { loginCheckState } from './actions/login';
