@@ -6,7 +6,7 @@ const props = {
   createArticle: jest.fn(),
   create: jest.fn(),
   addTag: jest.fn(),
-  removeTag: jest.fn()
+  removeTag: jest.fn(),
 };
 
 // @spy function

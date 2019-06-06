@@ -3,7 +3,6 @@ import Slider from 'react-animated-slider';
 import { connect } from 'react-redux';
 import htmlParser from 'html-react-parser';
 import stringParser from 'react-to-string';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Hashid from 'hashids';
 import getAllArticle from '../actions/article';
@@ -113,7 +112,7 @@ export class Index extends Component {
                     <div className="article-grid">
                       {all.map(item => (
                         <div className="b-article" key={item.article_id}>
-                          <Link to={`/story/${hashid.encode(item.article_id)}`}>
+                          <a href={`/story/${hashid.encode(item.article_id)}`}>
                             <div className="article-img">
                               <img
                                 src={item.image ? item.image : defaultImageUrl}
@@ -141,7 +140,7 @@ export class Index extends Component {
                                 </div>
                               </div>
                             </div>
-                          </Link>
+                          </a>
                         </div>
                       ))}
                     </div>
