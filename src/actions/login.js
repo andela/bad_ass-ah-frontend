@@ -42,6 +42,7 @@ export const loginCheckState = () => {
   if (!token) token = null;
   return {
     type: actionTypes.LOGIN_CHECK_STATE,
-    isAuthenticated: token !== null
+    isAuthenticated: token !== null,
+    token
   };
 };

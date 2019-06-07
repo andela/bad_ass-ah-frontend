@@ -23,7 +23,8 @@ const setLoginRedirectPath = (state, action) => updateObject(state, {
 });
 
 const loginCheckState = (state, action) => updateObject(state, {
-  isAuthenticated: action.isAuthenticated
+  isAuthenticated: action.isAuthenticated,
+  token: action.token
 });
 
 const reducer = (state = initialState, action) => {

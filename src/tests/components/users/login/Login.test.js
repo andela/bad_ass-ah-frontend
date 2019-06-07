@@ -7,8 +7,14 @@ import Button from '../../../../components/common/button/Button';
 describe('<Login />', () => {
   let wrapper;
 
+  const props = {
+    onLogin: jest.fn(),
+    loginRedirectPath: '',
+    isAuthenticated: true
+  };
+
   beforeEach(() => {
-    wrapper = shallow(<Login />);
+    wrapper = shallow(<Login {...props} />);
   });
 
   it('should render two <Input /> elements', () => {
@@ -46,6 +52,17 @@ describe('<Login />', () => {
     input.simulate('change', event);
     wrapper.update();
     expect(input.length).toBe(1);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should submit form if form submit', () => {
+    const spy = jest.spyOn(wrapper.instance(), 'submitHandler');
+    wrapper.instance().forceUpdate();
+
+    const fakeEvent = { preventDefault: () => { } };
+    const form = wrapper.find('#login-form');
+    form.simulate('submit', fakeEvent);
+    expect(form.length).toBe(1);
     expect(spy).toHaveBeenCalled();
   });
 });

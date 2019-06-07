@@ -1,4 +1,11 @@
 export {
   login,
-  loginCheckState
+  loginCheckState,
+  setLoginRedirectPath
 } from './login';
+
+export {
+  rate,
+  getUserArticleRating,
+  getArticleAverageRating
+} from './rateArticle';

@@ -1,0 +1,13 @@
+.section {
+
+  &__rating {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    margin-bottom: 20px;
+
+    &-like {
+      align-self: center;
+    }
+  }
+}

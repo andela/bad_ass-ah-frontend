@@ -8,25 +8,28 @@ import { likeArticle, dislikeArticle } from '../../actions/voteArticle';
 import Layout from '../layouts/Layout';
 import NotFound from '../NotFound';
 import Comment from '../comment/comments';
+import Rating from './rating/Rating';
 
 export class SingleArticle extends Component {
   state = {
     articleId: '',
     hasLikedClass: null,
-    hasDilikedClass: null
-  };
+    hasDilikedClass: null,
+    articleId2: null
+  }
+
+  componentWillMount() {
+    const { match: { params } } = this.props;
+    this.setState({ articleId2: params.handle });
+  }
 
   getArticle = () => {
-    const {
-      match: { params },
-      singleArticle
-    } = this.props;
+    const { match: { params }, singleArticle } = this.props;
     this.setState({ articleId: params.handle });
     singleArticle(params.handle);
-  };
+  }
 
   componentDidMount() {
-    // eslint-disable-next-line react/prop-types
     this.getArticle();
   }
 
@@ -95,40 +98,26 @@ export class SingleArticle extends Component {
                     {htmlParser(single.body)}
                   </div>
                 </div>
-                <div className="C-like c-like-grid">
-                  <div
-                    id="like-btn"
-                    className={`btn-heart ${this.state.hasLikedClass}`}
-                    title="likes"
-                    onClick={this.likeArticle}
-                  >
-                    {article.votes.hasLiked === true ? (
-                      <i className="icofont-heart changeColor" />
-                    ) : (
-                      <i className="icofont-heart" />
-                    )}
-                    <div>{article.votes.likes}</div>
-                  </div>
-                  <div
-                    id="dislike-btn"
-                    className={`btn-heart ${this.state.hasDilikedClass}`}
-                    title="dislikes"
-                    onClick={this.dislikeArticle}
-                  >
-                    {article.votes.hasDisliked === true ? (
-                      <i className="icofont-ui-love-broken changeColor" />
-                    ) : (
-                      <i className="icofont-ui-love-broken" />
-                    )}
-                    <div>{article.votes.dislikes}</div>
+                <div className='section__rating'>
+                  <Rating articleId={this.state.articleId2} />
+                  <div className="C-like c-like-grid section__rating-like">
+                    <div id="like-btn" className={`btn-heart ${this.state.hasLikedClass}`} title="likes" onClick={this.likeArticle} >
+                      {article.votes.hasLiked === true ? <i className="icofont-heart changeColor"></i> : <i className="icofont-heart"></i>}
+                      <div>{article.votes.likes}</div>
+                    </div>
+                    <div id="dislike-btn" className={`btn-heart ${this.state.hasDilikedClass}`} title="dislikes" onClick={this.dislikeArticle}>
+                      {article.votes.hasDisliked === true ? <i className="icofont-ui-love-broken changeColor"></i> : <i className="icofont-ui-love-broken"></i>}
+                      <div>{article.votes.dislikes}</div>
+                    </div>
                   </div>
                 </div>
                 <Comment articleId={articleId} />
               </div>
             ) : (
-              <center>
-                {error && error.errors !== undefined && <NotFound error={error.errors.body[0]} />}
-              </center>
+                <center>
+                  {error && error.errors !== undefined
+                    && <NotFound error={error.errors.body[0]} />}
+                </center>
             )}
           </div>
         </div>

@@ -9,6 +9,7 @@ import getAllArticle from './article';
 import profile from './profile';
 import comment from './comment/comments';
 import errors from './errors/errors';
+import ratingReducer from './rateArticle';
 
 // @create root reducer
 
@@ -21,7 +22,8 @@ const rootReducer = combineReducers({
   articles: getAllArticle,
   profile,
   comment,
-  errors
+  errors,
+  rating: ratingReducer
 });
 
 export default rootReducer;
