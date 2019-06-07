@@ -35,6 +35,7 @@ export class SingleArticle extends Component {
     articleId2: null,
     userId: '',
     prevPath: '',
+    shareArticleUrl: '',
     indexStart: '',
     indexEnd: '',
     text: '',
