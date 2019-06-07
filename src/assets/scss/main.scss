@@ -17,6 +17,8 @@
 @import 'starRating';
 @import 'sections';
 @import 'readingStats';
+@import 'highlightPopover';
+@import 'commentPopover';
 
 *,
 body {
@@ -34,5 +36,4 @@ body {
   }
 }
 @import 'style';
-@import 'article'
-
+@import 'article';
