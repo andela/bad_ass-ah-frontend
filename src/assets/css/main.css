@@ -738,6 +738,91 @@ footer {
   .reading-stats__description {
     margin-left: 4px;
     color: #555; }
+.popup {
+  background: #fff;
+  padding: 20px;
+  position: absolute;
+  border-radius: 50px;
+  width: 200px;
+  box-shadow: 1px 2px 8px #333;
+  text-align: center;
+  transition: all 0.45s ease-in-out;
+  z-index: 1; }
+  .popup button {
+    display: inline-block;
+    font-size: 13px;
+    cursor: pointer;
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 5px; }
+  .popup button:hover {
+    background: #d6d8d9; }
+
+.hide {
+  display: none; }
+
+.highlighted {
+  background: aqua;
+  cursor: pointer; }
+
+.highlighted:hover {
+  text-decoration: underline; }
+
+.comment-popover {
+  background: #fff;
+  border: 1px solid #d6d8d9;
+  width: 400px;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 1;
+  box-shadow: 1px 2px 8px #333;
+  transition: all 0.45s ease-in-out; }
+  .comment-popover .title {
+    border-bottom: 1px solid #d6d8d9;
+    background: #d6d8d9; }
+    .comment-popover .title .title-text {
+      padding: 10px;
+      font-size: 22px; }
+  .comment-popover form {
+    padding: 10px; }
+    .comment-popover form .comment-input {
+      display: block;
+      padding: 10px;
+      border: 1px solid #d6d8d9;
+      border-radius: 2px;
+      width: 100%;
+      font-size: 15px;
+      box-sizing: border-box;
+      margin-bottom: 15px; }
+    .comment-popover form .comment-btn {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+      padding: 5px;
+      border: 1px;
+      border-radius: 2px;
+      font-size: 13px;
+      width: 80px;
+      background: #d6d8d9;
+      cursor: pointer; }
+
+.highlight-comment {
+  background: #fff;
+  border: 1px solid #d6d8d9;
+  width: 350px;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 1;
+  box-shadow: 1px 2px 8px #333;
+  transition: all 0.45s ease-in-out; }
+  .highlight-comment .title {
+    border-bottom: 1px solid #d6d8d9;
+    background: #d6d8d9; }
+    .highlight-comment .title .title-text {
+      padding: 10px;
+      font-size: 22px; }
+  .highlight-comment .comment {
+    padding: 10px; }
 
 .popup {
   background: #fff;
