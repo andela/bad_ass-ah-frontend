@@ -53,7 +53,7 @@ a{
     box-shadow: none;
     outline: none;
     font-size: 14px;
-    font-family: "comfortaa",cursive;
+    font-family: $rokitFont;
     display: inline-block;
     text-transform: capitalize;
 }
@@ -92,7 +92,7 @@ a{
   .navigation a{
       color: $blackColor;
       font-size: 13px;
-      font-family: 'comfortaa',cursive;
+      font-family:$rokitFont;
       font-weight: bold;
   }
   .auth-link{
@@ -218,7 +218,7 @@ svg {
 }
 .moreBtn{
     background-color: #a71645;
-    color: var(--white-color);
+    color: $white-color;
     position: absolute;
     text-align: center;
     padding-top: 9px;
@@ -228,7 +228,7 @@ svg {
     border-radius: 30px;
     text-transform: uppercase;
     font-size: 10px;
-    font-family: 'Comfortaa',cursive;
+    font-family: $rokitFont;
     margin-top: 20px;
    transition: all 0.4s ease;
 }
@@ -359,7 +359,7 @@ width: 3.5%;
     border-radius: 2px;
     outline: none;
     color: $blackColor;
-    font-family: "comfortaa",cursive;
+    font-family:$rokitFont;
     text-align: center;
     text-transform: uppercase;
     font-size: 10px;
@@ -667,23 +667,6 @@ cursor: pointer;
     border-top-left-radius: 2px;
     border-top-right-radius: 2px;
 }
-.desc-articles a{
-    color: $blackColor;
-}
-.desc-articles-titles{
-   font-weight: bold;
-   padding-top: 5px;
-   cursor: pointer;
-}
-.desc-articles-titles h1{
-    font-family: 'Cantora One', sans-serif;
-}
-.desc-articles-titles div{
-    color: $blackColor;
-    font-weight: normal;
-    font-size: 15px;
-    margin-top: 5px;
-}
 .people-follower{
     border: 1px solid $gray;
     border-radius: 3px;
@@ -761,7 +744,7 @@ cursor: pointer;
         border-radius: 5px;
         color: #48636f;
         font-size: 12px;
-        font-family: 'comfortaa',cursive;
+        font-family: $rokitFont;
     }
    }
    .trashBtn{
@@ -769,6 +752,15 @@ cursor: pointer;
        background: none!important;
    }
 }
+.loadingSpinner{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 50vh;
+    img{
+        width: 60px;
+    }
+   }
 
 
 

@@ -1,6 +1,7 @@
 /* eslint-disable no-use-before-define */
 import axios from 'axios';
 import Hashid from 'hashids';
+import { checkToken } from '../../utils/checkToken';
 
 import {
   ADD_COMMENT, GET_ERRORS, GET_COMMENTS, COMMENT_LOADING
@@ -13,6 +14,7 @@ export const addComment = (commentData, articleId) => async (dispatch) => {
   try {
     const url = `/api/articles/${hashids.decode(articleId)}/comments`;
     const res = await axios.post(url, commentData, Config);
+    checkToken();
     dispatch({
       type: ADD_COMMENT,
       payload: res.data.createdComment

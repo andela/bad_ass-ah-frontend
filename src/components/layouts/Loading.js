@@ -6,7 +6,7 @@ const Loading = ({ loading, message }) => (
   <Fragment>
     <div className="G-loadingLine" style={loading === true ? { display: 'block' } : { display: 'none' }}>
       <div className="G-loading-inline" />
-      {message !== '' && (
+      {message !== '' && message !== undefined && (
       <div className="G-successMessage">
         <div>
           {' '}
