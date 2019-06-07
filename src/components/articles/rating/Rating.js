@@ -111,7 +111,7 @@ export class Rating extends Component {
 
     let loginRedirect = null;
     if (isSupposedToRedirect) {
-      loginRedirect = <Redirect to='/login' />;
+      loginRedirect = <Redirect to='/auth' />;
     }
 
     let displayStart = [...ratingStars];

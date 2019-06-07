@@ -2,7 +2,7 @@
 /* eslint-disable no-unused-expressions */
 import React from 'react';
 import { shallow } from 'enzyme';
-import { SingleArticle } from '../../../components/articles/SingleArticle';
+import { SingleArticle, mapStateToProps } from '../../../components/articles/SingleArticle';
 import CommentPopover from '../../../components/popovers/Comment';
 import HighlightPopover from '../../../components/popovers/Highlight';
 
@@ -210,5 +210,21 @@ describe('<SingleArticle />', () => {
   });
   it('should test the function ComponentWillreceiveProps', () => {
     component.instance().componentWillReceiveProps(props);
+  });
+  it('should map states to props', () => {
+    const state = {
+      articles: ['hello world'],
+      login: { isAuthenticated: true },
+      highlight: { highlights: 'hey' }
+    };
+    const props = mapStateToProps(state);
+    expect(props).toEqual(
+      {
+        articles:
+        ['hello world'],
+        isAuth: true,
+        highlights: 'hey'
+      }
+    );
   });
 });
