@@ -14,7 +14,6 @@ import CreateArticle from '../components/articles/CreateArticle';
 import SingleArticle from '../components/articles/SingleArticle';
 import ViewProfile from '../components/users/profile/ViewProfile';
 import EditProfile from '../components/users/profile/EditProfile';
-import EditArticle from '../components/articles/EditArticle';
 
 const Routes = () => (
   <Router>
@@ -28,7 +27,6 @@ const Routes = () => (
       <Route exact path="/story/:handle" component={SingleArticle} />
       <Route exact path="/view-profile" component={ViewProfile} />
       <Route exact path="/edit-profile" component={EditProfile} />
-      <Route exact path="/story/edit/:handle" component={EditArticle}/>
     </Switch>
   </Router>
 );
