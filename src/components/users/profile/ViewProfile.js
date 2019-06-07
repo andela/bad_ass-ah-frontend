@@ -4,22 +4,31 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component, Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import Hashid from 'hashids';
 import { connect } from 'react-redux';
+import Parser from 'html-react-parser';
+import StringParser from 'react-to-string';
 import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import avatar from '../../../assets/Images/avatar.svg';
+import Loading from '../../layouts/Loading';
+import Layout from '../../layouts/Layout';
 import {
   getCurrentProfile,
   getUserFollowers,
   getUserFollowing,
   getUserArticles
 } from '../../../actions/profile';
+import { deleteArticle } from '../../../actions/article';
 import Spinner from '../../layouts/Spinner';
-import Navbar from '../../layouts/Navbar';
-import Footer from '../../layouts/Footer';
 import Alert from '../../layouts/Alert';
 
+const hashids = new Hashid('', 10);
 export class ViewProfile extends Component {
+  state={
+    startLoading: false
+  }
+
   componentDidMount() {
     const {
       getCurrentProfile, getUserFollowers, getUserFollowing, getUserArticles
@@ -30,18 +39,28 @@ export class ViewProfile extends Component {
     getUserArticles();
   }
 
+  destroy= (id) => {
+    const { deleteArticle } = this.props;
+    this.setState({ startLoading: true });
+    deleteArticle(id);
+  }
+
   render() {
+    let successMessage;
     const {
-      loading, profile, followers, following, articles
+      loading, profile, followers, following, articles, message
     } = this.props;
+    const { startLoading } = this.state;
+    if (message !== '') setTimeout(() => { window.location.reload(true); }, 500);
     return (
-      <Fragment>
-        <Navbar />
-        {loading === true || profile === null ? (
+      <Layout>
+        {loading === true && profile === null ? (
           <section className="profile-section">
             <Spinner />
           </section>
         ) : (
+          <Fragment>
+          <Loading loading={startLoading} message={successMessage}/>
           <section className="profile-section">
             <Alert />
             <div className="user-profile">
@@ -65,6 +84,17 @@ export class ViewProfile extends Component {
                               <Moment date={article.createdAt} format="D MMM YYYY" />
                             </span>
                           </div>
+                          <div className="drop-article">
+                          <Link to={{
+                            pathname: `/story/edit/${hashids.encode(article.article_id)}`,
+                            state: { prevPath: window.location.pathname }
+                          }}>
+                          <button type="button" data-test="Btn-remove"> <span>Edit</span>
+                          <i class="icofont-ui-edit editIcon"></i></button>
+                          </Link>
+                          <button type="button" onClick={this.destroy.bind(this, hashids.encode(article.article_id))}> <span>Delete</span>
+                          <i class="icofont-ui-delete deleteIcon"></i></button>
+                          </div>
                         </div>
                         <div className="blogs-descriptive">
                           {article.image === null ? (
@@ -76,10 +106,13 @@ export class ViewProfile extends Component {
                           )}
                           <div className="desc-articles">
                             <div className="desc-articles-titles">
-                              <Link to="/">
-                                <h1>{article.title}</h1>
+                              <Link to={{
+                                pathname: `/story/${hashids.encode(article.article_id)}`,
+                                state: { prevPath: window.location.pathname }
+                              }}>
+                                <h1>{StringParser(Parser(article.body)).substring(0, 70)}</h1>
                                 <div>
-                                  <p>{article.body}</p>
+                                  <p>{StringParser(Parser(article.body)).substring(0, 90)}</p>
                                 </div>
                               </Link>
                             </div>
@@ -128,9 +161,9 @@ Following
               </div>
             </div>
           </section>
+          </Fragment>
         )}
-        <Footer />
-      </Fragment>
+      </Layout>
     );
   }
 }
@@ -144,7 +177,9 @@ ViewProfile.propTypes = {
   loading: PropTypes.bool,
   followers: PropTypes.object,
   following: PropTypes.object,
-  articles: PropTypes.array
+  articles: PropTypes.array,
+  deleteArticle: PropTypes.func.isRequired,
+  message: PropTypes.string.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -152,7 +187,8 @@ const mapStateToProps = state => ({
   loading: state.profile.loading,
   followers: state.profile.followers,
   following: state.profile.following,
-  articles: state.profile.articles.articles
+  articles: state.profile.articles.articles,
+  message: state.articles.message
 });
 
 export default connect(
@@ -161,6 +197,7 @@ export default connect(
     getCurrentProfile,
     getUserFollowers,
     getUserFollowing,
-    getUserArticles
+    getUserArticles,
+    deleteArticle
   }
 )(ViewProfile);
