@@ -6,7 +6,9 @@ import { SingleArticle } from '../../../components/articles/SingleArticle';
 jest.mock('../../../helpers/Config', () => ({
   isAuthenticated: () => {
     // eslint-disable-next-line no-lone-blocks
-    { 1; }
+    {
+      1;
+    }
   }
 }));
 const props = {
@@ -78,7 +80,9 @@ describe('<SingleArticle />', () => {
   it('should call dislikeArticle method when the dislike button is clicked', async () => {
     const spy = jest.spyOn(component.instance(), 'dislikeArticle');
     component.instance().forceUpdate();
-    await component.instance().componentWillReceiveProps({ articles: { voteMessage: 'You have disliked this article.' } });
+    await component
+      .instance()
+      .componentWillReceiveProps({ articles: { voteMessage: 'You have disliked this article.' } });
     expect(spy).toHaveBeenCalled();
   });
   it('should destroy article', async () => {

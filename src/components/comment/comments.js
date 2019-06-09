@@ -9,12 +9,6 @@ import Spinner from '../common/spinner/Spinner';
 import './CreateComment.scss';
 
 export class Comments extends Component {
-  // componentDidMount() {
-  //   // eslint-disable-next-line react/prop-types
-  //   const { getComments, articleId } = this.props;
-  //   getComments(articleId);
-  // }
-
   render() {
     // eslint-disable-next-line react/prop-types
     const { comment } = this.props;
@@ -50,7 +44,7 @@ Comment.propTypes = {
   comment: PropTypes.object.isRequired,
   articleId: PropTypes.number.isRequired,
   login: PropTypes.object.isRequired,
-  isAuthenticated: PropTypes.bool.isRequired,
+  isAuthenticated: PropTypes.bool.isRequired
 };
 const mapStateToProps = state => ({
   comment: state.comment,

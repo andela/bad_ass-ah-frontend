@@ -10,6 +10,7 @@ const props = {
   errors: {},
   mapStateToProps: jest.fn(),
   profile: { profile: {} },
+  newProps: { errors: {} }
 };
 
 describe('CommentForm Component', () => {
@@ -41,5 +42,9 @@ describe('CommentForm Component', () => {
     textArea.simulate('change', event);
     expect(textArea.length).toBe(1);
     expect(spy).toHaveBeenCalled();
+  });
+
+  it('should test the function ComponentWillreceiveProps', () => {
+    component.instance().componentWillReceiveProps(props);
   });
 });

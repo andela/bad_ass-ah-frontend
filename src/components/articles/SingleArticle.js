@@ -25,11 +25,13 @@ export class SingleArticle extends Component {
     articleId2: null,
     userId: '',
     prevPath: ''
-  }
+  };
 
   async componentWillMount() {
-    // eslint-disable-next-line react/prop-types
-    const { match: { params }, getComments } = this.props;
+    const {
+      match: { params },
+      getComments
+    } = this.props;
     this.setState({ articleId2: params.handle });
     const user = await isAuthenticated();
     this.setState({ userId: user.payload.id }, () => {
@@ -38,10 +40,13 @@ export class SingleArticle extends Component {
   }
 
   getArticle = () => {
-    const { match: { params }, singleArticle } = this.props;
+    const {
+      match: { params },
+      singleArticle
+    } = this.props;
     this.setState({ articleId: params.handle });
     singleArticle(params.handle);
-  }
+  };
 
   async componentDidMount() {
     await this.getArticle();
@@ -89,18 +94,16 @@ export class SingleArticle extends Component {
     const { deleteArticle } = this.props;
     this.setState({ startLoading: true });
     deleteArticle(id);
-  }
+  };
 
   render() {
     let single;
+    const { prevPath, userId, articleId2 } = this.state;
     const {
-      prevPath, userId, articleId2
-    } = this.state;
-
-    const { articles: { article, error, message } } = this.props;
+      articles: { article, error, message }
+    } = this.props;
 
     if (article !== null) if (article && article.article !== undefined) single = article.article;
-
     return (
       <Layout>
         {message !== '' && window.location.replace(prevPath)}
@@ -110,16 +113,25 @@ export class SingleArticle extends Component {
               <div className="G-create-article" data-test="G-create-article">
                 <div className="G-form-group">
                   <h1 className="G-storyTitle">{stringParser(htmlParser(single.title))}</h1>
-                  {userId === single.authorfkey.id && <div className="drop-article singleDrop">
-                    <Link to={`/story/edit/${hashids.encode(single.article_id)}`}>
-                      <button type="button" data-test="Btn-remove" > <span>Edit</span>
-                        <i className="icofont-ui-edit editIcon"></i></button>
-                    </Link>
-                    <button type="button" data-test="G-deleteArticle"
-                      onClick={this.destroy.bind(this, hashids.encode(single.article_id))}>
-                      <span>Delete</span>
-                      <i className="icofont-ui-delete deleteIcon"></i></button>
-                  </div>}
+                  {userId === single.authorfkey.id && (
+                    <div className="drop-article singleDrop">
+                      <Link to={`/story/edit/${hashids.encode(single.article_id)}`}>
+                        <button type="button" data-test="Btn-remove">
+                          {' '}
+                          <span>Edit</span>
+                          <i className="icofont-ui-edit editIcon" />
+                        </button>
+                      </Link>
+                      <button
+                        type="button"
+                        data-test="G-deleteArticle"
+                        onClick={this.destroy.bind(this, hashids.encode(single.article_id))}
+                      >
+                        <span>Delete</span>
+                        <i className="icofont-ui-delete deleteIcon" />
+                      </button>
+                    </div>
+                  )}
                 </div>
                 {single.image && (
                   <div className="G-form-group">
@@ -141,17 +153,37 @@ export class SingleArticle extends Component {
                   ''
                 )}
                 <div className="G-form-group">
-                  <div id="texteditor" name="body" className="G-singleEditor">{htmlParser(single.body)}</div>
+                  <div id="texteditor" name="body" className="G-singleEditor">
+                    {htmlParser(single.body)}
+                  </div>
                 </div>
-                <div className='section__rating'>
+                <div className="section__rating">
                   <Rating articleId={this.state.articleId2} />
                   <div className="C-like c-like-grid section__rating-like">
-                    <div id="like-btn" className={`btn-heart ${this.state.hasLikedClass}`} title="likes" onClick={this.likeArticle} >
-                      {article.votes.hasLiked === true ? <i className="icofont-heart changeColor"></i> : <i className="icofont-heart"></i>}
+                    <div
+                      id="like-btn"
+                      className={`btn-heart ${this.state.hasLikedClass}`}
+                      title="likes"
+                      onClick={this.likeArticle}
+                    >
+                      {article.votes.hasLiked === true ? (
+                        <i className="icofont-heart changeColor" />
+                      ) : (
+                        <i className="icofont-heart" />
+                      )}
                       <div>{article.votes.likes}</div>
                     </div>
-                    <div id="dislike-btn" className={`btn-heart ${this.state.hasDilikedClass}`} title="dislikes" onClick={this.dislikeArticle}>
-                      {article.votes.hasDisliked === true ? <i className="icofont-ui-love-broken changeColor"></i> : <i className="icofont-ui-love-broken"></i>}
+                    <div
+                      id="dislike-btn"
+                      className={`btn-heart ${this.state.hasDilikedClass}`}
+                      title="dislikes"
+                      onClick={this.dislikeArticle}
+                    >
+                      {article.votes.hasDisliked === true ? (
+                        <i className="icofont-ui-love-broken changeColor" />
+                      ) : (
+                        <i className="icofont-ui-love-broken" />
+                      )}
                       <div>{article.votes.dislikes}</div>
                     </div>
                   </div>
@@ -159,10 +191,9 @@ export class SingleArticle extends Component {
                 <Comment articleId={articleId2} />
               </div>
             ) : (
-                <center>
-                  {error && error.errors !== undefined
-                    && <NotFound error={error.errors.body[0]} />}
-                </center>
+              <center>
+                {error && error.errors !== undefined && <NotFound error={error.errors.body[0]} />}
+              </center>
             )}
           </Fragment>
         </div>
@@ -182,7 +213,8 @@ SingleArticle.propTypes = {
   dislikeArticle: PropTypes.func.isRequired,
   deleteArticle: PropTypes.func.isRequired,
   isAuth: PropTypes.bool.isRequired,
-  setReadingStats: PropTypes.func.isRequired
+  setReadingStats: PropTypes.func.isRequired,
+  getComments: PropTypes.func.isRequired
 };
 // eslint-disable-next-line max-len
 export default connect(mapStateToProps, {
