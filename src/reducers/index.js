@@ -10,6 +10,7 @@ import profile from './profile';
 import comment from './comment/comments';
 import errors from './errors/errors';
 import ratingReducer from './rateArticle';
+import readingStatsReducer from './readingStats';
 
 // @create root reducer
 
@@ -23,7 +24,8 @@ const rootReducer = combineReducers({
   profile,
   comment,
   errors,
-  rating: ratingReducer
+  rating: ratingReducer,
+  readingStats: readingStatsReducer
 });
 
 export default rootReducer;

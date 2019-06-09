@@ -635,6 +635,43 @@ footer {
   .section__rating-like {
     align-self: center; }
 
+.reading-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  font-style: italic;
+  font-size: 1.2em; }
+  .reading-stats__icon {
+    position: relative; }
+    .reading-stats__icon-study {
+      fill: #007bff;
+      width: 30px; }
+    .reading-stats__icon-tooltip {
+      visibility: hidden;
+      width: 85px;
+      background-color: #555;
+      color: #fff;
+      text-align: center;
+      border-radius: 4px;
+      padding: 4px;
+      position: absolute;
+      z-index: 1;
+      font-size: .7em;
+      margin-top: 33px;
+      margin-left: -30px;
+      font-style: normal; }
+    .reading-stats__icon:hover {
+      cursor: pointer; }
+    .reading-stats__icon:hover .reading-stats__icon-tooltip {
+      visibility: visible; }
+  .reading-stats__total-number {
+    margin-left: 7px;
+    font-weight: 700; }
+  .reading-stats__description {
+    margin-left: 4px;
+    color: #555; }
+
 *,
 body {
   margin: 0;
