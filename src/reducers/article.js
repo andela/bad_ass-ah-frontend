@@ -1,7 +1,7 @@
 // @call type going to be used..
 import {
   GET_ALL_ARTICLE, CREATE_ARTICLE, LOADING, ADD_TAG, REMOVE_TAG,
-  GET_SINGLE_ARTICLE, ARTICLE_FAILURE, VOTE_ARTICLES, UPDATE_ARTICLE, DELETE_ARTICLE
+  GET_SINGLE_ARTICLE, ARTICLE_FAILURE, VOTE_ARTICLES, BOOKMARK_ARTICLE_SUCCESS
 } from '../actions/types';
 
 const initialState = {
@@ -16,7 +16,7 @@ const initialState = {
   hasLiked: false,
   hasDisLiked: false,
   voteMessage: null,
-  message: ''
+  bookmark: null,
 };
 
 const getAllArticle = (state = initialState, action) => {
@@ -61,17 +61,12 @@ const getAllArticle = (state = initialState, action) => {
     case VOTE_ARTICLES:
       return {
         ...state,
-        voteMessage: payload.message
+        voteMessage: payload.message,
       };
-    case UPDATE_ARTICLE:
+    case BOOKMARK_ARTICLE_SUCCESS:
       return {
         ...state,
-        message: payload.message
-      };
-    case DELETE_ARTICLE:
-      return {
-        ...state,
-        message: payload
+        payload: payload.bookmark
       };
     default:
       return state;

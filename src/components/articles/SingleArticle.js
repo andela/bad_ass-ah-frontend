@@ -1,38 +1,23 @@
-import React, { Component, Fragment } from 'react';
+/* eslint-disable no-unused-vars */
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import htmlParser from 'html-react-parser';
-import stringParser from 'react-to-string';
-import Hashids from 'hashids';
-import { Link } from 'react-router-dom';
+import { singleArticle } from '../../actions/article';
 import { likeArticle, dislikeArticle } from '../../actions/voteArticle';
-import { singleArticle, deleteArticle } from '../../actions/article';
+import bookmarkArticle from '../../actions/bookmarkArticle';
 import Layout from '../layouts/Layout';
 import NotFound from '../NotFound';
 import Comment from '../comment/comments';
 import Rating from './rating/Rating';
-import { isAuthenticated } from '../../helpers/Config';
-import { getComments } from '../../actions/comment/comment';
-
-const hashids = new Hashids('', 10);
 
 export class SingleArticle extends Component {
   state = {
     articleId: '',
     hasLikedClass: null,
     hasDilikedClass: null,
-    articleId2: null,
-    userId: '',
-    prevPath: ''
-  }
-
-  async componentWillMount() {
-    // eslint-disable-next-line react/prop-types
-    const { match: { params }, getComments } = this.props;
-    const user = await isAuthenticated();
-    this.setState({ articleId2: params.handle, userId: user.payload.id }, () => {
-      getComments(this.state.articleId2);
-    });
+    bookmarkArticle: null,
+    hasbookmarkedClass: null
   }
 
   getArticle = () => {
@@ -41,25 +26,20 @@ export class SingleArticle extends Component {
     singleArticle(params.handle);
   }
 
-  async componentDidMount() {
-    await this.getArticle();
-    // console.log(this.state.articleId2);
-    // this.props.getComments(this.state.articleId2);
+  componentDidMount() {
+    this.getArticle();
   }
 
   componentWillReceiveProps(nextProps) {
-    const { voteMessage } = nextProps.articles;
-    // eslint-disable-next-line react/prop-types
-    const { location } = nextProps;
-    if (location !== undefined) {
-      const path = location.state ? location.state.prevPath : '/';
-      this.setState({ prevPath: path });
-    }
+    const { voteMessage, bookmarkMessage } = nextProps.articles;
     if (voteMessage === 'thanks for the support.') {
       this.setState({ hasLikedClass: 'changeColor', hasDilikedClass: null });
     }
     if (voteMessage === 'You have disliked this article.') {
       this.setState({ hasLikedClass: null, hasDilikedClass: 'changeColor' });
+    }
+    if (bookmarkMessage === 'Successfully bookmarked.') {
+      this.setState({ hasbookmarkedClass: 'changeColor' });
     }
   }
 
@@ -77,38 +57,33 @@ export class SingleArticle extends Component {
     this.getArticle();
   };
 
-destroy= (id) => {
-  const { deleteArticle } = this.props;
-  this.setState({ startLoading: true });
-  deleteArticle(id);
+
+bookmarks = async () => {
+  const { articleId } = this.state;
+  const { bookmarkArticle } = this.props;
+  await bookmarkArticle(articleId);
+  this.getArticle();
 }
 
 render() {
+  const { articleId } = this.state;
   let single;
   const {
-    prevPath, userId, articleId2
-  } = this.state;
-  const { articles: { article, error, message } } = this.props;
+    articles: {
+      article,
+      error,
+    }
+  } = this.props;
   if (article !== null) if (article && article.article !== undefined) single = article.article;
+
   return (
       <Layout>
-        { message !== '' && window.location.replace(prevPath)}
         <div className="G-showcase">
-          <Fragment>
+          <div>
             {single !== undefined ? (
               <div className="G-create-article" data-test="G-create-article">
                 <div className="G-form-group">
-                  <h1 className="G-storyTitle">{stringParser(htmlParser(single.title))}</h1>
-                  {userId === single.authorfkey.id && <div className="drop-article singleDrop">
-                    <Link to={`/story/edit/${hashids.encode(single.article_id)}`}>
-                    <button type="button" data-test="Btn-remove" > <span>Edit</span>
-                    <i className="icofont-ui-edit editIcon"></i></button>
-                    </Link>
-                    <button type="button" data-test="G-deleteArticle"
-                    onClick={this.destroy.bind(this, hashids.encode(single.article_id))}>
-                     <span>Delete</span>
-                    <i className="icofont-ui-delete deleteIcon"></i></button>
-                    </div>}
+                  <h1 className="G-storyTitle">{single.title}</h1>
                 </div>
                 {single.image && (
                   <div className="G-form-group">
@@ -130,7 +105,9 @@ render() {
                   ''
                 )}
                 <div className="G-form-group">
-                  <div id="texteditor" name="body" className="G-singleEditor">{htmlParser(single.body)}</div>
+                  <div id="texteditor" name="body" className="G-singleEditor">
+                    {htmlParser(single.body)}
+                  </div>
                 </div>
                 <div className='section__rating'>
                   <Rating articleId={this.state.articleId2} />
@@ -143,9 +120,12 @@ render() {
                       {article.votes.hasDisliked === true ? <i className="icofont-ui-love-broken changeColor"></i> : <i className="icofont-ui-love-broken"></i>}
                       <div>{article.votes.dislikes}</div>
                     </div>
+                    <div id="bookmark-btn" className={`btn-bookmark ${this.state.hasbookmarkedClass}`} title="bookmark" onClick= {this.bookmarks}>
+          {article.hasBookmarked === true ? <i class="icofont-book-mark changeColor"></i> : <i class="icofont-book-mark"></i>}
+          </div>
                   </div>
                 </div>
-                <Comment articleId={articleId2} />
+                <Comment articleId={articleId} />
               </div>
             ) : (
                 <center>
@@ -153,7 +133,7 @@ render() {
                     && <NotFound error={error.errors.body[0]} />}
                 </center>
             )}
-          </Fragment>
+          </div>
         </div>
       </Layout>
   );
@@ -168,13 +148,13 @@ SingleArticle.propTypes = {
   match: PropTypes.objectOf(PropTypes.object).isRequired,
   likeArticle: PropTypes.func.isRequired,
   dislikeArticle: PropTypes.func.isRequired,
-  deleteArticle: PropTypes.func.isRequired
+  bookmarkArticle: PropTypes.func.isRequired
+
 };
 // eslint-disable-next-line max-len
 export default connect(mapStateToProps, {
   singleArticle,
   likeArticle,
   dislikeArticle,
-  deleteArticle,
-  getComments
+  bookmarkArticle
 })(SingleArticle);

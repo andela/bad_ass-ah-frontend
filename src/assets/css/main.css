@@ -1404,14 +1404,14 @@ footer h1 {
 .G-showcase {
   position: relative;
   margin-top: 40px;
-  font-family: "Source Sans Pro", sans-serif;
-  /*@Copain*/ }
+  font-family: "Source Sans Pro", sans-serif; }
   .G-showcase .G-create-article {
     display: flex;
     width: 45%;
     flex-direction: column;
     margin: auto;
-    padding-left: 95px; }
+    padding-left: 95px;
+    /*@Copain*/ }
     .G-showcase .G-create-article .G-containers {
       box-shadow: 0px 0px 500px 0px #dddddda6; }
     .G-showcase .G-create-article .G-form-group {
@@ -1445,27 +1445,17 @@ footer h1 {
     .G-showcase .G-create-article ::placeholder {
       font-size: 14px;
       text-transform: capitalize; }
-    .G-showcase .G-create-article #texteditor, .G-showcase .G-create-article .G-titleEditor {
+    .G-showcase .G-create-article #texteditor {
       width: 100%;
       overflow: auto;
       font-family: "Rokkitt", serif !important;
       outline: none;
       box-shadow: none;
       font-size: 20px; }
-    .G-showcase .G-create-article #texteditor {
-      min-height: 40vh; }
-    .G-showcase .G-create-article .G-titleEditor {
-      min-height: auto; }
-    .G-showcase .G-create-article .changeTitle {
-      margin-top: 0 !important; }
     .G-showcase .G-create-article #texteditor:empty::before {
-      content: "start writting here ...";
+      content: 'start writting here ...';
       color: #0a05058c;
       font-size: 14px; }
-    .G-showcase .G-create-article .G-titleEditor:empty::before {
-      content: "write your title";
-      color: #0a05058c;
-      font-size: 15px; }
     .G-showcase .G-create-article .G-displayTag {
       padding-left: 40px;
       padding-right: 40px;
@@ -1502,13 +1492,15 @@ footer h1 {
       width: 100%;
       display: flex;
       box-shadow: 0px 0px 100px 0px #dddddd26; }
-      .G-showcase .G-create-article .G-actionType .G-tags, .G-showcase .G-create-article .G-actionType .G-links {
+      .G-showcase .G-create-article .G-actionType .G-tags,
+      .G-showcase .G-create-article .G-actionType .G-links {
         position: absolute;
         width: 60%;
         background: #ffff;
         height: 55px;
         right: 0; }
-        .G-showcase .G-create-article .G-actionType .G-tags input, .G-showcase .G-create-article .G-actionType .G-links input {
+        .G-showcase .G-create-article .G-actionType .G-tags input,
+        .G-showcase .G-create-article .G-actionType .G-links input {
           border: none;
           padding-left: 10px;
           font-size: 13px;
@@ -1517,7 +1509,8 @@ footer h1 {
           box-shadow: none;
           font-family: "Source Sans Pro", sans-serif;
           width: 75%; }
-        .G-showcase .G-create-article .G-actionType .G-tags .G-tagBtn, .G-showcase .G-create-article .G-actionType .G-links .G-tagBtn {
+        .G-showcase .G-create-article .G-actionType .G-tags .G-tagBtn,
+        .G-showcase .G-create-article .G-actionType .G-links .G-tagBtn {
           position: absolute;
           top: 0;
           right: 0;
@@ -1575,68 +1568,86 @@ footer h1 {
       padding: 10px;
       padding-left: 0;
       padding-top: 0; }
-  .G-showcase .G-notFound {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    min-height: 50vh; }
-    .G-showcase .G-notFound img {
-      width: 70px;
-      margin-bottom: 30px;
-      font-family: "Source Sans Pro", sans-serif; }
-  .G-showcase .G-displayValidation {
-    position: absolute;
-    right: 0;
-    top: 0; }
-    .G-showcase .G-displayValidation .G-displayError {
-      position: relative;
-      margin-top: 100px; }
-      .G-showcase .G-displayValidation .G-displayError .G-errors {
-        padding: 25px;
-        background: #dddddd4f;
-        color: #ef649b;
-        margin: 5px;
-        padding-left: 20px;
-        padding-right: 50px;
-        border-radius: 1px;
-        font-size: 12px;
-        min-width: 60%;
-        float: right;
+      .G-showcase .G-create-article .G-storyTitle .c-like-grid {
+        display: grid;
+        grid-template-columns: 50px 50px 50px;
+        grid-gap: 10px;
+        text-align: center; }
+    .G-showcase .G-create-article .G-notFound {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 50vh; }
+      .G-showcase .G-create-article .G-notFound img {
+        width: 70px;
+        margin-bottom: 30px;
+        font-family: "Source Sans Pro", sans-serif; }
+    .G-showcase .G-create-article .G-displayValidation {
+      position: absolute;
+      right: 0;
+      top: 0; }
+      .G-showcase .G-create-article .G-displayValidation .G-displayError {
         position: relative;
-        box-shadow: 0px 0px 50px 0px #4e469e2e; }
+        margin-top: 100px; }
+        .G-showcase .G-create-article .G-displayValidation .G-displayError .G-errors {
+          padding: 25px;
+          background: #dddddd4f;
+          color: #ef649b;
+          margin: 5px;
+          padding-left: 20px;
+          padding-right: 50px;
+          border-radius: 1px;
+          font-size: 12px;
+          min-width: 60%;
+          float: right;
+          position: relative;
+          box-shadow: 0px 0px 50px 0px #4e469e2e; }
 
 @keyframes shine {
   to {
     background-position: 0 0, 100% 0, 120px 0, 120px 40px, 120px 80px, 120px 120px; } }
+    .G-showcase .G-create-article .C-like {
+      position: fixed center;
+      right: 15px;
+      bottom: 15px;
+      z-index: 100; }
+    .G-showcase .G-create-article .c-like-grid {
+      display: grid;
+      grid-gap: 10px; }
+    .G-showcase .G-create-article .turnLike {
+      border: 1px solid red !important; }
+    .G-showcase .G-create-article .turnBlack {
+      color: black !important; }
+    .G-showcase .G-create-article .changeColor {
+      color: red; }
+    .G-showcase .G-create-article .btn-heart {
+      font-family: "Rokkitt", serif;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid #ddd;
+      background: #ffff;
+      line-height: 36px;
+      width: 30px;
+      padding-left: 10px;
+      padding-right: 10px; }
+      .G-showcase .G-create-article .btn-heart i {
+        padding-right: 2px; }
+      .G-showcase .G-create-article .btn-heart div {
+        display: inline-block; }
   .G-showcase .G-singleEditor {
     min-height: auto !important; }
-  .G-showcase .C-like {
-    position: fixed center;
-    right: 15px;
-    bottom: 15px;
-    z-index: 100; }
-  .G-showcase .c-like-grid {
-    display: grid;
-    grid-template-columns: 0fr 0fr;
-    grid-gap: 10px; }
-  .G-showcase .turnLike {
-    border: 1px solid red !important; }
-  .G-showcase .turnBlack {
-    color: black !important; }
-  .G-showcase .changeColor {
-    color: red; }
-  .G-showcase .btn-heart {
+  .G-showcase .btn-bookmark {
     font-family: "Rokkitt", serif;
     border-radius: 10px;
     cursor: pointer;
     border: 1px solid #ddd;
     background: #ffff;
     line-height: 36px;
-    width: 30px;
+    width: 20px;
     padding-left: 10px;
     padding-right: 10px; }
-    .G-showcase .btn-heart i {
+    .G-showcase .btn-bookmark i {
       padding-right: 2px; }
-    .G-showcase .btn-heart div {
+    .G-showcase .btn-bookmark div {
       display: inline-block; }

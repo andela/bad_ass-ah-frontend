@@ -1,4 +1,3 @@
-// @here we will set up our action types
 export const SEND_LINK_SUCCESS = 'SEND_LINK_SUCCESS';
 export const SEND_LINK_FAIL = 'SEND_LINK_FAIL';
 export const RESET_PASSWORD_SUCCESS = 'RESET_PASSWORD_SUCCESS';
@@ -41,5 +40,7 @@ export const RATE_FAIL = 'RATE_FAIL';
 export const GET_AVERAGE_RATING = 'GET_AVERAGE_RATING';
 export const GET_USER_RATING = 'GET_USER_RATING';
 export const RATE_START = 'RATE_START';
-export const UPDATE_ARTICLE = 'UPDATE_ARTICLE';
+export const BOOKMARK_ARTICLE_SUCCESS = 'BOOKMARK_ARTICLE';
+export const BOOKMARK_FAILURE = 'BOOKMARK_FAILURE';
 export const DELETE_ARTICLE = 'DELETE_ARTICLE';
+export const UPDATE_ARTICLE = 'UPDATE_ARTICLE';
