@@ -13,6 +13,7 @@ const props = {
 
 describe('<Comments />', () => {
   const component = shallow(<Comments {...props} />);
+
   it('should render without crashing', () => {
     expect(component).toMatchSnapshot();
   });
@@ -20,6 +21,7 @@ describe('<Comments />', () => {
     props.comment.loading = false;
     props.comment.comments = {};
     const wrapper = shallow(<Comments {...props} />);
+
     expect(wrapper).toMatchSnapshot();
   });
 });
