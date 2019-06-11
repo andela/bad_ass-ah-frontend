@@ -13,6 +13,7 @@ import Comment from '../comment/comments';
 import Rating from './rating/Rating';
 import { isAuthenticated } from '../../helpers/Config';
 import { getComments } from '../../actions/comment/comment';
+import { setReadingStats } from '../../actions';
 
 const hashids = new Hashids('', 10);
 
@@ -29,8 +30,9 @@ export class SingleArticle extends Component {
   async componentWillMount() {
     // eslint-disable-next-line react/prop-types
     const { match: { params }, getComments } = this.props;
+    this.setState({ articleId2: params.handle });
     const user = await isAuthenticated();
-    this.setState({ articleId2: params.handle, userId: user.payload.id }, () => {
+    this.setState({ userId: user.payload.id }, () => {
       getComments(this.state.articleId2);
     });
   }
@@ -43,7 +45,7 @@ export class SingleArticle extends Component {
 
   async componentDidMount() {
     await this.getArticle();
-    // console.log(this.state.articleId2);
+    this.setReadingStats();
     // this.props.getComments(this.state.articleId2);
   }
 
@@ -63,6 +65,12 @@ export class SingleArticle extends Component {
     }
   }
 
+  setReadingStats = () => {
+    if (this.props.isAuth) {
+      this.props.setReadingStats(this.state.articleId2);
+    }
+  }
+
   likeArticle = async () => {
     const { articleId } = this.state;
     const { likeArticle } = this.props;
@@ -77,22 +85,25 @@ export class SingleArticle extends Component {
     this.getArticle();
   };
 
-destroy= (id) => {
-  const { deleteArticle } = this.props;
-  this.setState({ startLoading: true });
-  deleteArticle(id);
-}
+  destroy = (id) => {
+    const { deleteArticle } = this.props;
+    this.setState({ startLoading: true });
+    deleteArticle(id);
+  }
 
-render() {
-  let single;
-  const {
-    prevPath, userId, articleId2
-  } = this.state;
-  const { articles: { article, error, message } } = this.props;
-  if (article !== null) if (article && article.article !== undefined) single = article.article;
-  return (
+  render() {
+    let single;
+    const {
+      prevPath, userId, articleId2
+    } = this.state;
+
+    const { articles: { article, error, message } } = this.props;
+
+    if (article !== null) if (article && article.article !== undefined) single = article.article;
+
+    return (
       <Layout>
-        { message !== '' && window.location.replace(prevPath)}
+        {message !== '' && window.location.replace(prevPath)}
         <div className="G-showcase">
           <Fragment>
             {single !== undefined ? (
@@ -101,14 +112,14 @@ render() {
                   <h1 className="G-storyTitle">{stringParser(htmlParser(single.title))}</h1>
                   {userId === single.authorfkey.id && <div className="drop-article singleDrop">
                     <Link to={`/story/edit/${hashids.encode(single.article_id)}`}>
-                    <button type="button" data-test="Btn-remove" > <span>Edit</span>
-                    <i className="icofont-ui-edit editIcon"></i></button>
+                      <button type="button" data-test="Btn-remove" > <span>Edit</span>
+                        <i className="icofont-ui-edit editIcon"></i></button>
                     </Link>
                     <button type="button" data-test="G-deleteArticle"
-                    onClick={this.destroy.bind(this, hashids.encode(single.article_id))}>
-                     <span>Delete</span>
-                    <i className="icofont-ui-delete deleteIcon"></i></button>
-                    </div>}
+                      onClick={this.destroy.bind(this, hashids.encode(single.article_id))}>
+                      <span>Delete</span>
+                      <i className="icofont-ui-delete deleteIcon"></i></button>
+                  </div>}
                 </div>
                 {single.image && (
                   <div className="G-form-group">
@@ -156,11 +167,12 @@ render() {
           </Fragment>
         </div>
       </Layout>
-  );
-}
+    );
+  }
 }
 const mapStateToProps = state => ({
-  articles: state.articles
+  articles: state.articles,
+  isAuth: state.login.isAuthenticated
 });
 SingleArticle.propTypes = {
   singleArticle: PropTypes.func.isRequired,
@@ -168,7 +180,9 @@ SingleArticle.propTypes = {
   match: PropTypes.objectOf(PropTypes.object).isRequired,
   likeArticle: PropTypes.func.isRequired,
   dislikeArticle: PropTypes.func.isRequired,
-  deleteArticle: PropTypes.func.isRequired
+  deleteArticle: PropTypes.func.isRequired,
+  isAuth: PropTypes.bool.isRequired,
+  setReadingStats: PropTypes.func.isRequired
 };
 // eslint-disable-next-line max-len
 export default connect(mapStateToProps, {
@@ -176,5 +190,6 @@ export default connect(mapStateToProps, {
   likeArticle,
   dislikeArticle,
   deleteArticle,
-  getComments
+  getComments,
+  setReadingStats
 })(SingleArticle);

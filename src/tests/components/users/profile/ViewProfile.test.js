@@ -8,6 +8,9 @@ const props = {
   getUserFollowing: jest.fn(),
   getUserArticles: jest.fn(),
   deleteArticle: jest.fn(),
+  getReadingStats: jest.fn(),
+  errorGetReadingStats: null,
+  readingStats: 3,
   profile: {
     image: ''
   },

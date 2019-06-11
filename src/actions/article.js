@@ -8,6 +8,7 @@ import {
   GET_SINGLE_ARTICLE, VOTE_ARTICLES, UPDATE_ARTICLE, DELETE_ARTICLE
 } from './types';
 import Config, { PassDispatch } from '../helpers/Config';
+import { checkToken } from '../utils/checkToken';
 
 dotenv.config();
 const hashids = new Hashid('', 10);
@@ -38,6 +39,7 @@ const createArticle = data => async (dispatch) => {
   formData.append('body', data.body);
   formData.append('tag', arr);
   await dispatch(loading());
+  checkToken();
   try {
     const Addarticle = await axios.post(url, formData, Config);
     await dispatch(PassDispatch(CREATE_ARTICLE, Addarticle.data));
@@ -76,6 +78,7 @@ const updateArticle = (handle, data) => async (dispatch) => {
   formData.append('image', data.image);
   formData.append('title', data.title);
   formData.append('body', data.body);
+  checkToken();
   try {
     const update = await axios.put(url, formData, Config);
     dispatch(PassDispatch(UPDATE_ARTICLE, update.data));
@@ -86,6 +89,7 @@ const updateArticle = (handle, data) => async (dispatch) => {
 // @delete article
 const deleteArticle = id => async (dispatch) => {
   const url = `/api/articles/${hashids.decode(id)}`;
+  checkToken();
   await axios.delete(url, Config)
     .then((res) => {
       dispatch(PassDispatch(DELETE_ARTICLE, res.data));

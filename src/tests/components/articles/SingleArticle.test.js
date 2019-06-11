@@ -12,6 +12,8 @@ jest.mock('../../../helpers/Config', () => ({
 const props = {
   singleArticle: jest.fn(),
   deleteArticle: jest.fn(),
+  setReadingStats: jest.fn(),
+  isAuth: true,
   match: { params: jest.fn() },
   addTag: jest.fn(),
   articles: {

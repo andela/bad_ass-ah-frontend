@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import queryString from 'query-string';
+import PropTypes from 'prop-types';
 import { loadUser } from '../../../actions/socialAuth';
 import SocialLogin from '../sociaLogin/SociaLogin';
 import Login from '../login/Login';
@@ -73,6 +74,10 @@ const mapStateToProps = state => ({
   isAuthenticated: state.socialAuth.isAuthenticated,
   error: state.login.error
 });
+
+Authenticate.propTypes = {
+  error: PropTypes.string,
+};
 
 export default connect(
   mapStateToProps,

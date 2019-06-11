@@ -1,0 +1,50 @@
+.reading-stats {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  font-style: italic;
+  font-size: 1.2em;
+
+  &__icon {
+    position: relative;
+    &-study {
+      fill: $bluecolor;
+      width: 30px;
+    }
+
+    &-tooltip {
+      visibility: hidden;
+      width: 85px;
+      background-color: $color-grey-dark-3;
+      color: $whitecolour;
+      text-align: center;
+      border-radius: 4px;
+      padding: 4px;
+      position: absolute;
+      z-index: 1;
+      font-size: .7em;
+      margin-top: 33px;
+      margin-left: -30px;
+      font-style: normal;
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+
+    &:hover &-tooltip {
+      visibility: visible;
+    }
+  }
+
+  &__total-number {
+    margin-left: 7px;
+    font-weight: 700;
+  }
+
+  &__description {
+    margin-left: 4px;
+    color: $color-grey-dark-3;
+  }
+}
