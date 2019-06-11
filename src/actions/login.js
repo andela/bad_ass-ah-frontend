@@ -19,6 +19,7 @@ export const login = (email, password) => (dispatch) => {
   return axios.post('/api/users/login', data)
     .then((response) => {
       localStorage.setItem('token', response.data.token);
+      localStorage.setItem('hasRight', response.data.user.isAdmin);
       dispatch(loginSuccess(response.data.token));
     })
     .catch((error) => {
@@ -39,10 +40,12 @@ export const setLoginRedirectPath = path => ({
 
 export const loginCheckState = () => {
   let token = localStorage.getItem('token');
+  const isAdmin = localStorage.getItem('hasRight');
   if (!token) token = null;
   return {
     type: actionTypes.LOGIN_CHECK_STATE,
     isAuthenticated: token !== null,
-    token
+    token,
+    isAdmin
   };
 };

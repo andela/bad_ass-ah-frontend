@@ -5,7 +5,8 @@ const initialState = {
   token: null,
   error: null,
   loginRedirectPath: '/',
-  isAuthenticated: false
+  isAuthenticated: false,
+  isAdmin: false
 };
 
 const loginFail = (state, action) => updateObject(state, {
@@ -24,7 +25,8 @@ const setLoginRedirectPath = (state, action) => updateObject(state, {
 
 const loginCheckState = (state, action) => updateObject(state, {
   isAuthenticated: action.isAuthenticated,
-  token: action.token
+  token: action.token,
+  isAdmin: action.isAdmin
 });
 
 const reducer = (state = initialState, action) => {
