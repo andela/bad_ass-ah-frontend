@@ -22,9 +22,6 @@ class Navbar extends Component {
 
  logout = () => {
    localStorage.removeItem('token');
-   // eslint-disable-next-line react/prop-types
-   window.history.pushState({ title: 'Authors Haven' }, 'Authors Haven', '/');
-   window.location.reload(true);
  }
 
  // eslint-disable-next-line class-methods-use-this

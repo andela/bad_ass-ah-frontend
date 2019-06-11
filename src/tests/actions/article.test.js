@@ -4,7 +4,7 @@ import ReduxThunk from 'redux-thunk';
 import Hashid from 'hashids';
 // @load action
 import getAllArticle, {
-  createArticle, addTag, removeTag, singleArticle, updateArticle, deleteArticle
+  createArticle, addTag, removeTag, singleArticle
 } from '../../actions/article';
 // getAllArticle,
 const middleware = [ReduxThunk];
@@ -61,50 +61,5 @@ describe('Article', () => {
     const id = hashids.encode(1);
     Store.dispatch(singleArticle(id));
     expect(Store.getActions()).toBeDefined();
-  });
-  it('should allows to update article', () => {
-    const id = hashids.encode(1);
-    localStorage.setItem('token', 'token');
-    const expectedResponse = {
-      status: 200,
-      message: 'success'
-    };
-    const formData = {
-      title: 'i love javascript',
-      body: 'this is java',
-      tag: 'tag1, tag2',
-      image: 'image.png'
-    };
-    moxios.wait(() => {
-      const request = moxios.requests.mostRecent();
-      request.respondWith({
-        status: 200,
-        response: expectedResponse
-      });
-    });
-    return Store.dispatch(updateArticle(id, formData))
-      .then(() => {
-        expect(Store.getActions().length).toBe(1);
-        expect(Store.getActions()).toBeDefined();
-      });
-  });
-  it('should delete article', () => {
-    const id = hashids.encode(1);
-    const expectedResponse = {
-      status: 200,
-      message: 'success'
-    };
-    moxios.wait(() => {
-      const request = moxios.requests.mostRecent();
-      request.respondWith({
-        status: 200,
-        response: expectedResponse
-      });
-    });
-    return Store.dispatch(deleteArticle(id))
-      .then(() => {
-        expect(Store.getActions().length).toBe(1);
-        expect(Store.getActions()).toBeDefined();
-      });
   });
 });

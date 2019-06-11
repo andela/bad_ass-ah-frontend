@@ -9,19 +9,15 @@ import Spinner from '../common/spinner/Spinner';
 import './CreateComment.scss';
 
 export class Comments extends Component {
-  // componentDidMount() {
-  //   // eslint-disable-next-line react/prop-types
-  //   const { getComments, articleId } = this.props;
-  //   getComments(articleId);
-  // }
+  componentWillMount() {
+    const { getComments, articleId } = this.props;
+    getComments(articleId);
+  }
 
   render() {
-    // eslint-disable-next-line react/prop-types
     const { comment } = this.props;
     const { comments, loading } = comment;
-    // eslint-disable-next-line react/prop-types
     const { articleId } = this.props;
-    // eslint-disable-next-line react/prop-types
     const { isAuthenticated } = this.props.login;
 
     let commentsContent;

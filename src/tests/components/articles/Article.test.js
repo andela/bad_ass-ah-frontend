@@ -4,16 +4,11 @@ import { CreateArticle } from '../../../components/articles/CreateArticle';
 
 const props = {
   createArticle: jest.fn(),
-  create: {
-    newArticle: {
-      message: 'success'
-    },
-    newTag: ['tag']
-  },
+  create: jest.fn(),
   addTag: jest.fn(),
   removeTag: jest.fn(),
-  ArticleValidation: jest.fn()
 };
+
 // @spy function
 const spyFunc = (component, func) => {
   const spy = jest.spyOn(component, func);
@@ -31,6 +26,15 @@ describe('Article', () => {
     const form = component.find('[data-test="G-submitData"]');
     form.simulate('click', fakeEvent);
     expect(form.length).toBe(1);
+    expect(spy).toHaveBeenCalled();
+    spy.mockClear();
+  });
+  it('should update user input  using onchange', () => {
+    const spy = spyFunc(component.instance(), 'onChange');
+    const fakeEvent = { target: { name: 'title', value: 'title' } };
+    const input = component.find('[data-test="G-input"]');
+    input.simulate('change', fakeEvent);
+    expect(input.length).toBe(1);
     expect(spy).toHaveBeenCalled();
     spy.mockClear();
   });
@@ -57,11 +61,11 @@ describe('Article', () => {
     instance.addTag(fakeEvent);
     expect(spy).toBeDefined();
   });
-  it('should update state', () => {
-    const spy = spyFunc(component.instance(), 'onChange');
-    const fakeEvent = { target: { name: 'tag', value: 'tag' } };
-    const input = component.find('[data-test="add-tag"]');
-    input.simulate('change', fakeEvent);
+  it('should open tag input', () => {
+    const spy = spyFunc(component.instance(), 'openTag');
+    const fakeEvent = { preventDefault: () => {} };
+    const input = component.find('[data-test="G-openTag"]');
+    input.simulate('click', fakeEvent);
     expect(input.length).toBe(1);
     expect(spy).toHaveBeenCalled();
   });

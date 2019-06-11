@@ -7,7 +7,6 @@ const props = {
   getUserFollowers: jest.fn(),
   getUserFollowing: jest.fn(),
   getUserArticles: jest.fn(),
-  deleteArticle: jest.fn(),
   profile: {
     image: ''
   },
@@ -38,10 +37,5 @@ describe('ViewProfile component', () => {
 
   it('renders without crashing', () => {
     expect(component).toMatchSnapshot();
-  });
-  it('should destroy article', async () => {
-    const instance = component.instance();
-    await instance.destroy('data');
-    expect(instance.length).toBeUndefined();
   });
 });

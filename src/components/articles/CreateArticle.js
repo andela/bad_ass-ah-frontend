@@ -2,20 +2,21 @@
 
 import React, { Component } from 'react';
 import PropType from 'prop-types';
-import ReactFileReader from 'react-file-reader';
 import { connect } from 'react-redux';
+import ReactFileReader from 'react-file-reader';
 import { createArticle, addTag, removeTag } from '../../actions/article';
 import Layout from '../layouts/Layout';
 import Loading from '../layouts/Loading';
 import ArticleValidation from '../../helpers/Article';
-import EditorCommand from './EditorCommand';
 
 export class CreateArticle extends Component {
  state = {
    title: '',
    image: '',
    tag: '',
+   link: '',
    loading: false,
+   open: false,
    titleError: '',
    bodyError: '',
    display: false,
@@ -24,41 +25,25 @@ export class CreateArticle extends Component {
 
 BodyContent = React.createRef();
 
-Title = React.createRef();
-
   onChange= (e) => {
     this.setState({ [e.target.name]: e.target.value });
   }
 
-  addTag=(e) => {
-    e.preventDefault();
-    const { addTag } = this.props;
-    const { tag } = this.state;
-    const add = `#${tag}`;
-    addTag(add);
-    this.setState({ tag: '' });
-  }
-
-   destroyTag=(tag) => {
-     const { removeTag } = this.props;
-     removeTag(tag);
-   }
-
-  onSubmit= async (e) => {
+  onSubmit=(e) => {
     e.preventDefault();
     this.setState({ loading: true, display: false });
-    const { fileImg } = this.state;
+    const { title, fileImg } = this.state;
     const { create } = this.props;
     const data = {
-      title: this.Title.current ? this.Title.current.innerHTML : '',
+      title,
       body: this.BodyContent.current ? this.BodyContent.current.innerHTML : '',
       image: fileImg,
       tag: create.newTag
     };
-    const validation = await ArticleValidation(data);
+    const validation = ArticleValidation(data);
     if (!validation) {
       const { createArticle } = this.props;
-      await createArticle(data);
+      createArticle(data);
     } else {
       this.setState({
         titleError: validation.title,
@@ -69,51 +54,123 @@ Title = React.createRef();
     }
   }
 
-  handleFiles=(files) => {
-    const data = files ? files.fileList[0] : '';
-    this.setState({ image: files || '', fileImg: data });
-  }
+setBold=() => {
+  document.execCommand('Bold', false, null);
+}
 
-  render() {
-    let successMessage;
-    const {
-      image, loading, titleError, bodyError, display, tag
-    } = this.state;
-    const { create } = this.props;
-    if (Object.keys(create).length !== 0 && create.newArticle !== null) {
-      if (create.newArticle !== undefined) successMessage = create.newArticle.message;
-      else successMessage = '';
-      setTimeout(() => {
-        window.location.reload(true);
-      }, 2000);
-    }
-    return (
+openTag=(e) => {
+  e.preventDefault();
+  this.setState(prevState => ({
+    open: !prevState.open
+  }));
+}
+
+addTag=(e) => {
+  e.preventDefault();
+  const { addTag } = this.props;
+  const { tag } = this.state;
+  const add = `#${tag}`;
+  addTag(add);
+  this.setState({ tag: '' });
+}
+
+handleFiles=(files) => {
+  const data = files ? files.fileList[0] : '';
+  this.setState({ image: files || '', fileImg: data });
+}
+
+destroyTag=(tag) => {
+  const { removeTag } = this.props;
+  removeTag(tag);
+}
+
+addLink= (link) => {
+  document.execCommand('CreateLink', false, link);
+}
+
+render() {
+  let successMessage;
+  const {
+    title, image, loading, tag, open, link, titleError, bodyError, display
+  } = this.state;
+  const { create } = this.props;
+  if (Object.keys(create).length !== 0 && create.newArticle !== null) {
+    if (create.newArticle !== undefined) successMessage = create.newArticle.message;
+    else successMessage = '';
+    setTimeout(() => {
+      window.location.reload(true);
+    }, 2000);
+  }
+  return (
     <Layout>
       <Loading loading={loading} message={successMessage} />
       <div className="G-showcase">
         <div className="G-create-article" data-test="G-create-article">
           <div className="G-containers">
-          <div className="G-actionType">
-          <div className="G-action">
+            <div className="G-actionType">
+              {open && (
+              <div className="G-links">
+                <input type="text" name="link" placeholder="place your link here" onChange={this.onChange} value={link} />
+                <button
+                  type="button"
+                  className="G-tagBtn"
+                  data-test="Add-link"
+                  onClick={this.addLink.bind(this, link)}
+                >
+                Add
+                </button>
+              </div>
+              )}
+              <div className="G-tags">
+                <input type="text" name="tag" placeholder="Add tag" onChange={this.onChange} value={tag} />
+                <button type="button" className="G-tagBtn" data-test="Add-tag" onClick={this.addTag}>Add</button>
+              </div>
+              <div className="G-action">
+                <button
+                  className="setBold"
+                  type="button"
+                  onClick={this.setBold}
+                  data-test="G-bold"
+                >
+                  <i className="icofont-bold" />
+                </button>
+              </div>
+              <div className="G-action">
+                <button
+                  type="button"
+                  className="setItalic"
+                  onClick={() => document.execCommand('Italic', false, null)}
+                >
+                  <i className="icofont-italic" />
+                </button>
+              </div>
+              <div className="G-action">
                 <ReactFileReader handleFiles={this.handleFiles} base64 data-test="G-image">
                   <button type="button" className="setImage">
                     <i className="icofont-ui-image uploadImageIcon" />
                   </button>
                 </ReactFileReader>
               </div>
-            <EditorCommand />
-            <div className="G-tags">
-                <input type="text" name="tag" placeholder="Add tag" data-test="add-tag"
-                onChange={this.onChange} value={tag} />
-                <button type="button" className="G-tagBtn" data-test="Add-tag" onClick={this.addTag}>Add</button>
+              <div className="G-action">
+                <button type="button" data-test="G-openTag" onClick={this.openTag}>
+                  <i className="icofont-link" />
+                  <small>link</small>
+                </button>
               </div>
             </div>
             <div className="G-form-group">
               {/* eslint-disable-next-line jsx-a11y/label-has-associated-control */}
-              <label className="titleLabel changeTitle">Your title</label>
-              <div contentEditable="true" ref={this.Title} data-test="G-input"
-              name="title"
-              className="G-titleEditor"/>
+              <label className="titleLabel">Your title</label>
+              <input
+                type="text"
+                name="title"
+                id=""
+                className="G-input"
+                placeholder="write your title"
+                value={title}
+                onChange={this.onChange}
+                data-test="G-input"
+              />
             </div>
             {create.newTag !== undefined && create.newTag.length !== 0 && (
             <div className="G-form-group">
@@ -185,14 +242,14 @@ Title = React.createRef();
         </div>
       </div>
     </Layout>
-    );
-  }
+  );
+}
 }
 CreateArticle.propTypes = {
   createArticle: PropType.func.isRequired,
-  create: PropType.objectOf(PropType.object).isRequired,
   addTag: PropType.func.isRequired,
-  removeTag: PropType.func.isRequired
+  removeTag: PropType.func.isRequired,
+  create: PropType.objectOf(PropType.object).isRequired
 };
 const mapStateToProps = state => ({
   create: state.articles

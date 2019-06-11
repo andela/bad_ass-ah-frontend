@@ -41,5 +41,3 @@ export const RATE_FAIL = 'RATE_FAIL';
 export const GET_AVERAGE_RATING = 'GET_AVERAGE_RATING';
 export const GET_USER_RATING = 'GET_USER_RATING';
 export const RATE_START = 'RATE_START';
-export const UPDATE_ARTICLE = 'UPDATE_ARTICLE';
-export const DELETE_ARTICLE = 'DELETE_ARTICLE';

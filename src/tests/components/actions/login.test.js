@@ -28,8 +28,7 @@ describe('Login actions', () => {
       request.respondWith({
         status: 200,
         response: {
-          token: 'a-token',
-          openId: 'open'
+          token: 'a-token'
         }
       });
     });

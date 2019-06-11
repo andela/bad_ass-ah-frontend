@@ -1,8 +1,9 @@
 import getAllArticle from '../../../reducers/article';
 import {
   GET_ALL_ARTICLE, CREATE_ARTICLE, ARTICLE_FAILURE, LOADING, ADD_TAG,
-  REMOVE_TAG, VOTE_ARTICLES, DELETE_ARTICLE, UPDATE_ARTICLE, GET_SINGLE_ARTICLE
-} from '../../../actions/types';
+  REMOVE_TAG
+} from '../../../actions/type';
+import { VOTE_ARTICLES } from '../../../actions/types';
 
 // @test
 describe('Article reducer', () => {
@@ -103,32 +104,5 @@ describe('Article reducer', () => {
       payload
     });
     expect(state.voteMessage).toEqual(payload.message);
-  });
-  it('should get single article', () => {
-    const payload = { title: 'laravel' };
-    const initialState = { article: { article: { title: 'laravel' } } };
-    const state = getAllArticle(initialState, {
-      type: GET_SINGLE_ARTICLE,
-      payload
-    });
-    expect(state).toEqual({ article: payload });
-  });
-  it('should update article using UPDAT_ARTICLE action', () => {
-    const payload = { title: 'laravel' };
-    const initialState = { updatedArticle: { title: 'laravel' } };
-    const state = getAllArticle(initialState, {
-      type: UPDATE_ARTICLE,
-      payload
-    });
-    expect(state).toEqual({ updatedArticle: payload });
-  });
-  it('should delete article', () => {
-    const payload = 'deleted successfully';
-    const initialState = { message: payload };
-    const state = getAllArticle(initialState, {
-      type: DELETE_ARTICLE,
-      payload
-    });
-    expect(state).toEqual({ message: payload });
   });
 });
