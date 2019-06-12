@@ -29,11 +29,15 @@ const hashids = new Hashid('', 10);
 export class ViewProfile extends Component {
   state = {
     startLoading: false
-  }
+  };
 
   componentDidMount() {
     const {
-      getCurrentProfile, getUserFollowers, getUserFollowing, getUserArticles, getReadingStats
+      getCurrentProfile,
+      getUserFollowers,
+      getUserFollowing,
+      getUserArticles,
+      getReadingStats
     } = this.props;
     getCurrentProfile();
     getUserFollowers();
@@ -46,27 +50,42 @@ export class ViewProfile extends Component {
     const { deleteArticle } = this.props;
     this.setState({ startLoading: true });
     deleteArticle(id);
-  }
+  };
 
   render() {
     let successMessage;
     const {
-      loading, profile, followers, following, articles, message, readingStats, errorGetReadingStats
+      loading,
+      profile,
+      followers,
+      following,
+      articles,
+      message,
+      readingStats,
+      errorGetReadingStats
     } = this.props;
     const { startLoading } = this.state;
-    if (message !== '') setTimeout(() => { window.location.reload(true); }, 500);
+    if (message !== '') {
+      setTimeout(() => {
+        window.location.reload(true);
+      }, 500);
+    }
 
     let displayReadingStats = null;
 
     if (errorGetReadingStats === null && readingStats > 0) {
-      displayReadingStats = <div className='reading-stats'>
-        <div className='reading-stats__icon'>
-          <Study className='reading-stats__icon-study' />
-          <span className='reading-stats__icon-tooltip'>Articles I read</span>
+      displayReadingStats = (
+        <div className="reading-stats">
+          <div className="reading-stats__icon">
+            <Study className="reading-stats__icon-study" />
+            <span className="reading-stats__icon-tooltip">Articles I read</span>
+          </div>
+          <span className="reading-stats__total-number">{readingStats}</span>
+          <span className="reading-stats__description">
+            {readingStats === 1 ? 'article' : 'articles'}
+          </span>
         </div>
-        <span className='reading-stats__total-number'>{readingStats}</span>
-        <span className='reading-stats__description'>{readingStats === 1 ? 'article' : 'articles'}</span>
-      </div>;
+      );
     }
 
     return (
@@ -76,103 +95,116 @@ export class ViewProfile extends Component {
             <Spinner />
           </section>
         ) : (
-            <Fragment>
-              <Loading loading={startLoading} message={successMessage} />
-              <section className="profile-section">
-                <Alert />
-                <div className="user-profile">
-                  <div className="user-articles">
-                    <div className="pro-article-title">My Articles</div>
-                    <div className="user-blogs">
-                      {articles !== undefined
-                        && articles !== null
-                        && articles.length > 0
-                        && articles.map((article, index) => (
-                          <div key={index} className="blogs-article">
-                            <div className="blogs-avatar-info">
-                              <div className="blog-avatar">
-                                <img src={profile.image === null ? avatar : profile.image} alt="" />
-                              </div>
-                              <div className="blog-info">
-                                <span>{profile.username}</span>
-                                <span>
-                                  created on
-                              {' '}
-                                  <Moment date={article.createdAt} format="D MMM YYYY" />
-                                </span>
-                              </div>
-                              <div className="drop-article">
-                                <Link to={{
+          <Fragment>
+            <Loading loading={startLoading} message={successMessage} />
+            <section className="profile-section">
+              <Alert />
+              <div className="user-profile">
+                <div className="user-articles">
+                  <div className="pro-article-title">My Articles</div>
+                  <div className="user-blogs">
+                    {articles !== undefined
+                      && articles !== null
+                      && articles.length > 0
+                      && articles.map((article, index) => (
+                        <div key={index} className="blogs-article">
+                          <div className="blogs-avatar-info">
+                            <div className="blog-avatar">
+                              <img src={profile.image === null ? avatar : profile.image} alt="" />
+                            </div>
+                            <div className="blog-info">
+                              <span>{profile.username}</span>
+                              <span>
+                                created on <Moment date={article.createdAt} format="D MMM YYYY" />
+                              </span>
+                            </div>
+                            <div className="drop-article">
+                              <Link
+                                to={{
                                   pathname: `/story/edit/${hashids.encode(article.article_id)}`,
                                   state: { prevPath: window.location.pathname }
-                                }}>
-                                  <button type="button" data-test="Btn-remove"> <span>Edit</span>
-                                    <i class="icofont-ui-edit editIcon"></i></button>
-                                </Link>
-                                <button type="button" onClick={this.destroy.bind(this, hashids.encode(article.article_id))}> <span>Delete</span>
-                                  <i class="icofont-ui-delete deleteIcon"></i></button>
-                              </div>
+                                }}
+                              >
+                                <button type="button" data-test="Btn-remove">
+                                  {' '}
+                                  <span>Edit</span>
+                                  <i class="icofont-ui-edit editIcon" />
+                                </button>
+                              </Link>
+                              <button
+                                type="button"
+                                onClick={this.destroy.bind(
+                                  this,
+                                  hashids.encode(article.article_id)
+                                )}
+                              >
+                                {' '}
+                                <span>Delete</span>
+                                <i class="icofont-ui-delete deleteIcon" />
+                              </button>
                             </div>
-                            <div className="blogs-descriptive">
-                              {article.image === null ? (
-                                ''
-                              ) : (
-                                  <div className="desc-image">
-                                    <img src={article.image} alt="article1" />
-                                  </div>
-                              )}
-                              <div className="desc-articles">
-                                <div className="desc-articles-titles">
-                                  <Link to={{
+                          </div>
+                          <div className="blogs-descriptive">
+                            {article.image === null ? (
+                              ''
+                            ) : (
+                              <div className="desc-image">
+                                <img src={article.image} alt="article1" />
+                              </div>
+                            )}
+                            <div className="desc-articles">
+                              <div className="desc-articles-titles">
+                                <Link
+                                  to={{
                                     pathname: `/story/${hashids.encode(article.article_id)}`,
                                     state: { prevPath: window.location.pathname }
-                                  }}>
-                                    <h1>{StringParser(Parser(article.body)).substring(0, 70)}</h1>
-                                    <div>
-                                      <p>{StringParser(Parser(article.body)).substring(0, 90)}</p>
-                                    </div>
-                                  </Link>
-                                </div>
+                                  }}
+                                >
+                                  <h1>{StringParser(Parser(article.body)).substring(0, 70)}</h1>
+                                  <div>
+                                    <p>{StringParser(Parser(article.body)).substring(0, 90)}</p>
+                                  </div>
+                                </Link>
                               </div>
                             </div>
                           </div>
-                        ))}
-                    </div>
-                  </div>
-                  <div className="user-infos">
-                    <div className="avatar">
-                      <img src={profile.image === null ? avatar : profile.image} alt="" />
-                    </div>
-                    <div className="information">
-                      <h5>{profile.username}</h5>
-                      <h5>{profile.email}</h5>
-                      {displayReadingStats}
-                    </div>
-                    <div className="bio">{profile.bio}</div>
-                    <div className="usernumber-followers">
-                      <div>
-                        <Link to="/profile/followers">
-                          {followers.numberOfFollowers}
-                          {' '}
-                          {followers.numberOfFollowers === 1 ? 'Follower' : 'Followers'}
-                        </Link>
-                      </div>
-                      <div>
-                        <Link to="/profile/following">
-                          {following.numberOfFollowing}
-                          {' '}
-                          Following
-                    </Link>
-                      </div>
-                    </div>
-                    <Link to="/edit-profile" className="edit-profile-link">
-                      <i className="far fa-edit" />
-                      Edit profile
-                </Link>
+                        </div>
+                      ))}
                   </div>
                 </div>
-              </section>
-            </Fragment>
+                <div className="user-infos">
+                  <div className="avatar">
+                    <img src={profile.image === null ? avatar : profile.image} alt="" />
+                  </div>
+                  <div className="information">
+                    <h5>{profile.username}</h5>
+                    <h5>{profile.email}</h5>
+                    {displayReadingStats}
+                  </div>
+                  <div className="bio">{profile.bio}</div>
+                  <div className="usernumber-followers">
+                    <div>
+                      <Link to="/profile/followers">
+                        {followers.numberOfFollowers}{' '}
+                        {followers.numberOfFollowers === 1 ? 'Follower' : 'Followers'}
+                      </Link>
+                    </div>
+                    <div>
+                      <Link to="/profile/following">{following.numberOfFollowing} Following</Link>
+                    </div>
+                  </div>
+                  <Link to="/edit-profile" className="edit-profile-link">
+                    <i className="far fa-edit" />
+                    Edit profile
+                  </Link>
+                </div>
+                {/* <Link to="/edit-profile" className="edit-profile-link">
+                    <i className="far fa-edit" />
+                    Edit profile
+                  </Link> */}
+              </div>
+            </section>
+          </Fragment>
         )}
       </Layout>
     );
