@@ -76,7 +76,7 @@ export class Index extends Component {
                             </Link>
                           </div>
                           <img src={defaultImageUrl }
-                                alt="default image" className="slid" />
+                                alt="default" className="slid" />
                         </div>
                       </div>
                     </div>

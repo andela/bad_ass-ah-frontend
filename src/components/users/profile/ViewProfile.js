@@ -107,10 +107,10 @@ export class ViewProfile extends Component {
                                   state: { prevPath: window.location.pathname }
                                 }}>
                                   <button type="button" data-test="Btn-remove"> <span>Edit</span>
-                                    <i class="icofont-ui-edit editIcon"></i></button>
+                                    <i className="icofont-ui-edit editIcon"></i></button>
                                 </Link>
                                 <button type="button" onClick={this.destroy.bind(this, hashids.encode(article.article_id))}> <span>Delete</span>
-                                  <i class="icofont-ui-delete deleteIcon"></i></button>
+                                  <i className="icofont-ui-delete deleteIcon"></i></button>
                               </div>
                             </div>
                             <div className="blogs-descriptive">

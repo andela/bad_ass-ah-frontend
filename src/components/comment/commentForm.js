@@ -29,7 +29,6 @@ export class CommentForm extends Component {
       text
     };
     const { articleId, addComment } = this.props;
-
     addComment(newComment, articleId);
     this.setState({ text: '' });
   };
