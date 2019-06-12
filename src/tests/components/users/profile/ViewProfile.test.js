@@ -33,14 +33,26 @@ const props = {
       image: null,
       tag: ['tag1', 'tag2']
     }
-  ]
+  ],
+  message: 'Good'
 };
 
+const window = {
+  location: {
+    reload: jest.fn()
+  }
+};
+
+Object.defineProperty(global, 'window', { value: window });
+
 describe('ViewProfile component', () => {
+  jest.useFakeTimers();
   const component = shallow(<ViewProfile {...props} />);
 
   it('renders without crashing', () => {
+    jest.runAllTimers();
     expect(component).toMatchSnapshot();
+    expect(setTimeout).toHaveBeenCalledTimes(1);
   });
   it('should destroy article', async () => {
     const instance = component.instance();

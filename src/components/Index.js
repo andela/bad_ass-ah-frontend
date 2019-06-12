@@ -28,59 +28,64 @@ export class Index extends Component {
     let all;
     const size = 5;
     let slide;
-    const { allArticle: { allArticles } } = this.props;
+    const {
+      allArticle: { allArticles }
+    } = this.props;
     if (allArticles && allArticles.length !== 0) {
       all = allArticles[0].articles;
       slide = allArticles[0].articles.slice(0, size);
     }
     return (
-    <Layout>
-      <Fragment>
-        {all !== undefined
-          ? (
+      <Layout>
+        <Fragment>
+          {all !== undefined ? (
             <Fragment>
               <section className="showcase showslide">
                 <Slider autoplay={3000}>
-                  {slide !== undefined ? slide.map(slid => (
+                  {slide !== undefined ? (
+                    slide.map(slid => (
+                      <div className="slides">
+                        <div className="slide-container">
+                          <div className="slide-image">
+                            <div className="imgSlide">
+                              <div className="blog-desc">
+                                <p>{stringParser(htmlParser(slid.title)).substring(0, 100)}</p>
+                                <Link
+                                  to={`/story/${hashid.encode(slid.article_id)}`}
+                                  className="moreBtn"
+                                >
+                                  <img src={playIcon} alt="read" className="small-icon" />
+                                  Read more
+                                </Link>
+                              </div>
+                              <img
+                                src={slid.image ? slid.image : defaultImageUrl}
+                                alt={slid.image}
+                                className="slid"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  ) : (
                     <div className="slides">
-                    <div className="slide-container">
-                      <div className="slide-image">
-                        <div className="imgSlide">
-                          <div className="blog-desc">
-                            <p>
-                            {stringParser(htmlParser(slid.title)).substring(0, 100)}
-                            </p>
-                            <Link to={`/story/${hashid.encode(slid.article_id)}`} className="moreBtn">
-                              <img src={playIcon} alt="read" className="small-icon" />
-                            Read more
-                            </Link>
+                      <div className="slide-container">
+                        <div className="slide-image">
+                          <div className="imgSlide">
+                            <div className="blog-desc">
+                              <p>No Story Found</p>
+                              <Link to="#notfound" className="moreBtn">
+                                <img src={playIcon} alt="read" className="small-icon" />
+                                Read more
+                              </Link>
+                            </div>
+                            <img src={defaultImageUrl} alt="default" className="slid" />
                           </div>
-                          <img src={slid.image ? slid.image : defaultImageUrl}
-                                alt={slid.image} className="slid" />
                         </div>
                       </div>
                     </div>
-                  </div>
-                  ))
-                    : <div className="slides">
-                    <div className="slide-container">
-                      <div className="slide-image">
-                        <div className="imgSlide">
-                          <div className="blog-desc">
-                            <p>
-                             No Story Found
-                            </p>
-                            <Link to="#notfound" className="moreBtn">
-                              <img src={playIcon} alt="read" className="small-icon" />
-                            Read more
-                            </Link>
-                          </div>
-                          <img src={defaultImageUrl }
-                                alt="default image" className="slid" />
-                        </div>
-                      </div>
-                    </div>
-                  </div>}
+                  )}
                 </Slider>
                 <div className="slides">
                   <div className="slide-container">
@@ -93,9 +98,7 @@ export class Index extends Component {
                     <div className="slide-image">
                       <div className="imgSlide">
                         <div className="blog-desc">
-                          <p>
-                          Why you should choose useState instead of useReducer
-                          </p>
+                          <p>Why you should choose useState instead of useReducer</p>
                           <a href="#data" className="moreBtn">
                             <img src={playIcon} alt="read" className="small-icon" />
                             Read more
@@ -114,10 +117,12 @@ export class Index extends Component {
                     <div className="article-grid">
                       {all.map(item => (
                         <div className="b-article" key={item.article_id}>
-                          <Link to={{
-                            pathname: `/story/${hashid.encode(item.article_id)}`,
-                            state: { prevPath: window.location.pathname }
-                          }}>
+                          <Link
+                            to={{
+                              pathname: `/story/${hashid.encode(item.article_id)}`,
+                              state: { prevPath: window.location.pathname }
+                            }}
+                          >
                             <div className="article-img">
                               <img
                                 src={item.image ? item.image : defaultImageUrl}
@@ -132,7 +137,14 @@ export class Index extends Component {
                                 <div className="art-author">
                                   <div className="authors-av">
                                     <div>
-                                      <img src={item.authorfkey.image !== null ? item.authorfkey.image : defaultAvatar} alt="" />
+                                      <img
+                                        src={
+                                          item.authorfkey.image !== null
+                                            ? item.authorfkey.image
+                                            : defaultAvatar
+                                        }
+                                        alt=""
+                                      />
                                       <h5 className="author-name">{item.authorfkey.username}</h5>
                                     </div>
                                     <h5>{new Date(item.createdAt).toDateString()}</h5>
@@ -140,7 +152,9 @@ export class Index extends Component {
                                   <div className="small-text">
                                     {stringParser(htmlParser(item.body)).substring(0, 100)}
                                     {'...'}
-                                    <a href="#d" className="readMore">Read more</a>
+                                    <a href="#d" className="readMore">
+                                      Read more
+                                    </a>
                                   </div>
                                 </div>
                               </div>
@@ -153,14 +167,15 @@ export class Index extends Component {
                 </div>
               </section>
             </Fragment>
-          )
-          : <Fragment>
-            <div className='loadingSpinner'>
-            <img src={spinner} alt='spinner'/>
-            </div>
-          </Fragment>}
-      </Fragment>
-    </Layout>
+          ) : (
+            <Fragment>
+              <div className="loadingSpinner">
+                <img src={spinner} alt="spinner" />
+              </div>
+            </Fragment>
+          )}
+        </Fragment>
+      </Layout>
     );
   }
 }
@@ -170,6 +185,9 @@ Index.propTypes = {
   allArticles: PropTypes.objectOf(PropTypes.object).isRequired
 };
 const mapStateToProps = state => ({
-  allArticle: state.articles,
+  allArticle: state.articles
 });
-export default connect(mapStateToProps, { getAllArticle })(Index);
+export default connect(
+  mapStateToProps,
+  { getAllArticle }
+)(Index);

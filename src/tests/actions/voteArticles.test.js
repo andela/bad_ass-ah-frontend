@@ -3,10 +3,7 @@ import configuration from 'redux-mock-store';
 import ReduxThunk from 'redux-thunk';
 import Hashid from 'hashids';
 // @load action
-import {
-  likeArticle,
-  dislikeArticle
-} from '../../actions/voteArticle';
+import { likeArticle, dislikeArticle } from '../../actions/voteArticle';
 // getAllArticle,
 const middleware = [ReduxThunk];
 const mockStore = configuration(middleware);
@@ -24,26 +21,40 @@ describe('Article', () => {
   });
   it('should test single article with action VOTE_ARTICLE and paylod', () => {
     const id = hashids.encode('l4zbqj2dpr');
-    moxios.stubRequest(`https://badass-ah-backend-staging.herokuapp.com/api/articles/${id}/like`, {
-      status: 201,
-      resposne: {
-        message: 'hello world'
-      }
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 201,
+        resposne: {
+          message: 'hello world'
+        }
+      });
+      const request2 = moxios.requests.mostRecent();
+      request2.respondWith({
+        status: 200,
+        response: {
+          status: 200,
+          article: {}
+        }
+      });
     });
-    Store.dispatch(likeArticle(id));
-    expect(likeArticle()).toBeDefined();
+    return Store.dispatch(likeArticle(id)).then(() => {
+      expect(Store.getActions().length).toBe(1);
+    });
   });
 
   it('should test single article with action VOTE_ARTICLE and paylod', () => {
     const id = hashids.encode('l4zbqj2dpr');
-    moxios.stubRequest(`https://badass-ah-backend-staging.herokuapp.com/api/articles/${id}/like`, {
-      status: 401,
-      resposne: {
-        message: 'hello world'
-      }
+    moxios.wait(() => {
+      const request = moxios.requests.mostRecent();
+      request.respondWith({
+        status: 401,
+        response: 'Unauthorized'
+      });
     });
-    Store.dispatch(likeArticle(id));
-    expect(likeArticle()).toBeDefined();
+    return Store.dispatch(likeArticle(id)).then(() => {
+      expect(Store.getActions().length).toBe(1);
+    });
   });
 
   it('should test single article with action VOTE_ARTICLE and paylod', () => {

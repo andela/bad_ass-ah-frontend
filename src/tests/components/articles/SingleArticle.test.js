@@ -1,7 +1,10 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-unused-expressions */
 import React from 'react';
 import { shallow } from 'enzyme';
 import { SingleArticle } from '../../../components/articles/SingleArticle';
+import CommentPopover from '../../../components/popovers/Comment';
+import HighlightPopover from '../../../components/popovers/Highlight';
 
 jest.mock('../../../helpers/Config', () => ({
   isAuthenticated: () => {
@@ -11,6 +14,59 @@ jest.mock('../../../helpers/Config', () => ({
     }
   }
 }));
+
+const window = {
+  getSelection: () => ({
+    removeAllRanges: () => {},
+    getRangeAt: nbr => ({
+      getBoundingClientRect: () => ({
+        top: '',
+        left: ''
+      }),
+      surroundContents: (node) => {}
+    })
+  }),
+  location: {
+    replace: jest.fn()
+  }
+};
+
+Object.defineProperty(global, 'window', { value: window });
+
+const document = {
+  getElementById: id => ({
+    classList: {
+      add: jest.fn(),
+      remove: jest.fn()
+    },
+    style: {
+      top: '',
+      left: '',
+      right: ''
+    }
+  }),
+  getElementsByClassName: className => [
+    {
+      class: className,
+      getBoundingClientRect: jest.fn()
+    }
+  ],
+  documentElement: {
+    scrollTop: {}
+  },
+  createElement: el => ({
+    style: {
+      background: 'blue'
+    },
+    onmouseup: jest.fn()
+  }),
+  addEventListener: () => {},
+  removeEventListener: () => {},
+  onmouseup: jest.fn()
+};
+
+Object.defineProperty(global, 'document', { value: document });
+
 const props = {
   singleArticle: jest.fn(),
   deleteArticle: jest.fn(),
@@ -43,8 +99,16 @@ const props = {
   likeArticle: jest.fn(),
   dislikeArticle: jest.fn(),
   isAuthenticated: jest.fn(),
+  getUserHighlights: jest.fn(),
   payload: {
     id: 1
+  },
+  highlightText: jest.fn(),
+  highlights: [],
+  location: {
+    state: {
+      prevPath: '/'
+    }
   }
 };
 
@@ -89,5 +153,62 @@ describe('<SingleArticle />', () => {
     const instance = component.instance();
     await instance.destroy('data');
     expect(instance.length).toBeUndefined();
+  });
+
+  it('should call onChange method when the comment value is changed', () => {
+    const props = {
+      onSubmit: jest.fn(),
+      comment: ''
+    };
+    const spy = jest.spyOn(component.instance(), 'onChange');
+    component.instance().forceUpdate();
+
+    const CommentComponent = shallow(<CommentPopover onChange={spy} {...props} />);
+    const event = {
+      target: { value: 'Good' }
+    };
+
+    const btn = CommentComponent.find('#comment-input');
+    btn.simulate('change', event);
+    expect(btn.length).toBe(1);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should call onSubmit method when the send button is clicked', () => {
+    const props = {
+      onChange: jest.fn(),
+      comment: ''
+    };
+
+    const spy = jest.spyOn(component.instance(), 'onSubmit');
+    component.instance().forceUpdate();
+
+    const CommentComponent = shallow(<CommentPopover onSubmit={spy} {...props} />);
+    const event = { preventDefault: () => {} };
+
+    const form = CommentComponent.find('#comment-form');
+    form.simulate('submit', event);
+    expect(form.length).toBe(1);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should call onHighlight method when the highlight button is clicked', () => {
+    const spy = jest.spyOn(component.instance(), 'onHighlight');
+    component.instance().forceUpdate();
+
+    const CommentComponent = shallow(<HighlightPopover onHighlight={spy} />);
+
+    const btn = CommentComponent.find('#highlight-btn');
+    btn.simulate('click');
+    expect(btn.length).toBe(1);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('componentDidUpdate', () => {
+    component.setProps({ highlights: [{ text: 'text' }] });
+    expect(component.instance().props.highlights).toBeDefined();
+  });
+  it('should test the function ComponentWillreceiveProps', () => {
+    component.instance().componentWillReceiveProps(props);
   });
 });
