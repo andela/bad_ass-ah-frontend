@@ -1,16 +1,20 @@
 import {
   ADD_COMMENT,
   GET_COMMENTS,
-  COMMENT_LOADING
+  COMMENT_LOADING,
+  GET_SINGLE_COMMENT,
+  UPDATE_COMMENT,
+  DELETE_COMMENT
 } from '../../../actions/types';
 
 import comment from '../../../reducers/comment/comments';
 
 describe('comments reducer', () => {
-  const initiState = {
+  const initialState = {
     comments: [],
-    comment: {},
-    loading: false
+    singleComment: {},
+    loading: false,
+    updatedComment: {}
   };
   it('should return default state', () => {
     const newSate = comment([], {});
@@ -33,7 +37,7 @@ describe('comments reducer', () => {
         bio: null
       }
     };
-    const newSate = comment(initiState, {
+    const newSate = comment(initialState, {
       type: ADD_COMMENT,
       payload
     });
@@ -45,7 +49,7 @@ describe('comments reducer', () => {
     const payload = {
       loading: true
     };
-    const newState = comment(initiState, {
+    const newState = comment(initialState, {
       type: COMMENT_LOADING,
       payload
     });
@@ -68,10 +72,50 @@ describe('comments reducer', () => {
         bio: null
       }
     };
-    const newState = comment(initiState, {
+    const newState = comment(initialState, {
       type: GET_COMMENTS,
       payload
     });
     expect(newState.comments).toEqual(payload);
+  });
+  it('should return new state if action type is GET_SINGLE_COMMENT', () => {
+    const payload = {
+      id: 107,
+      body: 'to be updated',
+      articleId: 109,
+      author: 80,
+      createdAt: '2019-06-11T10:00:34.374Z',
+      updatedAt: '2019-06-11T10:00:34.374Z'
+    };
+    const newState = comment(initialState, {
+      type: GET_SINGLE_COMMENT,
+      payload
+    });
+    expect(newState.singleComment).toEqual(payload);
+  });
+  it('should return new state if action type is UPDATE_COMMENT', () => {
+    const payload = {
+      id: 129,
+      body: 'fgfhf',
+      articleId: 1,
+      author: 10,
+      createdAt: '2019-06-03T12:54:33.420Z',
+      updatedAt: '2019-06-03T12:54:33.420Z'
+    };
+    const newState = comment(initialState, {
+      type: UPDATE_COMMENT,
+      payload
+    });
+    expect(newState.updatedComment).toEqual(payload);
+  });
+  it('should return new state if action type is DELETE_COMMENT', () => {
+    const payload = {
+      comments: []
+    };
+    const newState = comment(initialState, {
+      type: DELETE_COMMENT,
+      payload
+    });
+    expect(newState.comments).toEqual(payload.comments);
   });
 });
