@@ -20,6 +20,7 @@ export const addComment = (commentData, articleId) => async (dispatch) => {
   try {
     const url = `/api/articles/${hashids.decode(articleId)}/comments`;
     const res = await axios.post(url, commentData, Config);
+
     dispatch({
       type: ADD_COMMENT,
       payload: res.data.createdComment
@@ -35,6 +36,7 @@ export const updateComment = (commentData, articleId, commentId) => async (dispa
   try {
     const url = `/api/articles/${articleId}/comments/${commentId}`;
     const res = await axios.put(url, commentData, Config);
+
     dispatch({
       type: UPDATE_COMMENT,
       payload: res.data.comment
@@ -51,6 +53,7 @@ export const deleteComment = (commentId, articleId) => async (dispatch) => {
   try {
     const url = `/api/articles/${articleId}/comments/${commentId}`;
     const res = await axios.delete(url, Config);
+
     dispatch({
       type: DELETE_COMMENT,
       payload: commentId
@@ -68,6 +71,7 @@ const getComments = articleId => async (dispatch) => {
     dispatch(setCommentLoading());
     const url = `/api/articles/${hashids.decode(articleId)}/comments`;
     const res = await axios.get(url, Config);
+
     dispatch({
       type: GET_COMMENTS,
       payload: res.data.comment
@@ -83,6 +87,7 @@ const getSingleComment = (articleId, commentId) => async (dispatch) => {
   try {
     const url = `/api/articles/${articleId}/comments/${commentId}`;
     const res = await axios.get(url, Config);
+
     dispatch({
       type: GET_SINGLE_COMMENT,
       payload: res.data.comment

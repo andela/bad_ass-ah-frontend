@@ -14,6 +14,7 @@ import Rating from './rating/Rating';
 import { isAuthenticated } from '../../helpers/Config';
 import { getComments } from '../../actions/comment/comment';
 import { setReadingStats } from '../../actions';
+import ShareArticle from './shareArticle/shareArticle';
 
 const hashids = new Hashids('', 10);
 
@@ -24,17 +25,18 @@ export class SingleArticle extends Component {
     hasDilikedClass: null,
     articleId2: null,
     userId: '',
-    prevPath: ''
+    prevPath: '',
+    shareArticleUrl: ''
   };
 
   async componentWillMount() {
     const {
-      match: { params },
+      match: { params, url },
       getComments
     } = this.props;
     this.setState({ articleId2: params.handle });
     const user = await isAuthenticated();
-    this.setState({ userId: user.payload.id }, () => {
+    this.setState({ userId: user.payload.id, shareArticleUrl: url }, () => {
       getComments(this.state.articleId2);
     });
   }
@@ -74,7 +76,7 @@ export class SingleArticle extends Component {
     if (this.props.isAuth) {
       this.props.setReadingStats(this.state.articleId2);
     }
-  }
+  };
 
   likeArticle = async () => {
     const { articleId } = this.state;
@@ -98,7 +100,9 @@ export class SingleArticle extends Component {
 
   render() {
     let single;
-    const { prevPath, userId, articleId2 } = this.state;
+    const {
+      prevPath, userId, articleId2, shareArticleUrl
+    } = this.state;
     const {
       articles: { article, error, message }
     } = this.props;
@@ -188,6 +192,7 @@ export class SingleArticle extends Component {
                     </div>
                   </div>
                 </div>
+                <ShareArticle shareArticleUrl={shareArticleUrl} />
                 <Comment articleId={articleId2} />
               </div>
             ) : (
@@ -217,11 +222,14 @@ SingleArticle.propTypes = {
   getComments: PropTypes.func.isRequired
 };
 // eslint-disable-next-line max-len
-export default connect(mapStateToProps, {
-  singleArticle,
-  likeArticle,
-  dislikeArticle,
-  deleteArticle,
-  getComments,
-  setReadingStats
-})(SingleArticle);
+export default connect(
+  mapStateToProps,
+  {
+    singleArticle,
+    likeArticle,
+    dislikeArticle,
+    deleteArticle,
+    getComments,
+    setReadingStats
+  }
+)(SingleArticle);

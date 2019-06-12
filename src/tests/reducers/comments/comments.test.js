@@ -116,6 +116,7 @@ describe('comments reducer', () => {
       type: DELETE_COMMENT,
       payload
     });
+
     expect(newState.comments).toEqual(payload.comments);
   });
 });
