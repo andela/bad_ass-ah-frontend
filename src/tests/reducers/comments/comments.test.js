@@ -4,7 +4,8 @@ import {
   COMMENT_LOADING,
   GET_SINGLE_COMMENT,
   UPDATE_COMMENT,
-  DELETE_COMMENT
+  DELETE_COMMENT,
+  VOTE_COMMENT
 } from '../../../actions/types';
 
 import comment from '../../../reducers/comment/comments';
@@ -118,5 +119,24 @@ describe('comments reducer', () => {
     });
 
     expect(newState.comments).toEqual(payload.comments);
+  });
+  it('should vote comment', () => {
+    const payload = {
+      likeComment: 10,
+      dislikeComment: 0,
+      commentID: 0,
+      comment: {
+        id: 10
+      },
+      votes: {
+        likes: 10,
+        dislikes: 10
+      }
+    };
+    const newSate = comment(initialState, {
+      type: VOTE_COMMENT,
+      payload
+    });
+    expect(newSate.likeComment).toEqual(payload.likeComment);
   });
 });

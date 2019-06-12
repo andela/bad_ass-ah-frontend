@@ -2,6 +2,7 @@
 /* eslint-disable no-use-before-define */
 import axios from 'axios';
 import Hashid from 'hashids';
+import { checkToken } from '../../utils/checkToken';
 
 import {
   ADD_COMMENT,
@@ -12,15 +13,14 @@ import {
   GET_SINGLE_COMMENT,
   UPDATE_COMMENT
 } from '../types';
-import Config from '../../helpers/jsonConfig';
 
 const hashids = new Hashid('', 10);
 
 export const addComment = (commentData, articleId) => async (dispatch) => {
   try {
     const url = `/api/articles/${hashids.decode(articleId)}/comments`;
-    const res = await axios.post(url, commentData, Config);
-
+    checkToken();
+    const res = await axios.post(url, commentData);
     dispatch({
       type: ADD_COMMENT,
       payload: res.data.createdComment
@@ -35,8 +35,8 @@ export const addComment = (commentData, articleId) => async (dispatch) => {
 export const updateComment = (commentData, articleId, commentId) => async (dispatch) => {
   try {
     const url = `/api/articles/${articleId}/comments/${commentId}`;
-    const res = await axios.put(url, commentData, Config);
-
+    checkToken();
+    const res = await axios.put(url, commentData);
     dispatch({
       type: UPDATE_COMMENT,
       payload: res.data.comment
@@ -52,8 +52,8 @@ export const updateComment = (commentData, articleId, commentId) => async (dispa
 export const deleteComment = (commentId, articleId) => async (dispatch) => {
   try {
     const url = `/api/articles/${articleId}/comments/${commentId}`;
-    const res = await axios.delete(url, Config);
-
+    checkToken();
+    const res = await axios.delete(url);
     dispatch({
       type: DELETE_COMMENT,
       payload: commentId
@@ -70,7 +70,8 @@ const getComments = articleId => async (dispatch) => {
   try {
     dispatch(setCommentLoading());
     const url = `/api/articles/${hashids.decode(articleId)}/comments`;
-    const res = await axios.get(url, Config);
+    checkToken();
+    const res = await axios.get(url);
 
     dispatch({
       type: GET_COMMENTS,
@@ -86,7 +87,8 @@ const getComments = articleId => async (dispatch) => {
 const getSingleComment = (articleId, commentId) => async (dispatch) => {
   try {
     const url = `/api/articles/${articleId}/comments/${commentId}`;
-    const res = await axios.get(url, Config);
+    checkToken();
+    const res = await axios.get(url);
 
     dispatch({
       type: GET_SINGLE_COMMENT,

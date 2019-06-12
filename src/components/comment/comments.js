@@ -7,6 +7,7 @@ import CommentForm from './commentForm';
 import CommentFeed from './CommentFeed';
 import Spinner from '../common/spinner/Spinner';
 import './CreateComment.scss';
+import './LikeComment.scss';
 
 export class Comments extends Component {
   render() {

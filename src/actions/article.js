@@ -81,6 +81,7 @@ const singleArticle = handle => async (dispatch) => {
 
 // @update article
 const updateArticle = (handle, data) => async (dispatch) => {
+  checkToken();
   const url = `/api/articles/${hashids.decode(handle)}`;
   const formData = new FormData();
   formData.append('image', data.image);
@@ -98,8 +99,7 @@ const updateArticle = (handle, data) => async (dispatch) => {
 const deleteArticle = id => async (dispatch) => {
   const url = `/api/articles/${hashids.decode(id)}`;
   checkToken();
-  await axios
-    .delete(url, Config)
+  await axios.delete(url)
     .then((res) => {
       dispatch(PassDispatch(DELETE_ARTICLE, res.data));
     })

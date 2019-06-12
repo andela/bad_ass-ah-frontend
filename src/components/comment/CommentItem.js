@@ -1,13 +1,14 @@
 /* eslint-disable no-nested-ternary */
 import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import Moment from 'react-moment';
 import 'moment-timezone';
 import userCommentAvatar from '../../assets/Images/icons/boy.svg';
 import postedCommentOption from '../../assets/Images/icons/comment_option.svg';
 import { isAuthenticated } from '../../helpers/jsonConfig';
 import { deleteComment, getSingleComment, updateComment } from '../../actions/comment/comment';
+import VoteComment from './VoteComment';
 
 export class CommentItem extends Component {
   state = {
@@ -22,7 +23,7 @@ export class CommentItem extends Component {
 
   async componentWillMount() {
     const user = await isAuthenticated();
-    this.setState({ userId: user.payload.id });
+    await this.setState({ userId: user.payload.id });
   }
 
   componentWillReceiveProps(nextProps) {
@@ -73,9 +74,8 @@ export class CommentItem extends Component {
     const {
       userId, displayEditBox, errors, text, commentId, body
     } = this.state;
-    const { comment } = this.props;
-    const { login } = this.props;
-    const { profile } = this.props.profile;
+    const { login, comment, profile } = this.props;
+
     const editeCommentBox = (
       <div className="comment_form">
         <div className="comment_user_avatar">
@@ -116,7 +116,7 @@ export class CommentItem extends Component {
               type="button"
               onClick={this.fetchSingleArticle.bind(this, comment.articleId, comment.id)}
             >
-              <i class="icofont-ui-edit editIcon" /> Update
+              <i className="icofont-ui-edit editIcon" /> Update
             </button>
             <button
               type="button"
@@ -124,7 +124,7 @@ export class CommentItem extends Component {
               onClick={this.onDelete.bind(this, comment.id, comment.articleId)}
             >
               {' '}
-              <i class="icofont-ui-delete deleteIcon" /> Delete
+              <i className="icofont-ui-delete deleteIcon" /> Delete
             </button>
           </div>
         </div>
@@ -157,7 +157,8 @@ export class CommentItem extends Component {
               {commentId !== comment.id ? comment.body : body}
               <div className="posted_comment_content" />
               <div className="posted_comment_footer">
-                <div className="favorite_posted_comment" />
+                <VoteComment allVotes={comment.votecomments} userId={userId}
+                commentId={comment.id} articleID= {comment.articleId} />
                 <div className="reply_to_comment" />
               </div>
             </div>
@@ -180,7 +181,7 @@ CommentItem.propTypes = {
   singleComment: PropTypes.object.isRequired,
   profile: PropTypes.object.isRequired,
   updateComment: PropTypes.func.isRequired,
-  updatedComment: PropTypes.object.isRequired
+  updatedComment: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
