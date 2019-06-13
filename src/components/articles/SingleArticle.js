@@ -9,11 +9,14 @@ import stringParser from 'react-to-string';
 import Hashids from 'hashids';
 import { Link } from 'react-router-dom';
 import { likeArticle, dislikeArticle } from '../../actions/voteArticle';
+// eslint-disable-next-line import/named
 import { singleArticle, deleteArticle } from '../../actions/article';
 import Layout from '../layouts/Layout';
 import NotFound from '../NotFound';
 import Comment from '../comment/comments';
 import Rating from './rating/Rating';
+import bookmarkArticle from '../../actions/bookmarkArticle';
+import { isAuthenticated } from '../../helpers/Config';
 import { getComments } from '../../actions/comment/comment';
 import { setReadingStats } from '../../actions';
 import ShareArticle from './shareArticle/shareArticle';
@@ -23,7 +26,6 @@ import Alert from '../layouts/Alert';
 import { highlightText, getUserHighlights } from '../../actions/highlight';
 import { markHighlightedText } from '../../utils/markHighlightedText';
 import Spinner from '../layouts/Spinner';
-import { isAuthenticated } from '../../helpers/Config';
 
 const hashids = new Hashids('', 10);
 
@@ -32,6 +34,8 @@ export class SingleArticle extends Component {
     articleId: '',
     hasLikedClass: null,
     hasDilikedClass: null,
+    hasbookmarkedClass: null,
+    bookmarkArticle: null,
     articleId2: null,
     userId: '',
     prevPath: '',
@@ -140,6 +144,13 @@ export class SingleArticle extends Component {
     await dislikeArticle(articleId);
     this.getArticle();
   };
+
+bookmarks = async () => {
+  const { articleId } = this.state;
+  const { bookmarkArticle } = this.props;
+  await bookmarkArticle(articleId);
+  this.getArticle();
+}
 
   onSelectedText = () => {
     const popup = document.getElementById('highlight-popup');
@@ -321,6 +332,9 @@ export class SingleArticle extends Component {
                       )}
                       <div>{article.votes.dislikes}</div>
                     </div>
+                    <div id="bookmark-btn" className={`btn-bookmark ${this.state.hasbookmarkedClass}`} title="bookmark" onClick= {this.bookmarks}>
+                    {article.hasBookmarked === true ? <i class="icofont-book-mark changeColor"></i> : <i class="icofont-book-mark"></i>}
+                  </div>
                   </div>
                 </div>
                 <ShareArticle shareArticleUrl={shareArticleUrl} />
@@ -354,7 +368,8 @@ SingleArticle.propTypes = {
   setReadingStats: PropTypes.func.isRequired,
   highlightText: PropTypes.func,
   getUserHighlights: PropTypes.func,
-  highlights: PropTypes.array
+  highlights: PropTypes.array,
+  bookmarkArticle: PropTypes.func.isRequired
 };
 // eslint-disable-next-line max-len
 export default connect(
@@ -367,6 +382,7 @@ export default connect(
     getComments,
     setReadingStats,
     highlightText,
-    getUserHighlights
+    getUserHighlights,
+    bookmarkArticle
   }
 )(SingleArticle);
