@@ -15,6 +15,7 @@ import blog3 from '../assets/Images/entertainment.jpeg';
 import spinner from '../assets/Images/spinner.gif';
 import defaultAvatar from '../assets/Images/icons/boy.svg';
 import 'react-animated-slider/build/horizontal.css';
+import ArticlePagination from './articles/ArticlePagination';
 
 export class Index extends Component {
   componentDidMount() {
@@ -165,6 +166,7 @@ export class Index extends Component {
                     </div>
                   </div>
                 </div>
+                <ArticlePagination />
               </section>
             </Fragment>
           ) : (
