@@ -336,7 +336,7 @@ export class SingleArticle extends Component {
     );
   }
 }
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   articles: state.articles,
   isAuth: state.login.isAuthenticated,
   highlights: state.highlight.highlights

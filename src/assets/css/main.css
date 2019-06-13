@@ -778,6 +778,62 @@ footer {
   .highlight-comment .comment {
     padding: 10px; }
 
+.C-popUp {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: #5600ff63;
+  z-index: 100; }
+
+.C-popupDescription {
+  background: #fff;
+  width: 25%;
+  border-radius: 4px;
+  color: #000;
+  padding: 20px; }
+
+.C-popupDescription img {
+  width: 60px; }
+
+.C-popup-success {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 75%; }
+
+.C-popup-message {
+  font-size: 13px;
+  margin-bottom: 15px;
+  text-align: center; }
+
+.C-popup-message h1 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 5px; }
+
+.C-closePopUp {
+  right: 0;
+  position: absolute;
+  margin: 20px;
+  font-size: 30px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: #fff;
+  outline: none;
+  box-shadow: none; }
+
+.activate {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .activate a {
+    font-size: 1.5em; }
+
 *,
 body {
   margin: 0;
