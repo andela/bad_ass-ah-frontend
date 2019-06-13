@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable array-callback-return */
+/* eslint-disable class-methods-use-this */
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -11,10 +14,17 @@ import Layout from '../layouts/Layout';
 import NotFound from '../NotFound';
 import Comment from '../comment/comments';
 import Rating from './rating/Rating';
+import bookmarkArticle from '../../actions/bookmarkArticle';
 import { isAuthenticated } from '../../helpers/Config';
 import { getComments } from '../../actions/comment/comment';
 import { setReadingStats } from '../../actions';
 import ShareArticle from './shareArticle/shareArticle';
+import HighlightPopover from '../popovers/Highlight';
+import CommentPopover from '../popovers/Comment';
+import Alert from '../layouts/Alert';
+import { highlightText, getUserHighlights } from '../../actions/highlight';
+import { markHighlightedText } from '../../utils/markHighlightedText';
+import Spinner from '../layouts/Spinner';
 
 const hashids = new Hashids('', 10);
 
@@ -23,13 +33,20 @@ export class SingleArticle extends Component {
     articleId: '',
     hasLikedClass: null,
     hasDilikedClass: null,
+    hasbookmarkedClass: null,
+    bookmarkArticle: null,
     articleId2: null,
     userId: '',
     prevPath: '',
-    shareArticleUrl: ''
+    indexStart: '',
+    indexEnd: '',
+    text: '',
+    comment: '',
+    handle: this.props.match.params.handle
   };
 
   async componentWillMount() {
+    // eslint-disable-next-line react/prop-types
     const {
       match: { params, url },
       getComments
@@ -44,16 +61,50 @@ export class SingleArticle extends Component {
   getArticle = () => {
     const {
       match: { params },
-      singleArticle
+      singleArticle,
+      getUserHighlights
     } = this.props;
     this.setState({ articleId: params.handle });
     singleArticle(params.handle);
+    getUserHighlights(params.handle);
   };
 
   async componentDidMount() {
     await this.getArticle();
     this.setReadingStats();
     // this.props.getComments(this.state.articleId2);
+  }
+
+  componentDidUpdate() {
+    const elements = document.getElementsByClassName('highlighted');
+    const topScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (elements) {
+      Array.from(elements).forEach((element) => {
+        const rect = element.getBoundingClientRect();
+        // eslint-disable-next-line no-param-reassign
+        element.onclick = () => {
+          const { highlights } = this.props;
+          highlights.forEach((highlight) => {
+            if (element.textContent === highlight.text) {
+              const root = document.getElementsByClassName('App')[0];
+              const div = document.createElement('div');
+              div.className = 'highlight-comment';
+              div.style.top = `${rect.top + topScroll}px`;
+              div.style.left = `${rect.right}px`;
+              div.innerHTML = ` <div class="title">
+                                <div class="title-text">Comment</div>
+                              </div>
+                              <div class="comment">${highlight.comment}</div>`;
+              root.appendChild(div);
+              root.onmouseup = () => {
+                div.classList.add('hide');
+              };
+            }
+          });
+        };
+      });
+    }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -92,6 +143,84 @@ export class SingleArticle extends Component {
     this.getArticle();
   };
 
+bookmarks = async () => {
+  const { articleId } = this.state;
+  const { bookmarkArticle } = this.props;
+  await bookmarkArticle(articleId);
+  this.getArticle();
+}
+
+  onSelectedText = () => {
+    const popup = document.getElementById('highlight-popup');
+    document.onmouseup = () => {
+      const selection = document.getSelection();
+      const selectedText = selection.toString();
+
+      if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const rect = range.getBoundingClientRect();
+        const topScroll = window.pageYOffset || document.documentElement.scrollTop;
+
+        if (selectedText.length) {
+          popup.classList.remove('hide');
+          popup.style.top = `${rect.top + topScroll - 80}px`;
+          popup.style.left = `${rect.left}px`;
+
+          this.setState({
+            indexStart: selection.anchorOffset,
+            indexEnd:
+              selection.anchorOffset === 0
+                ? selection.anchorOffset + selectedText.length - 1
+                : selection.anchorOffset + selectedText.length,
+            text: selectedText
+          });
+        } else {
+          popup.classList.add('hide');
+        }
+      }
+    };
+  };
+
+  onHighlight = () => {
+    const popup = document.getElementById('highlight-popup');
+    const comment = document.getElementById('comment-popover');
+    const div = document.getElementsByClassName('G-showcase')[0];
+    popup.classList.add('hide');
+    const selection = window.getSelection();
+    const range = selection.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
+    const topScroll = window.pageYOffset || document.documentElement.scrollTop;
+    const newNode = document.createElement('span');
+    newNode.style.background = 'aqua';
+    range.surroundContents(newNode);
+    comment.classList.remove('hide');
+    comment.style.top = `${rect.top + topScroll}px`;
+    comment.style.left = `${rect.right - 40}px`;
+
+    div.onmouseup = () => {
+      comment.classList.add('hide');
+      newNode.style.background = '';
+    };
+  };
+
+  onChange = (e) => {
+    this.setState({ comment: e.target.value });
+  };
+
+  onSubmit = (e) => {
+    e.preventDefault();
+    const { highlightText } = this.props;
+
+    highlightText(this.state);
+    window.getSelection().removeAllRanges();
+    this.setState({
+      indexStart: '',
+      indexEnd: '',
+      text: '',
+      comment: ''
+    });
+  };
+
   destroy = (id) => {
     const { deleteArticle } = this.props;
     this.setState({ startLoading: true });
@@ -104,17 +233,24 @@ export class SingleArticle extends Component {
       prevPath, userId, articleId2, shareArticleUrl
     } = this.state;
     const {
-      articles: { article, error, message }
+      articles: { article, error, message },
+      highlights
     } = this.props;
 
     if (article !== null) if (article && article.article !== undefined) single = article.article;
+
+    this.onSelectedText();
+
     return (
       <Layout>
         {message !== '' && window.location.replace(prevPath)}
+        <HighlightPopover onHighlight={this.onHighlight} />
+        <CommentPopover onChange={this.onChange} onSubmit={this.onSubmit} />
         <div className="G-showcase">
           <Fragment>
             {single !== undefined ? (
               <div className="G-create-article" data-test="G-create-article">
+                <Alert />
                 <div className="G-form-group">
                   <h1 className="G-storyTitle">{stringParser(htmlParser(single.title))}</h1>
                   {userId === single.authorfkey.id && (
@@ -158,7 +294,11 @@ export class SingleArticle extends Component {
                 )}
                 <div className="G-form-group">
                   <div id="texteditor" name="body" className="G-singleEditor">
-                    {htmlParser(single.body)}
+                    {highlights === null || highlights === undefined ? (
+                      <Spinner />
+                    ) : (
+                      htmlParser(markHighlightedText(single.body, highlights))
+                    )}
                   </div>
                 </div>
                 <div className="section__rating">
@@ -190,6 +330,9 @@ export class SingleArticle extends Component {
                       )}
                       <div>{article.votes.dislikes}</div>
                     </div>
+                    <div id="bookmark-btn" className={`btn-bookmark ${this.state.hasbookmarkedClass}`} title="bookmark" onClick= {this.bookmarks}>
+                    {article.hasBookmarked === true ? <i class="icofont-book-mark changeColor"></i> : <i class="icofont-book-mark"></i>}
+                  </div>
                   </div>
                 </div>
                 <ShareArticle shareArticleUrl={shareArticleUrl} />
@@ -208,7 +351,8 @@ export class SingleArticle extends Component {
 }
 const mapStateToProps = state => ({
   articles: state.articles,
-  isAuth: state.login.isAuthenticated
+  isAuth: state.login.isAuthenticated,
+  highlights: state.highlight.highlights
 });
 SingleArticle.propTypes = {
   singleArticle: PropTypes.func.isRequired,
@@ -218,8 +362,12 @@ SingleArticle.propTypes = {
   dislikeArticle: PropTypes.func.isRequired,
   deleteArticle: PropTypes.func.isRequired,
   isAuth: PropTypes.bool.isRequired,
+  getComments: PropTypes.func,
   setReadingStats: PropTypes.func.isRequired,
-  getComments: PropTypes.func.isRequired
+  highlightText: PropTypes.func,
+  getUserHighlights: PropTypes.func,
+  highlights: PropTypes.array,
+  bookmarkArticle: PropTypes.func.isRequired
 };
 // eslint-disable-next-line max-len
 export default connect(
@@ -230,6 +378,9 @@ export default connect(
     dislikeArticle,
     deleteArticle,
     getComments,
-    setReadingStats
+    setReadingStats,
+    highlightText,
+    getUserHighlights,
+    bookmarkArticle
   }
 )(SingleArticle);

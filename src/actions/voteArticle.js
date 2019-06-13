@@ -9,10 +9,9 @@ import {
 } from './types';
 
 const hashids = new Hashid('', 10);
-const BACKEND_URL = 'https://badass-ah-backend-staging.herokuapp.com';
 
 export const likeArticle = id => async (dispatch) => {
-  const url = `${BACKEND_URL}/api/articles/${hashids.decode(id)}/like`;
+  const url = `/api/articles/${hashids.decode(id)}/like`;
   try {
     const Like = await axios.post(url, '', config);
     dispatch(PassDispatch(VOTE_ARTICLES, Like.data));
@@ -22,7 +21,7 @@ export const likeArticle = id => async (dispatch) => {
 };
 
 export const dislikeArticle = id => async (dispatch) => {
-  const url = `${BACKEND_URL}/api/articles/${hashids.decode(id)}/dislike`;
+  const url = `/api/articles/${hashids.decode(id)}/dislike`;
   axios.post(url, '', config);
 
   try {

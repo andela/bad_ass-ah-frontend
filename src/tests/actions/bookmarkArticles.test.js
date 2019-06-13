@@ -3,7 +3,7 @@ import configuration from 'redux-mock-store';
 import ReduxThunk from 'redux-thunk';
 import Hashid from 'hashids';
 // @load action
-import { likeArticle, dislikeArticle } from '../../actions/voteArticle';
+import bookmarkArticle from '../../actions/bookmarkArticle';
 // getAllArticle,
 const middleware = [ReduxThunk];
 const mockStore = configuration(middleware);
@@ -19,48 +19,34 @@ describe('Article', () => {
   afterEach(() => {
     moxios.uninstall();
   });
-  it('should test single article with action VOTE_ARTICLE and paylod', () => {
+  it('should test single article with action BOOKMARK_ARTICLE_SUCCESS and paylod', () => {
     const id = hashids.encode('l4zbqj2dpr');
-    moxios.wait(() => {
-      const request = moxios.requests.mostRecent();
-      request.respondWith({
-        status: 201,
-        resposne: {
-          message: 'hello world'
-        }
-      });
-      const request2 = moxios.requests.mostRecent();
-      request2.respondWith({
-        status: 200,
-        response: {
-          status: 200,
-          article: {}
-        }
-      });
+    moxios.stubRequest(`https://badass-ah-backend-staging.herokuapp.com/api/articles/${id}/bookmark`, {
+      status: 201,
+      resposne: {
+        message: 'hello world'
+      }
     });
-    return Store.dispatch(likeArticle(id)).then(() => {
-      expect(Store.getActions().length).toBe(1);
-    });
+    Store.dispatch(bookmarkArticle(id));
+    expect(bookmarkArticle()).toBeDefined();
   });
 
-  it('should test single article with action VOTE_ARTICLE and paylod', () => {
+  it('should test single article with action BOOKMARK_ARTICLE_SUCCESS and paylod', () => {
     const id = hashids.encode('l4zbqj2dpr');
-    moxios.wait(() => {
-      const request = moxios.requests.mostRecent();
-      request.respondWith({
-        status: 401,
-        response: 'Unauthorized'
-      });
+    moxios.stubRequest(`https://badass-ah-backend-staging.herokuapp.com/api/articles/${id}/bookmark`, {
+      status: 401,
+      resposne: {
+        message: 'hello world'
+      }
     });
-    return Store.dispatch(likeArticle(id)).then(() => {
-      expect(Store.getActions().length).toBe(1);
-    });
+    Store.dispatch(bookmarkArticle(id));
+    expect(bookmarkArticle()).toBeDefined();
   });
 
-  it('should test single article with action VOTE_ARTICLE and paylod', () => {
+  it('should test single article with action BOOKMARK_ARTICLE_SUCCESS and paylod', () => {
     const id = hashids.encode(1);
-    Store.dispatch(dislikeArticle(id));
-    expect(dislikeArticle()).toBeDefined();
+    Store.dispatch(bookmarkArticle(id));
+    expect(bookmarkArticle()).toBeDefined();
 
     const expectedState = {
       message: 'message',
@@ -85,14 +71,14 @@ describe('Article', () => {
       });
     });
 
-    return Store.dispatch(dislikeArticle(id)).then(() => {
+    return Store.dispatch(bookmarkArticle(id)).then(() => {
       expect(Store.getActions().length).toBe(1);
     });
   });
-  it('should test single article with action VOTE_ARTICLE and paylod', () => {
+  it('should test single article with action BOOKMARK_ARTICLE_SUCCESS and paylod', () => {
     const id = hashids.encode(1);
-    Store.dispatch(dislikeArticle(id));
-    expect(dislikeArticle()).toBeDefined();
+    Store.dispatch(bookmarkArticle(id));
+    expect(bookmarkArticle()).toBeDefined();
 
     const expectedState = {
       message: 'message',
@@ -117,7 +103,7 @@ describe('Article', () => {
       });
     });
 
-    return Store.dispatch(dislikeArticle(id)).then(() => {
+    return Store.dispatch(bookmarkArticle(id)).then(() => {
       expect(Store.getActions().length).toBe(1);
     });
   });

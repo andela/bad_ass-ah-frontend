@@ -11,6 +11,7 @@
     "enzyme-adapter-react-16": "^1.13.0",
     "hashids": "^1.2.2",
     "html-react-parser": "^0.7.0",
+    "jsdom": "^15.1.1",
     "jsontokens": "^2.0.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.25",

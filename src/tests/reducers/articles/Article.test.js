@@ -1,7 +1,8 @@
 import getAllArticle from '../../../reducers/article';
 import {
   GET_ALL_ARTICLE, CREATE_ARTICLE, ARTICLE_FAILURE, LOADING, ADD_TAG,
-  REMOVE_TAG, VOTE_ARTICLES, DELETE_ARTICLE, UPDATE_ARTICLE, GET_SINGLE_ARTICLE
+  REMOVE_TAG, VOTE_ARTICLES, DELETE_ARTICLE,
+  UPDATE_ARTICLE, GET_SINGLE_ARTICLE, BOOKMARK_ARTICLE_SUCCESS
 } from '../../../actions/types';
 
 // @test
@@ -130,5 +131,27 @@ describe('Article reducer', () => {
       payload
     });
     expect(state).toEqual({ message: payload });
+  });
+  it('should like an article when BOOKMARK_ARTICLE_SUCCESS is called', () => {
+    const initialState = {
+      allArticles: [],
+      newArticle: null,
+      loading: true,
+      error: {},
+      newTag: [],
+      article: null,
+      likes: null,
+      dislikes: null,
+      hasBookmarked: null
+    };
+    const payload = {
+      likes: 1,
+      dislikes: 0
+    };
+    const state = getAllArticle(initialState, {
+      type: BOOKMARK_ARTICLE_SUCCESS,
+      payload
+    });
+    expect(state.bookmarkMessage).toEqual(payload.bookmark);
   });
 });

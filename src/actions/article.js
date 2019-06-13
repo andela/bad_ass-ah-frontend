@@ -4,8 +4,16 @@ import dotenv from 'dotenv';
 
 // @call type we are going to use
 import {
-  GET_ALL_ARTICLE, CREATE_ARTICLE, ARTICLE_FAILURE, LOADING, ADD_TAG, REMOVE_TAG,
-  GET_SINGLE_ARTICLE, VOTE_ARTICLES, UPDATE_ARTICLE, DELETE_ARTICLE
+  GET_ALL_ARTICLE,
+  CREATE_ARTICLE,
+  ARTICLE_FAILURE,
+  LOADING,
+  ADD_TAG,
+  REMOVE_TAG,
+  GET_SINGLE_ARTICLE,
+  VOTE_ARTICLES,
+  UPDATE_ARTICLE,
+  DELETE_ARTICLE
 } from './types';
 import Config, { PassDispatch } from '../helpers/Config';
 import { checkToken } from '../utils/checkToken';
@@ -14,16 +22,16 @@ dotenv.config();
 const hashids = new Hashid('', 10);
 
 // @get all article actions
-const getAllArticle = () => (dispatch) => {
+const getAllArticle = () => async (dispatch) => {
   const url = '/api/articles';
-  axios
-    .get(url)
-    .then((response) => {
-      dispatch(PassDispatch(GET_ALL_ARTICLE, response.data));
-    })
-    .catch((error) => {
+  try {
+    const res = await axios.get(url);
+    dispatch(PassDispatch(GET_ALL_ARTICLE, res.data));
+  } catch (error) {
+    if (error.response) {
       dispatch(PassDispatch(ARTICLE_FAILURE, error.response));
-    });
+    }
+  }
 };
 // @loading
 const loading = () => ({
@@ -90,7 +98,8 @@ const updateArticle = (handle, data) => async (dispatch) => {
 const deleteArticle = id => async (dispatch) => {
   const url = `/api/articles/${hashids.decode(id)}`;
   checkToken();
-  await axios.delete(url, Config)
+  await axios
+    .delete(url, Config)
     .then((res) => {
       dispatch(PassDispatch(DELETE_ARTICLE, res.data));
     })
