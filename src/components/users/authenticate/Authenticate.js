@@ -37,6 +37,7 @@ export class Authenticate extends Component {
 
     let errorMessage = null;
 
+    // eslint-disable-next-line react/prop-types
     if (this.props.error) errorMessage = <p className={'form__error'}>{this.props.error}</p>;
 
     return (
