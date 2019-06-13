@@ -1,6 +1,8 @@
+// <Redirect to={this.props.loginRedirectPath} />
+// Redirect,
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Redirect, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Input from '../../common/input/Input';
 import Button from '../../common/button/Button';
@@ -79,8 +81,8 @@ export class Login extends Component {
 
   render() {
     let loginRedirect = null;
-
-    if (this.props.isAuthenticated) loginRedirect = <Redirect to={this.props.loginRedirectPath} />;
+    // eslint-disable-next-line max-len
+    if (this.props.isAuthenticated) loginRedirect = window.location.replace(this.props.loginRedirectPath);
 
     return (
       <>

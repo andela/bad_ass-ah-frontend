@@ -3,7 +3,7 @@ import { decodeToken } from 'jsontokens';
 const token = localStorage.getItem('token');
 const Config = {
   headers: {
-    'Content-Type': 'multipart/form-data',
+    'Content-Type': 'multipart/form-data'
   }
 };
 const PassDispatch = (type, payload) => ({
