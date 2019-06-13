@@ -12,6 +12,8 @@ import errors from './errors/errors';
 import ratingReducer from './rateArticle';
 import readingStatsReducer from './readingStats';
 import highlight from './highlight';
+import registration from './registration';
+import activate from './activate';
 
 // @create root reducer
 
@@ -21,13 +23,15 @@ const rootReducer = combineReducers({
   forgotPassword,
   resetPassword,
   login: loginReducer,
+  register: registration,
   articles: getAllArticle,
   profile,
   comment,
   errors,
   rating: ratingReducer,
   readingStats: readingStatsReducer,
-  highlight
+  highlight,
+  activate
 });
 
 export default rootReducer;

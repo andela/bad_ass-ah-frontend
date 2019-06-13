@@ -58,7 +58,7 @@ class Navbar extends Component {
           </div>
           <div className="top-menus">
             <div className="title">
-              <h1>Authors Heaven</h1>
+              <h1>Authors Haven</h1>
             </div>
             <div className="navigation">
               <ul>
@@ -108,8 +108,8 @@ class Navbar extends Component {
                 <li><Link to="/view-profile"><i className="icofont-ui-user"></i>My Profile</Link></li>
                 <li><Link to="/"><i className="icofont-settings"></i>Settings</Link></li>
                 <li onClick={ this.logout } data-test="logout" className="logout"><Link to="/"><i className="icofont-logout"></i>Logout</Link></li></ul>
-                  : <ul><li><Link to="/login"><i className="icofont-sign-in"></i>SignIn</Link></li>
-                <li><Link to="/register"><i className="icofont-sign-out"></i>SignUp</Link></li>
+                  : <ul><li><Link to="/auth"><i className="icofont-sign-in"></i>SignIn</Link></li>
+                <li><Link to="/auth"><i className="icofont-sign-out"></i>SignUp</Link></li>
                 <li><Link to="/forgot-password"><i className="icofont-ui-password"></i>Forgot password</Link></li></ul> }
             </div>}
           </div>

@@ -8,6 +8,7 @@ import SocialLogin from '../sociaLogin/SociaLogin';
 import Login from '../login/Login';
 import logo from '../../../assets/Images/icons/world.svg';
 import Button from '../../common/button/Button';
+import Registration from '../registration/Registration';
 
 export class Authenticate extends Component {
   state = {
@@ -62,7 +63,7 @@ export class Authenticate extends Component {
             <div className='auth__form-error'>
               {errorMessage}
             </div>
-            {currentForm === 'login' ? <Login /> : 'Sign UP'}
+            {currentForm === 'login' ? <Login /> : <Registration/>}
             <SocialLogin />
           </div>
         </div>
@@ -70,6 +71,10 @@ export class Authenticate extends Component {
     );
   }
 }
+
+Authenticate.propTypes = {
+  error: PropTypes.objectOf(PropTypes.object).isRequired,
+};
 const mapStateToProps = state => ({
   isAuthenticated: state.socialAuth.isAuthenticated,
   error: state.login.error
