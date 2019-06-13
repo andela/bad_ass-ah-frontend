@@ -127,42 +127,86 @@
     }
   }
 }
-.toggleNavBar{
+.toggleNavBar {
   position: absolute;
   right: 0;
   margin-right: 100px;
   background: #fff;
-  box-shadow: 0 1px 2px rgba(0,0,0,.25), 0 0 1px rgba(0,0,0,.35);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 0 1px rgba(0, 0, 0, 0.35);
   padding: 5px;
   top: 0;
   z-index: 10;
   margin-top: 90px;
   width: 12%;
-  li{
+  li {
     padding: 20px;
     padding-left: 10px;
   }
-  a{
+  a {
     color: $blackColor;
-    i{
+    i {
       padding-right: 5px;
     }
   }
 }
-// body {
-//   background-color: #000;
-//   margin-top: 20%;
-//   display: flex;
-//   justify-content: space-around;
-// }
-// .navbar {
-//   padding: 0.7rem 2rem;
-//   position: fixed;
-//   width: 40%;
-//   top: 0;
-//   left: 0;
-//   background: $darkcolour;
-//   opacity: 0.9;
-//   color: $whitecolour;
-//   }
-  
+
+.toggleNotification {
+  right: 157px;
+  z-index: 110;
+  background: $graycolor;
+  width: 20%;
+  padding: 0px;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+
+  ul{
+    li{
+      background: $whitecolor;
+      margin-bottom: 2px;
+      color: #333;
+      cursor: pointer;
+
+      i{
+        display: block;
+        float: left;
+        color: #333;
+      }
+      span{
+        display: block;
+        margin-left: 30px;
+      }
+      
+    }
+    li:hover{
+      background: $graycolor;
+    }
+    .no-notification{
+      text-align: center;
+    }
+  }
+}
+.notification-badge {
+  i {
+    font-size: 30px;
+    color: gray;
+  }
+  span {
+    font-size: 13px;
+    background: $graycolor;
+    display: inline-block;
+    width: 20px;
+    padding: 3px;
+    text-align: center;
+    border-radius: 50%;
+    font-weight: bolder;
+    color: $whitecolor;
+    background: #dc3545;
+    position: absolute;
+    right: 15px;
+    bottom: 30px;
+  }
+}
+
+.dropdownHeight{
+  height: 470px;
+  overflow-y: auto;
+}

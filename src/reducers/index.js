@@ -14,6 +14,7 @@ import readingStatsReducer from './readingStats';
 import highlight from './highlight';
 import registration from './registration';
 import activate from './activate';
+import notification from './notification';
 
 // @create root reducer
 
@@ -31,7 +32,8 @@ const rootReducer = combineReducers({
   rating: ratingReducer,
   readingStats: readingStatsReducer,
   highlight,
-  activate
+  activate,
+  notification
 });
 
 export default rootReducer;
