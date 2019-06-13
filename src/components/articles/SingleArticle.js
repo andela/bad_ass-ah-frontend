@@ -7,13 +7,15 @@ import PropTypes from 'prop-types';
 import htmlParser from 'html-react-parser';
 import stringParser from 'react-to-string';
 import Hashids from 'hashids';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { likeArticle, dislikeArticle } from '../../actions/voteArticle';
 import { singleArticle, deleteArticle } from '../../actions/article';
 import Layout from '../layouts/Layout';
 import NotFound from '../NotFound';
 import Comment from '../comment/comments';
 import Rating from './rating/Rating';
+import bookmarkArticle from '../../actions/bookmarkArticle';
+import { isAuthenticated } from '../../helpers/Config';
 import { getComments } from '../../actions/comment/comment';
 import { setReadingStats } from '../../actions';
 import ShareArticle from './shareArticle/shareArticle';
@@ -22,8 +24,8 @@ import CommentPopover from '../popovers/Comment';
 import Alert from '../layouts/Alert';
 import { highlightText, getUserHighlights } from '../../actions/highlight';
 import { markHighlightedText } from '../../utils/markHighlightedText';
+import { setLoginRedirectPath } from '../../actions/login';
 import Spinner from '../layouts/Spinner';
-import { isAuthenticated } from '../../helpers/Config';
 
 const hashids = new Hashids('', 10);
 
@@ -32,6 +34,8 @@ export class SingleArticle extends Component {
     articleId: '',
     hasLikedClass: null,
     hasDilikedClass: null,
+    hasbookmarkedClass: null,
+    bookmarkArticle: null,
     articleId2: null,
     userId: '',
     prevPath: '',
@@ -40,7 +44,8 @@ export class SingleArticle extends Component {
     indexEnd: '',
     text: '',
     comment: '',
-    handle: this.props.match.params.handle
+    handle: this.props.match.params.handle,
+    redirectOnBookmark: false
   };
 
   async componentWillMount() {
@@ -50,6 +55,7 @@ export class SingleArticle extends Component {
       getComments
     } = this.props;
     this.setState({ articleId2: params.handle });
+    this.getArticle();
     const user = await isAuthenticated();
     this.setState({ userId: user.payload.id, shareArticleUrl: url }, () => {
       getComments(this.state.articleId2);
@@ -141,6 +147,18 @@ export class SingleArticle extends Component {
     this.getArticle();
   };
 
+bookmarks = async () => {
+  if (this.props.isAuth) {
+    const { articleId } = this.state;
+    const { bookmarkArticle } = this.props;
+    await bookmarkArticle(articleId);
+    this.getArticle();
+  } else {
+    this.props.setLoginRedirectPath(window.location.pathname);
+    this.setState({ redirectOnBookmark: true });
+  }
+}
+
   onSelectedText = () => {
     const popup = document.getElementById('highlight-popup');
     document.onmouseup = () => {
@@ -221,7 +239,7 @@ export class SingleArticle extends Component {
   render() {
     let single;
     const {
-      prevPath, userId, articleId2, shareArticleUrl
+      prevPath, userId, articleId2, shareArticleUrl, redirectOnBookmark
     } = this.state;
     const {
       articles: { article, error, message },
@@ -231,8 +249,14 @@ export class SingleArticle extends Component {
 
     this.onSelectedText();
 
+    let redirectOnBookmarkURL = null;
+    if (redirectOnBookmark) {
+      redirectOnBookmarkURL = <Redirect to='/auth' />;
+    }
+
     return (
       <Layout>
+        {redirectOnBookmarkURL}
         {message !== '' && window.location.replace(prevPath)}
         <HighlightPopover onHighlight={this.onHighlight} />
         <CommentPopover onChange={this.onChange} onSubmit={this.onSubmit} />
@@ -321,6 +345,9 @@ export class SingleArticle extends Component {
                       )}
                       <div>{article.votes.dislikes}</div>
                     </div>
+                    <div id="bookmark-btn" className={`btn-bookmark ${this.state.hasbookmarkedClass}`} title="bookmark" onClick= {this.bookmarks}>
+                    {article.hasBookmarked === true ? <i class="icofont-book-mark changeColor"></i> : <i class="icofont-book-mark"></i>}
+                  </div>
                   </div>
                 </div>
                 <ShareArticle shareArticleUrl={shareArticleUrl} />
@@ -354,7 +381,9 @@ SingleArticle.propTypes = {
   setReadingStats: PropTypes.func.isRequired,
   highlightText: PropTypes.func,
   getUserHighlights: PropTypes.func,
-  highlights: PropTypes.array
+  highlights: PropTypes.array,
+  bookmarkArticle: PropTypes.func.isRequired,
+  setLoginRedirectPath: PropTypes.func
 };
 // eslint-disable-next-line max-len
 export default connect(
@@ -367,6 +396,8 @@ export default connect(
     getComments,
     setReadingStats,
     highlightText,
-    getUserHighlights
+    getUserHighlights,
+    bookmarkArticle,
+    setLoginRedirectPath
   }
 )(SingleArticle);

@@ -71,6 +71,7 @@ const props = {
   singleArticle: jest.fn(),
   deleteArticle: jest.fn(),
   setReadingStats: jest.fn(),
+  setLoginRedirectPath: jest.fn(),
   isAuth: true,
   match: { params: jest.fn() },
   addTag: jest.fn(),
@@ -98,6 +99,7 @@ const props = {
   },
   likeArticle: jest.fn(),
   dislikeArticle: jest.fn(),
+  bookmarkArticle: jest.fn(),
   isAuthenticated: jest.fn(),
   getUserHighlights: jest.fn(),
   payload: {
@@ -124,6 +126,24 @@ describe('<SingleArticle />', () => {
     await component.instance().likeArticle();
     expect(spy).toHaveBeenCalled();
     expect(props.likeArticle).toHaveBeenCalled();
+  });
+
+  it('should call bookmarkArticle method when the bookmark button is clicked', async () => {
+    const spy = jest.spyOn(component.instance(), 'bookmarks');
+    component.instance().forceUpdate();
+    await component.instance().bookmarks();
+    expect(spy).toHaveBeenCalled();
+    expect(props.bookmarkArticle).toHaveBeenCalled();
+  });
+
+  it('should call bookmarkArticle method when the bookmark button is clicked', async () => {
+    const spy = jest.spyOn(component.instance(), 'bookmarks');
+    component.instance().forceUpdate();
+    component.setProps({ isAuth: false });
+    component.setState({ redirectOnBookmark: true });
+    await component.instance().bookmarks();
+    expect(spy).toHaveBeenCalled();
+    expect(props.bookmarkArticle).toHaveBeenCalled();
   });
 
   it('should call dislikeArticle method when the dislike button is clicked', async () => {

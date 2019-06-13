@@ -47,4 +47,9 @@ describe('CommentForm Component', () => {
   it('should test the function ComponentWillreceiveProps', () => {
     component.instance().componentWillReceiveProps(props);
   });
+
+  it('should test the function ComponentWillreceiveProps', () => {
+    // component.instance().componentWillReceiveProps(props);
+    component.setProps({ profile: { profile: null } });
+  });
 });

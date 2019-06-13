@@ -8,6 +8,9 @@ const store = mockStore();
 
 describe('alert actions', () => {
   beforeEach(() => {
+    // eslint-disable-next-line no-unused-expressions
+    jest.useFakeTimers();
+    jest.runAllTimers();
     store.clearActions();
   });
 
