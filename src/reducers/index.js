@@ -15,6 +15,7 @@ import highlight from './highlight';
 import registration from './registration';
 import activate from './activate';
 import notification from './notification';
+import getBookmarks from './fetchBookmark';
 
 // @create root reducer
 
@@ -33,7 +34,8 @@ const rootReducer = combineReducers({
   readingStats: readingStatsReducer,
   highlight,
   activate,
-  notification
+  notification,
+  getBookmarks
 });
 
 export default rootReducer;

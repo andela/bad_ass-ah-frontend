@@ -167,6 +167,7 @@
           .blog-info {
             position: absolute;
             margin-left: 10px;
+            font-family: $rokitFont;
 
             span {
               display: block;
@@ -225,6 +226,7 @@
               font-weight: normal;
               font-size: 15px;
               margin-top: 5px;
+              font-family: $rokitFont;
             }
           }
         }

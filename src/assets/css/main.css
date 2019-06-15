@@ -511,7 +511,8 @@ footer {
               border-radius: 100%; }
           .profile-section .user-articles .user-blogs .blogs-article .blogs-avatar-info .blog-info {
             position: absolute;
-            margin-left: 10px; }
+            margin-left: 10px;
+            font-family: "Rokkitt", serif; }
             .profile-section .user-articles .user-blogs .blogs-article .blogs-avatar-info .blog-info span {
               display: block;
               color: #333; }
@@ -551,7 +552,8 @@ footer {
             color: #000;
             font-weight: normal;
             font-size: 15px;
-            margin-top: 5px; }
+            margin-top: 5px;
+            font-family: "Rokkitt", serif; }
 
 .profile-container {
   background: #d6d8d9;
@@ -825,91 +827,61 @@ footer {
   .highlight-comment .comment {
     padding: 10px; }
 
-.popup {
-  background: #fff;
-  padding: 20px;
+.C-popUp {
   position: absolute;
-  border-radius: 50px;
-  width: 200px;
-  box-shadow: 1px 2px 8px #333;
-  text-align: center;
-  transition: all 0.45s ease-in-out;
-  z-index: 1; }
-  .popup button {
-    display: inline-block;
-    font-size: 13px;
-    cursor: pointer;
-    margin-right: 10px;
-    padding: 5px;
-    border-radius: 5px; }
-  .popup button:hover {
-    background: #d6d8d9; }
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: #5600ff63;
+  z-index: 100; }
 
-.hide {
-  display: none; }
-
-.highlighted {
-  background: aqua;
-  cursor: pointer; }
-
-.highlighted:hover {
-  text-decoration: underline; }
-
-.comment-popover {
+.C-popupDescription {
   background: #fff;
-  border: 1px solid #d6d8d9;
-  width: 400px;
-  border-radius: 5px;
-  position: absolute;
-  z-index: 1;
-  box-shadow: 1px 2px 8px #333;
-  transition: all 0.45s ease-in-out; }
-  .comment-popover .title {
-    border-bottom: 1px solid #d6d8d9;
-    background: #d6d8d9; }
-    .comment-popover .title .title-text {
-      padding: 10px;
-      font-size: 22px; }
-  .comment-popover form {
-    padding: 10px; }
-    .comment-popover form .comment-input {
-      display: block;
-      padding: 10px;
-      border: 1px solid #d6d8d9;
-      border-radius: 2px;
-      width: 100%;
-      font-size: 15px;
-      box-sizing: border-box;
-      margin-bottom: 15px; }
-    .comment-popover form .comment-btn {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
-      padding: 5px;
-      border: 1px;
-      border-radius: 2px;
-      font-size: 13px;
-      width: 80px;
-      background: #d6d8d9;
-      cursor: pointer; }
+  width: 25%;
+  border-radius: 4px;
+  color: #000;
+  padding: 20px; }
 
-.highlight-comment {
-  background: #fff;
-  border: 1px solid #d6d8d9;
-  width: 350px;
-  border-radius: 5px;
+.C-popupDescription img {
+  width: 60px; }
+
+.C-popup-success {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 75%; }
+
+.C-popup-message {
+  font-size: 13px;
+  margin-bottom: 15px;
+  text-align: center; }
+
+.C-popup-message h1 {
+  font-size: 1.3rem;
+  font-weight: bold;
+  margin-bottom: 5px; }
+
+.C-closePopUp {
+  right: 0;
   position: absolute;
-  z-index: 1;
-  box-shadow: 1px 2px 8px #333;
-  transition: all 0.45s ease-in-out; }
-  .highlight-comment .title {
-    border-bottom: 1px solid #d6d8d9;
-    background: #d6d8d9; }
-    .highlight-comment .title .title-text {
-      padding: 10px;
-      font-size: 22px; }
-  .highlight-comment .comment {
-    padding: 10px; }
+  margin: 20px;
+  font-size: 30px;
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: #fff;
+  outline: none;
+  box-shadow: none; }
+
+.activate {
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+  .activate a {
+    font-size: 1.5em; }
 
 .C-popUp {
   position: absolute;
@@ -967,17 +939,10 @@ footer {
   .activate a {
     font-size: 1.5em; }
 
-*,
-body {
-  margin: 0;
-  padding: 0; }
-
-body {
-  font-family: 'Arapey', serif; }
-  body ul {
-    list-style-type: none; }
-  body a {
-    text-decoration: none; }
+.user-articles {
+  width: 60% !important;
+  overflow-y: none !important;
+  height: auto !important; }
 
 *,
 body {
@@ -1606,8 +1571,7 @@ footer h1 {
   position: relative;
   margin-top: 40px;
   margin-bottom: 40px;
-  font-family: "Source Sans Pro", sans-serif;
-  /*@Copain*/ }
+  font-family: "Source Sans Pro", sans-serif; }
   .G-showcase .G-create-article {
     display: flex;
     width: 45%;
@@ -1823,7 +1787,8 @@ footer h1 {
 
 .c-like-grid {
   display: grid;
-  grid-gap: 10px; }
+  grid-gap: 10px;
+  grid-template-columns: 1fr 1fr 1fr; }
 
 .turnLike {
   border: 1px solid red !important; }
@@ -1866,3 +1831,15 @@ footer h1 {
     padding-right: 2px; }
   .btn-bookmark div {
     display: inline-block; }
+
+*,
+body {
+  margin: 0;
+  padding: 0; }
+
+body {
+  font-family: 'Arapey', serif; }
+  body ul {
+    list-style-type: none; }
+  body a {
+    text-decoration: none; }

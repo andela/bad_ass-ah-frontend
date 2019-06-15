@@ -13,6 +13,7 @@ import CreateArticle from '../components/articles/CreateArticle';
 // eslint-disable-next-line import/no-named-as-default
 import SingleArticle from '../components/articles/SingleArticle';
 import ViewProfile from '../components/users/profile/ViewProfile';
+import ViewBookmark from '../components/users/profile/ViewBookmarks';
 import EditProfile from '../components/users/profile/EditProfile';
 
 const Routes = () => (
@@ -26,6 +27,7 @@ const Routes = () => (
       <Route exact path="/story/new-story" component={CreateArticle} />
       <Route exact path="/story/:handle" component={SingleArticle} />
       <Route exact path="/view-profile" component={ViewProfile} />
+      <Route exact path="/bookmark" component={ViewBookmark} />
       <Route exact path="/edit-profile" component={EditProfile} />
     </Switch>
   </Router>

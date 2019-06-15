@@ -3,7 +3,14 @@ import configuration from 'redux-mock-store';
 import ReduxThunk from 'redux-thunk';
 import Hashid from 'hashids';
 // @load action
-import bookmarkArticle from '../../actions/bookmarkArticle';
+import {
+  bookmarkArticle,
+  fetchBookmarks,
+} from '../../actions/bookmarkArticle';
+import {
+  VIEW_BOOKMARKS,
+  VIEW_BOOKMARKS_FAILURE,
+} from '../../actions/types';
 // getAllArticle,
 const middleware = [ReduxThunk];
 const mockStore = configuration(middleware);
@@ -105,6 +112,37 @@ describe('Article', () => {
 
     return Store.dispatch(bookmarkArticle(id)).then(() => {
       expect(Store.getActions().length).toBe(1);
+    });
+  });
+
+  it('should dispatch successful action', async () => {
+    const BACKEND_URL = 'https://badass-ah-backend-staging.herokuapp.com';
+    await moxios.stubRequest(`${BACKEND_URL}/api/articles/bookmark`, {
+      status: 200,
+      response: []
+    });
+    return Store.dispatch(fetchBookmarks()).then(() => {
+      const expectedAction = [{
+        type: VIEW_BOOKMARKS,
+        payload: []
+      }];
+      expect(Store.getActions()).toEqual(expectedAction);
+    });
+  });
+
+  it('should dispatch successful action', async () => {
+    const BACKEND_URL = 'https://badass-ah-backend-staging.herokuapp.com';
+    await moxios.stubRequest(`${BACKEND_URL}/api/articles/bookmark`, {
+      status: 400,
+      response: 'Request failed with status code 400'
+    });
+    const expectedAction = [{
+      payload: 'Request failed with status code 400',
+      type: VIEW_BOOKMARKS_FAILURE
+    }];
+
+    return Store.dispatch(fetchBookmarks()).then(() => {
+      expect(Store.getActions()).toEqual(expectedAction);
     });
   });
 });

@@ -15,7 +15,7 @@ import Layout from '../layouts/Layout';
 import NotFound from '../NotFound';
 import Comment from '../comment/comments';
 import Rating from './rating/Rating';
-import bookmarkArticle from '../../actions/bookmarkArticle';
+import { bookmarkArticle } from '../../actions/bookmarkArticle';
 import { isAuthenticated } from '../../helpers/Config';
 import { getComments } from '../../actions/comment/comment';
 import { setReadingStats } from '../../actions';
