@@ -68,6 +68,8 @@ const document = {
 Object.defineProperty(global, 'document', { value: document });
 
 const props = {
+  unfollowUser: jest.fn(),
+  unfollowAUser: jest.fn(),
   singleArticle: jest.fn(),
   deleteArticle: jest.fn(),
   setReadingStats: jest.fn(),
@@ -111,7 +113,12 @@ const props = {
     state: {
       prevPath: '/'
     }
-  }
+  },
+  profile: { following: {}, followers: {} },
+  follow: { unfollowOneUser: {}, followOneUser: {} },
+  getUserFollowing: jest.fn(),
+  single: {},
+  followAUser: jest.fn()
 };
 
 describe('<SingleArticle />', () => {
@@ -238,13 +245,18 @@ describe('<SingleArticle />', () => {
       highlight: { highlights: 'hey' }
     };
     const props = mapStateToProps(state);
-    expect(props).toEqual(
-      {
-        articles:
-        ['hello world'],
-        isAuth: true,
-        highlights: 'hey'
-      }
-    );
+    expect(props).toEqual({
+      articles: ['hello world'],
+      isAuth: true,
+      highlights: 'hey'
+    });
+  });
+  it('should call unfollowAUser method when the button is clicked', () => {
+    const unfollow = 2;
+    const wrapper = shallow(<SingleArticle {...props} />);
+    const spy = jest.spyOn(wrapper.instance(), 'unfollowAUser');
+    wrapper.instance().forceUpdate();
+    wrapper.instance().unfollowAUser(unfollow);
+    expect(spy).toHaveBeenCalled();
   });
 });

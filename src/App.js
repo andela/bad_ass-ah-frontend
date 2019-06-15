@@ -7,7 +7,7 @@ import 'moment-timezone';
 import Store from './Store';
 import Routers from './routes/routes';
 import { loginCheckState } from './actions/login';
-import { getCurrentProfile } from './actions/profile';
+import { getCurrentProfile, getUserFollowers, getUserFollowing } from './actions/profile';
 
 // @store our css file
 import './assets/css/main.css';
@@ -20,7 +20,12 @@ const REACT_APP_BACKEND_URL = 'https://badass-ah-backend-staging.herokuapp.com';
 const App = () => {
   axios.defaults.baseURL = REACT_APP_BACKEND_URL;
   useEffect(() => {
-    Store.dispatch(getCurrentProfile(), Store.dispatch(loginCheckState()));
+    Store.dispatch(
+      getCurrentProfile(),
+      Store.dispatch(loginCheckState()),
+      Store.dispatch(getUserFollowers()),
+      Store.dispatch(getUserFollowing())
+    );
   }, []);
 
   return (

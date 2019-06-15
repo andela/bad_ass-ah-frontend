@@ -1,5 +1,5 @@
+/* eslint-disable no-unused-expressions */
 /* eslint-disable no-unused-vars */
-/* eslint-disable array-callback-return */
 /* eslint-disable class-methods-use-this */
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
@@ -28,6 +28,9 @@ import { markHighlightedText } from '../../utils/markHighlightedText';
 import { setLoginRedirectPath } from '../../actions/login';
 import Spinner from '../layouts/Spinner';
 import Report from './reporting/Report';
+import followUser, { unfollowUser } from '../../actions/user/followUser';
+import userDefaulAvatar from '../../assets/Images/icons/boy.svg';
+import { getUserFollowing } from '../../actions/profile';
 
 const hashids = new Hashids('', 10);
 
@@ -47,7 +50,9 @@ export class SingleArticle extends Component {
     text: '',
     comment: '',
     handle: this.props.match.params.handle,
-    redirectOnBookmark: false
+    redirectOnBookmark: false,
+    displayFollowUserBox: false,
+    redirectOnFollow: false
   };
 
   async componentWillMount() {
@@ -62,6 +67,7 @@ export class SingleArticle extends Component {
     this.setState({ userId: user.payload.id, shareArticleUrl: url }, () => {
       getComments(this.state.articleId2);
     });
+    this.props.getUserFollowing();
   }
 
   getArticle = () => {
@@ -78,10 +84,11 @@ export class SingleArticle extends Component {
   async componentDidMount() {
     await this.getArticle();
     this.setReadingStats();
+
     // this.props.getComments(this.state.articleId2);
   }
 
-  componentDidUpdate() {
+  componentDidUpdate(prevProps) {
     const elements = document.getElementsByClassName('highlighted');
     const topScroll = window.pageYOffset || document.documentElement.scrollTop;
 
@@ -159,7 +166,7 @@ export class SingleArticle extends Component {
       this.props.setLoginRedirectPath(window.location.pathname);
       this.setState({ redirectOnBookmark: true });
     }
-  }
+  };
 
   onSelectedText = () => {
     const popup = document.getElementById('highlight-popup');
@@ -238,26 +245,96 @@ export class SingleArticle extends Component {
     deleteArticle(id);
   };
 
+  followAUser = (followee) => {
+    const { userId } = this.state;
+    userId === null && this.setState({ redirectOnFollow: true });
+    const { followUser } = this.props;
+    followUser(followee);
+  };
+
+  unfollowAUser = (unfollow) => {
+    const { unfollowUser } = this.props;
+    unfollowUser(unfollow);
+  };
+
   render() {
     let single;
+    let followees;
+    let followDiv;
     const {
-      prevPath, userId, articleId2, shareArticleUrl, redirectOnBookmark
+      prevPath,
+      userId,
+      articleId2,
+      shareArticleUrl,
+      redirectOnBookmark,
+      displayFollowUserBox,
+      redirectOnFollow
     } = this.state;
     const {
       articles: { article, error, message },
-      highlights
+      highlights,
+      profile,
+      follow
     } = this.props;
+    const { followers, following } = profile;
+    const { followOneUser, unfollowOneUser } = follow;
+
     if (article !== null) if (article && article.article !== undefined) single = article.article;
+    if (profile !== null) {
+      if (following && following.following !== undefined) followees = following.following;
+    }
 
     this.onSelectedText();
 
     let redirectOnBookmarkURL = null;
     if (redirectOnBookmark) {
-      redirectOnBookmarkURL = <Redirect to='/auth' />;
+      redirectOnBookmarkURL = <Redirect to="/auth" />;
+    }
+    let redirect = null;
+    let followBox = null;
+    if (redirectOnFollow) {
+      redirect = <Redirect to="/auth" />;
+    }
+
+    if (single !== undefined) {
+      followBox = (
+        <div className="follow_box" onClick={this.followAUser.bind(this, single.author)}>
+          follow
+        </div>
+      );
+    }
+
+    if (followOneUser !== null) {
+      followBox = (
+        <div className="unfollow_box" onClick={this.unfollowAUser.bind(this, single.author)}>
+          unfollow
+        </div>
+      );
+    }
+
+    if (
+      single !== undefined
+      && followees !== undefined
+      && followOneUser === null
+      && unfollowOneUser === null
+    ) {
+      for (let i = 0; i < followees.length; i += 1) {
+        if (followees[i].userId === single.author) {
+          followBox = (
+            <div className="unfollow_box" onClick={this.unfollowAUser.bind(this, single.author)}>
+              unfollow
+            </div>
+          );
+        }
+      }
+    }
+    if (single !== undefined && single.author === userId) {
+      followBox = null;
     }
     return (
       <Layout>
         {redirectOnBookmarkURL}
+        {redirect}
         {message !== '' && window.location.replace(prevPath)}
         <HighlightPopover onHighlight={this.onHighlight} />
         <CommentPopover onChange={this.onChange} onSubmit={this.onSubmit} />
@@ -268,6 +345,15 @@ export class SingleArticle extends Component {
                 <Alert />
                 <div className="G-form-group">
                   <h1 className="G-storyTitle">{stringParser(htmlParser(UpperCase(single.title)))}</h1>
+                   <div className="author_in_top">
+                    <div className="author_avatar">
+                      <img src={single.authorfkey.image || userDefaulAvatar} alt="" />
+                    </div>
+                    <div className="author_on_top_name">
+                      <span>{single.authorfkey.username}</span>
+                    </div>
+                    {followBox}
+                  </div>
                   <p className='reading-time'>reading time: {single.readingTime}</p>
                   {userId === single.authorfkey.id && (
                     <div className="drop-article singleDrop">
@@ -329,7 +415,7 @@ export class SingleArticle extends Component {
                       {article.votes.hasLiked === true ? (
                         <i className="icofont-heart changeColor" />
                       ) : (
-                          <i className="icofont-heart" />
+                        <i className="icofont-heart" />
                       )}
                       <div>{article.votes.likes}</div>
                     </div>
@@ -342,12 +428,21 @@ export class SingleArticle extends Component {
                       {article.votes.hasDisliked === true ? (
                         <i className="icofont-ui-love-broken changeColor" />
                       ) : (
-                          <i className="icofont-ui-love-broken" />
+                        <i className="icofont-ui-love-broken" />
                       )}
                       <div>{article.votes.dislikes}</div>
                     </div>
-                    <div id="bookmark-btn" className={`btn-bookmark ${this.state.hasbookmarkedClass}`} title="bookmark" onClick={this.bookmarks}>
-                      {article.hasBookmarked === true ? <i class="icofont-book-mark changeColor"></i> : <i class="icofont-book-mark"></i>}
+                    <div
+                      id="bookmark-btn"
+                      className={`btn-bookmark ${this.state.hasbookmarkedClass}`}
+                      title="bookmark"
+                      onClick={this.bookmarks}
+                    >
+                      {article.hasBookmarked === true ? (
+                        <i class="icofont-book-mark changeColor" />
+                      ) : (
+                        <i class="icofont-book-mark" />
+                      )}
                     </div>
                   </div>
                   <Report articleId={this.state.articleId2} />
@@ -356,9 +451,9 @@ export class SingleArticle extends Component {
                 <Comment articleId={articleId2} />
               </div>
             ) : (
-                <center>
-                  {error && error.errors !== undefined && <NotFound error={error.errors.body[0]} />}
-                </center>
+              <center>
+                {error && error.errors !== undefined && <NotFound error={error.errors.body[0]} />}
+              </center>
             )}
           </Fragment>
         </div>
@@ -369,7 +464,9 @@ export class SingleArticle extends Component {
 export const mapStateToProps = state => ({
   articles: state.articles,
   isAuth: state.login.isAuthenticated,
-  highlights: state.highlight.highlights
+  highlights: state.highlight.highlights,
+  profile: state.profile,
+  follow: state.follow
 });
 SingleArticle.propTypes = {
   singleArticle: PropTypes.func.isRequired,
@@ -385,7 +482,12 @@ SingleArticle.propTypes = {
   getUserHighlights: PropTypes.func,
   highlights: PropTypes.array,
   bookmarkArticle: PropTypes.func.isRequired,
-  setLoginRedirectPath: PropTypes.func
+  setLoginRedirectPath: PropTypes.func,
+  followUser: PropTypes.func,
+  unfollowUser: PropTypes.func,
+  profile: PropTypes.object.isRequired,
+  follow: PropTypes.object.isRequired,
+  getUserFollowing: PropTypes.func.isRequired
 };
 // eslint-disable-next-line max-len
 export default connect(
@@ -400,6 +502,9 @@ export default connect(
     highlightText,
     getUserHighlights,
     bookmarkArticle,
-    setLoginRedirectPath
+    setLoginRedirectPath,
+    followUser,
+    unfollowUser,
+    getUserFollowing
   }
 )(SingleArticle);
