@@ -15,8 +15,8 @@ import './assets/icofont/icofont.css';
 
 dotenv.config();
 
-const { REACT_APP_BACKEND_URL } = process.env;
-
+// const { REACT_APP_BACKEND_URL } = process.env;
+const REACT_APP_BACKEND_URL = 'https://badass-ah-backend-staging.herokuapp.com';
 const App = () => {
   axios.defaults.baseURL = REACT_APP_BACKEND_URL;
   useEffect(() => {

@@ -110,7 +110,7 @@ componentDidMount() {
             <div className="G-form-group">
               {single && single.image && (
               <div className="G-image-display">
-                {image !== '' ? <img src={image.base64} alt="selected " /> : <img src={single.image} alt="selected " />}
+                {image !== '' ? <img src={image.base64} alt="selected " /> : <img src={single.image ? single.image : ''} alt="selected " />}
                 {' '}
               </div>
               )}

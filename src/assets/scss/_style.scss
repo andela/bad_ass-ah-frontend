@@ -204,18 +204,6 @@ svg {
     font-size: 20px;
   }
 }
-.slide-image::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  width: 100%;
-  height: 100%;
-  background: $backgroundOverlay;
-  z-index: 1;
-  border-radius: 4px;
-}
 .moreBtn {
   background-color: #a71645;
   color: $white-color;
@@ -293,16 +281,6 @@ svg {
   height: 100%;
   object-fit: cover;
 }
-.article-img::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #00000052;
-  z-index: 10;
-}
 .b-article-desc {
   position: absolute;
   width: 100%;
@@ -329,6 +307,7 @@ svg {
 .art-author {
   position: relative;
   color: #333;
+  font-family: $rokitFont;
 }
 .authors-av {
   display: grid;

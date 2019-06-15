@@ -70,7 +70,6 @@ export class ViewBookmark extends Component {
         window.location.reload(true);
       }, 500);
     }
-    console.log(getBookmarks);
     return (
       <Layout>
         {loading === true || profile === null ? (

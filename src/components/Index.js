@@ -1,9 +1,11 @@
+/* eslint-disable max-len */
 import React, { Component, Fragment } from 'react';
 import Slider from 'react-animated-slider';
 import { connect } from 'react-redux';
 import htmlParser from 'html-react-parser';
 import stringParser from 'react-to-string';
 import { Link } from 'react-router-dom';
+import UpperCase from 'ucfirst';
 import PropTypes from 'prop-types';
 import Hashid from 'hashids';
 import getAllArticle from '../actions/article';
@@ -15,6 +17,7 @@ import blog3 from '../assets/Images/entertainment.jpeg';
 import spinner from '../assets/Images/spinner.gif';
 import defaultAvatar from '../assets/Images/icons/boy.svg';
 import 'react-animated-slider/build/horizontal.css';
+import '../assets/scss/_Index.scss';
 
 export class Index extends Component {
   componentDidMount() {
@@ -49,7 +52,7 @@ export class Index extends Component {
                           <div className="slide-image">
                             <div className="imgSlide">
                               <div className="blog-desc">
-                                <p>{stringParser(htmlParser(slid.title)).substring(0, 100)}</p>
+                                <p>{stringParser(htmlParser(UpperCase(slid.title))).substring(0, 100)}</p>
                                 <Link
                                   to={`/story/${hashid.encode(slid.article_id)}`}
                                   className="moreBtn"
@@ -133,7 +136,7 @@ export class Index extends Component {
                             <div className="b-article-desc">
                               <div className="descriptions">
                                 <div className="art-title">
-                                  {stringParser(htmlParser(item.title)).substring(0, 90)}
+                                  {stringParser(htmlParser(UpperCase(item.title))).substring(0, 90)}
                                 </div>
                                 <div className="art-author">
                                   <div className="authors-av">
@@ -146,12 +149,12 @@ export class Index extends Component {
                                         }
                                         alt=""
                                       />
-                                      <h5 className="author-name">{item.authorfkey.username}</h5>
+                                      <h5 className="author-name">{UpperCase(item.authorfkey.username)}</h5>
                                     </div>
                                     <h5>{new Date(item.createdAt).toDateString()}</h5>
                                   </div>
                                   <div className="small-text">
-                                    {stringParser(htmlParser(item.body)).substring(0, 100)}
+                                    {stringParser(htmlParser(UpperCase(item.body))).substring(0, 100)}
                                     {'...'}
                                     <a href="#d" className="readMore">
                                       Read more

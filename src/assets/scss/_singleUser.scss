@@ -1,0 +1,147 @@
+.view-single-user{
+    min-height: 40vh;
+    position: relative;
+    padding-top: 10px;
+    padding-left: 45px;
+    padding-right: 45px;
+    font-family: 'Rokkitt', serif;
+    .view-single-user-founded{
+        display: flex;
+        flex-direction: column;
+        width: 55%;
+        justify-content: center;
+        align-items: center;
+        margin: auto;
+        .view-single-user-infos{
+            display: grid;
+            grid-template-columns: 10% 600px;
+            grid-gap: 30px;
+            margin-bottom: 10px;
+            padding-left: 15px;
+            padding-right: 15px;
+            .view-single-user-avatar{
+                width: 80px;
+                height: 80px;
+                img{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 100%;
+                }
+            }
+            .view-single-user-bios{
+                position: relative;
+                .view-single-user-username{
+                    padding-top: 8px;
+                    font-weight: bold;
+                    margin-bottom: 5px;
+                }
+                .view-single-user-bio{
+                    font-size: 15px;
+    
+                }
+            }
+        }
+        .view-single-user-articles{
+            position: relative;
+            width: 100%;
+            .view-single-title-user{
+                padding-left: 10px;
+                margin-top: 10px;
+                margin-bottom: 10px;
+            }
+            .view-single-user-articles-by-one{
+                display: grid;
+                grid-template-columns: 50% 50%;
+                justify-content: center;
+                align-items: center;
+                .view-single-user-single{
+                    margin-top: 10px;
+                    border-radius: 3px;
+                    position: relative;
+                    margin: 8px;
+                    .view-single-user-article-image{
+                        width: 100%;
+                        height: 450px;
+                        img{
+                            width: 100%;
+                            height: 100%;
+                            object-fit: cover;
+                            border-top-left-radius: 3px;
+                            border-top-right-radius: 3px;
+                        }
+                    }
+                    .view-single-user-article-image:before{
+                        content: '';
+                        position: absolute;
+                        top: 0;
+                        width: 100%;
+                        height: 100%;
+                        background:linear-gradient(#4429dc85, #1d1d4830, #221fea2e, #25195424);
+                        left: 0;
+                        right: 0;
+                        border-radius: 3px;
+                    }
+                  .view-single-story-infos{
+                    position: absolute;
+                    top: 0;
+                    z-index: 200;
+                    color: #fff;
+                    height: 100%;
+                    .view-story-divider-info{
+                        display: grid;
+                        margin: 10px;
+                        grid-template-columns: 50px 100%;
+                        grid-gap: 10px;
+                        .view-single-story-user-avatar{
+                            width: 50px;
+                            height: 50px;
+                            img{
+                                width: 100%;
+                                height: 100%;
+                                border-radius: 100%;
+                                object-fit:cover;
+                            }
+                        }
+                    }
+                    .view-single-story-desc{
+                        position: absolute;
+                        bottom: 0;
+                        margin-bottom: 60px;
+                        padding: 10px;
+                        width: 250px;
+                        .view-single-story-title{
+                            font-size: 20px;
+                        }
+                        .view-single-story-body{
+                            font-size: 15px;
+                        }
+                        .view-single-article-button{
+                            margin-top: 10px;
+                            .view-single-story-btn{
+                                color: #fff;
+                                position: absolute;
+                                text-transform: uppercase;
+                                font-size: 12px;
+                                font-family: "Rokkitt", serif;
+                                transition: all 0.4s ease;
+                                border: none;
+                                background: none;
+                                font-weight: bold;
+                                cursor: pointer;
+                                outline: none;
+                                box-shadow: none;
+                                .more-read{
+                                    padding-right: 5px;
+                                    font-size: 16px;
+                                }
+                            }
+                        }
+                    }
+                  }
+                }
+            }
+        }
+    }
+}
+/*#0000001a*/
