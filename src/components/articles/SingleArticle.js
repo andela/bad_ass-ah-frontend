@@ -226,7 +226,6 @@ export class SingleArticle extends Component {
       articles: { article, error, message },
       highlights
     } = this.props;
-
     if (article !== null) if (article && article.article !== undefined) single = article.article;
 
     this.onSelectedText();
@@ -243,6 +242,7 @@ export class SingleArticle extends Component {
                 <Alert />
                 <div className="G-form-group">
                   <h1 className="G-storyTitle">{stringParser(htmlParser(single.title))}</h1>
+                  <p className='reading-time'>reading time: {single.readingTime}</p>
                   {userId === single.authorfkey.id && (
                     <div className="drop-article singleDrop">
                       <Link to={`/story/edit/${hashids.encode(single.article_id)}`}>
@@ -303,7 +303,7 @@ export class SingleArticle extends Component {
                       {article.votes.hasLiked === true ? (
                         <i className="icofont-heart changeColor" />
                       ) : (
-                        <i className="icofont-heart" />
+                          <i className="icofont-heart" />
                       )}
                       <div>{article.votes.likes}</div>
                     </div>
@@ -316,7 +316,7 @@ export class SingleArticle extends Component {
                       {article.votes.hasDisliked === true ? (
                         <i className="icofont-ui-love-broken changeColor" />
                       ) : (
-                        <i className="icofont-ui-love-broken" />
+                          <i className="icofont-ui-love-broken" />
                       )}
                       <div>{article.votes.dislikes}</div>
                     </div>
@@ -326,9 +326,9 @@ export class SingleArticle extends Component {
                 <Comment articleId={articleId2} />
               </div>
             ) : (
-              <center>
-                {error && error.errors !== undefined && <NotFound error={error.errors.body[0]} />}
-              </center>
+                <center>
+                  {error && error.errors !== undefined && <NotFound error={error.errors.body[0]} />}
+                </center>
             )}
           </Fragment>
         </div>
