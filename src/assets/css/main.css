@@ -1461,6 +1461,14 @@ footer h1 {
   .loadingSpinner img {
     width: 60px; }
 
+.reading-time {
+  display: inline-block;
+  background-color: #efefef;
+  font-style: italic;
+  font-weight: 300;
+  padding: 4px;
+  color: #555; }
+
 /*@gratian*/
 .G-showcase {
   position: relative;
