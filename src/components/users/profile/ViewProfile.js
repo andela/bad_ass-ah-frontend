@@ -192,6 +192,9 @@ export class ViewProfile extends Component {
                     <div>
                       <Link to="/profile/following">{following.numberOfFollowing} Following</Link>
                     </div>
+                    <div>
+                      <Link to="/profile/following">{following.numberOfFollowing} Bookmarks</Link>
+                    </div>
                   </div>
                   <Link to="/edit-profile" className="edit-profile-link">
                     <i className="far fa-edit" />

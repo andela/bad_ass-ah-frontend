@@ -5,6 +5,7 @@ import localStorage from '../../../../helpers/localStorage';
 import Button from '../../../../components/common/button/Button';
 
 const props = {
+  error: 'message undefined',
   loadUser: jest.fn(),
   isAuthenticated: false,
   location: {
