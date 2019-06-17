@@ -169,6 +169,92 @@
     background: #d6d8d9; }
   .toggleNotification ul .no-notification {
     text-align: center; }
+  .toggleNotification .notifications-opt {
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background: #f3f3f3;
+    border-bottom: 1px solid #000; }
+    .toggleNotification .notifications-opt .label {
+      font-size: 18px;
+      font-weight: bolder;
+      display: block;
+      margin-right: 15%;
+      float: left;
+      margin-top: 2%; }
+      .toggleNotification .notifications-opt .label i {
+        display: block;
+        float: left;
+        color: #333; }
+      .toggleNotification .notifications-opt .label span {
+        display: block;
+        margin-left: 30px; }
+    .toggleNotification .notifications-opt .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 28px; }
+      .toggleNotification .notifications-opt .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0; }
+      .toggleNotification .notifications-opt .switch .switcher {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #b9b9b9;
+        -webkit-transition: 0.4s;
+        transition: 0.4s; }
+      .toggleNotification .notifications-opt .switch .switcher:before {
+        position: absolute;
+        content: '';
+        height: 20px;
+        width: 20px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: 0.4s;
+        transition: 0.4s; }
+      .toggleNotification .notifications-opt .switch input:checked + .switcher {
+        background-color: #2196f3; }
+      .toggleNotification .notifications-opt .switch input:focus + .switcher {
+        box-shadow: 0 0 1px #2196f3; }
+      .toggleNotification .notifications-opt .switch input:checked + .switcher:before {
+        -webkit-transform: translateX(32px);
+        -ms-transform: translateX(32px);
+        transform: translateX(32px); }
+      .toggleNotification .notifications-opt .switch .switcher.round {
+        border-radius: 34px; }
+      .toggleNotification .notifications-opt .switch .switcher.round:before {
+        border-radius: 50%; }
+      .toggleNotification .notifications-opt .switch .text:after {
+        position: absolute;
+        top: 7px;
+        right: 5px;
+        content: 'OFF';
+        -webkit-transition: opacity 0.5s ease-in-out;
+        -moz-transition: opacity 0.5s ease-in-out;
+        transition: opacity 0.5s ease-in-out; }
+      .toggleNotification .notifications-opt .switch .text:before {
+        position: absolute;
+        top: 7px;
+        left: 5px;
+        color: #fff;
+        content: 'ON';
+        -webkit-transition: opacity 0.5s ease-in-out;
+        -moz-transition: opacity 0.5s ease-in-out;
+        transition: opacity 0.5s ease-in-out; }
+      .toggleNotification .notifications-opt .switch input + .switcher + .text:after {
+        opacity: 1; }
+      .toggleNotification .notifications-opt .switch input + .switcher + .text:before {
+        opacity: 0; }
+      .toggleNotification .notifications-opt .switch input:checked + .switcher + .text:after {
+        opacity: 0; }
+      .toggleNotification .notifications-opt .switch input:checked + .switcher + .text:before {
+        opacity: 1; }
 
 .notification-badge i {
   font-size: 30px;
