@@ -1,37 +1,56 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import instagram from '../../assets/Images/icons/instagram.svg';
 import twitter from '../../assets/Images/icons/twitter.svg';
 import facebook from '../../assets/Images/icons/facebook.svg';
 import logo from '../../assets/Images/icons/world.svg';
-import notification from '../../assets/Images/icons/notification.svg';
 import user from '../../assets/Images/icons/boy.svg';
 import search from '../../assets/Images/icons/search.svg';
+import { getNotifications, readNotification } from '../../actions/notification';
 
-class Navbar extends Component {
-  state={
-    open: false
+export class Navbar extends Component {
+  state = {
+    openProfile: false,
+    openNotifications: false
+  };
+
+  componentDidMount() {
+    const { getNotifications } = this.props;
+    getNotifications();
   }
 
- OnOpen = () => {
-   this.setState(prevState => ({
-     open: !prevState.open
-   }));
- }
+  onProfileOpen = () => {
+    this.setState(prevState => ({
+      openProfile: !prevState.openProfile
+    }));
+  };
 
- logout = () => {
-   localStorage.removeItem('token');
-   // eslint-disable-next-line react/prop-types
-   window.history.pushState({ title: 'Authors Haven' }, 'Authors Haven', '/');
-   window.location.reload(true);
- }
+  onNotificationsOpen = () => {
+    this.setState(prevState => ({
+      openNotifications: !prevState.openNotifications
+    }));
+  };
 
- // eslint-disable-next-line class-methods-use-this
- render() {
-   const { open } = this.state;
-   // @check if user if authenticated
-   return (
+  logout = () => {
+    localStorage.removeItem('token');
+    // eslint-disable-next-line react/prop-types
+    window.history.pushState({ title: 'Authors Haven' }, 'Authors Haven', '/');
+    window.location.reload(true);
+  };
+
+  // eslint-disable-next-line class-methods-use-this
+  render() {
+    const { openProfile, openNotifications } = this.state;
+    const { notifications, readNotification } = this.props;
+    const dropdownHeight = notifications !== undefined
+    && notifications !== null && notifications.length > 5
+      ? 'dropdownHeight'
+      : '';
+    // @check if user if authenticated
+    return (
       <header>
         <div className="top-header">
           <div className="top-icon">
@@ -83,40 +102,128 @@ class Navbar extends Component {
                 </li>
               </ul>
               <div className="auth-link">
-                <div className="auth-path" title="notification">
-                  <img
-                    src={notification}
-                    alt=""
-                    className="headerIcon"
-                  />
+                <div
+                  className="auth-path notification-badge"
+                  onClick={this.onNotificationsOpen}
+                  data-test="openNotificationToggle"
+                >
+                  <i className="fas fa-bell" />
+                  {notifications !== undefined
+                    && notifications !== null
+                    && notifications.length > 0 && <span>{notifications.length}</span>}
                 </div>
                 <div className="auth-path" title="profile">
                   <img
                     src={user}
                     alt=""
                     className="headerIcon headerAvatar"
-                    onClick= {this.OnOpen}
-                    data-test= "openToggle"
+                    onClick={this.onProfileOpen}
+                    data-test="openToggle"
                   />
                 </div>
               </div>
             </div>
-            {open && <div className="toggleNavBar">
-
-                {localStorage.getItem('token') ? <ul><li><Link to="/story/new-story"><i className="icofont-artichoke"></i>New Article</Link></li>
-                <li><Link to="/"><i className="icofont-brand-appstore"></i>Articles</Link></li>
-                <li><Link to="/view-profile"><i className="icofont-ui-user"></i>My Profile</Link></li>
-                <li><Link to="/"><i className="icofont-settings"></i>Settings</Link></li>
-                <li onClick={ this.logout } data-test="logout" className="logout"><Link to="/"><i className="icofont-logout"></i>Logout</Link></li></ul>
-                  : <ul><li><Link to="/auth"><i className="icofont-sign-in"></i>SignIn</Link></li>
-                <li><Link to="/auth"><i className="icofont-sign-out"></i>SignUp</Link></li>
-                <li><Link to="/forgot-password"><i className="icofont-ui-password"></i>Forgot password</Link></li></ul> }
-            </div>}
+            {openProfile && (
+              <div className="toggleNavBar">
+                {localStorage.getItem('token') ? (
+                  <ul>
+                    <li>
+                      <Link to="/story/new-story">
+                        <i className="icofont-artichoke" />
+                        New Article
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/">
+                        <i className="icofont-brand-appstore" />
+                        Articles
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/view-profile">
+                        <i className="icofont-ui-user" />
+                        My Profile
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/">
+                        <i className="icofont-settings" />
+                        Settings
+                      </Link>
+                    </li>
+                    <li onClick={this.logout} data-test="logout" className="logout">
+                      <Link to="/">
+                        <i className="icofont-logout" />
+                        Logout
+                      </Link>
+                    </li>
+                  </ul>
+                ) : (
+                  <ul>
+                    <li>
+                      <Link to="/auth">
+                        <i className="icofont-sign-in" />
+                        SignIn
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/register">
+                        <i className="icofont-sign-out" />
+                        SignUp
+                      </Link>
+                    </li>
+                    <li>
+                      <Link to="/forgot-password">
+                        <i className="icofont-ui-password" />
+                        Forgot password
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </div>
+            )}
+            {openNotifications && (
+              <div className={`toggleNavBar toggleNotification ${dropdownHeight}`}>
+                <ul>
+                  {notifications !== undefined
+                    && notifications !== null
+                    && notifications.length > 0
+                    && notifications.map(notification => (
+                      <li
+                        id="one-not"
+                        key={notification.id}
+                        onClick={() => readNotification(notification.id)}
+                      >
+                        <i className="fas fa-comments" />
+                        <span>{notification.message}</span>
+                      </li>
+                    ))}
+                  {notifications !== undefined
+                    && notifications !== null
+                    && notifications.length === 0 && (
+                      <li className="no-notification">No notification</li>
+                  )}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </header>
-   );
- }
+    );
+  }
 }
 
-export default Navbar;
+Navbar.propTypes = {
+  getNotifications: PropTypes.func.isRequired,
+  notifications: PropTypes.array,
+  readNotification: PropTypes.func
+};
+
+const mapStateToProps = state => ({
+  notifications: state.notification.notifications
+});
+
+export default connect(
+  mapStateToProps,
+  { getNotifications, readNotification }
+)(Navbar);
