@@ -15,11 +15,13 @@ import SingleArticle from '../components/articles/SingleArticle';
 import ViewProfile from '../components/users/profile/ViewProfile';
 import EditProfile from '../components/users/profile/EditProfile';
 import EditArticle from '../components/articles/EditArticle';
+import ReportedArticles from '../components/articles/reporting/ReportedArticles';
 
 const Routes = () => (
   <Router>
     <Switch>
       <Route exact path="/auth" component={Authenticate} />
+      <Route exact path="/login" component={Authenticate} />
       <Route exact path="/" component={Index} />
       <Route exact path="/forgot-password" component={SendEmail} />
       <Route exact path="/activate-user/:token" component={ActivateUser} />
@@ -28,7 +30,8 @@ const Routes = () => (
       <Route exact path="/story/:handle" component={SingleArticle} />
       <Route exact path="/view-profile" component={ViewProfile} />
       <Route exact path="/edit-profile" component={EditProfile} />
-      <Route exact path="/story/edit/:handle" component={EditArticle}/>
+      <Route exact path="/story/edit/:handle" component={EditArticle} />
+      <Route exact path="/reported/stories" component={ReportedArticles} />
     </Switch>
   </Router>
 );

@@ -10,6 +10,7 @@ import logo from '../../assets/Images/icons/world.svg';
 import user from '../../assets/Images/icons/boy.svg';
 import search from '../../assets/Images/icons/search.svg';
 import { getNotifications, readNotification } from '../../actions/notification';
+import { loginCheckState } from '../../actions/login';
 
 export class Navbar extends Component {
   state = {
@@ -19,6 +20,7 @@ export class Navbar extends Component {
 
   componentDidMount() {
     const { getNotifications } = this.props;
+    this.props.loginCheckState();
     getNotifications();
   }
 
@@ -36,6 +38,7 @@ export class Navbar extends Component {
 
   logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('hasRight');
     // eslint-disable-next-line react/prop-types
     window.history.pushState({ title: 'Authors Haven' }, 'Authors Haven', '/');
     window.location.reload(true);
@@ -44,12 +47,22 @@ export class Navbar extends Component {
   // eslint-disable-next-line class-methods-use-this
   render() {
     const { openProfile, openNotifications } = this.state;
-    const { notifications, readNotification } = this.props;
+    const {
+      notifications, readNotification, isAdmin, isAuthenticated
+    } = this.props;
     const dropdownHeight = notifications !== undefined
-    && notifications !== null && notifications.length > 5
+      && notifications !== null && notifications.length > 5
       ? 'dropdownHeight'
       : '';
-    // @check if user if authenticated
+    // @check if user if authenticatedd
+
+    let displayRepotedArticlesLink = null;
+    if (isAdmin === 'true' && isAuthenticated) {
+      displayRepotedArticlesLink = <li>
+        <Link to="/reported/stories">Reported&nbsp;stories</Link>
+      </li>;
+    }
+
     return (
       <header>
         <div className="top-header">
@@ -100,6 +113,7 @@ export class Navbar extends Component {
                 <li>
                   <Link to="/">Business</Link>
                 </li>
+                {displayRepotedArticlesLink}
               </ul>
               <div className="auth-link">
                 <div
@@ -159,26 +173,26 @@ export class Navbar extends Component {
                     </li>
                   </ul>
                 ) : (
-                  <ul>
-                    <li>
-                      <Link to="/auth">
-                        <i className="icofont-sign-in" />
-                        SignIn
+                    <ul>
+                      <li>
+                        <Link to="/auth">
+                          <i className="icofont-sign-in" />
+                          SignIn
                       </Link>
-                    </li>
-                    <li>
-                      <Link to="/register">
-                        <i className="icofont-sign-out" />
-                        SignUp
+                      </li>
+                      <li>
+                        <Link to="/register">
+                          <i className="icofont-sign-out" />
+                          SignUp
                       </Link>
-                    </li>
-                    <li>
-                      <Link to="/forgot-password">
-                        <i className="icofont-ui-password" />
-                        Forgot password
+                      </li>
+                      <li>
+                        <Link to="/forgot-password">
+                          <i className="icofont-ui-password" />
+                          Forgot password
                       </Link>
-                    </li>
-                  </ul>
+                      </li>
+                    </ul>
                 )}
               </div>
             )}
@@ -216,14 +230,19 @@ export class Navbar extends Component {
 Navbar.propTypes = {
   getNotifications: PropTypes.func.isRequired,
   notifications: PropTypes.array,
-  readNotification: PropTypes.func
+  readNotification: PropTypes.func,
+  loginCheckState: PropTypes.func,
+  isAdmin: PropTypes.string,
+  isAuthenticated: PropTypes.bool
 };
 
 const mapStateToProps = state => ({
-  notifications: state.notification.notifications
+  notifications: state.notification.notifications,
+  isAuthenticated: state.login.isAuthenticated,
+  isAdmin: state.login.isAdmin
 });
 
 export default connect(
   mapStateToProps,
-  { getNotifications, readNotification }
+  { getNotifications, readNotification, loginCheckState }
 )(Navbar);

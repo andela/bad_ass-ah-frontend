@@ -881,6 +881,177 @@ footer {
   .activate a {
     font-size: 1.5em; }
 
+.backdrop {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.7); }
+  .backdrop__icon-close {
+    width: 20px;
+    height: 20px;
+    float: right;
+    margin: 20px 40px 0 0;
+    fill: #dedede; }
+    .backdrop__icon-close:hover {
+      cursor: pointer; }
+
+.dropdown {
+  position: relative;
+  display: inline-block;
+  margin-left: 30px;
+  align-self: center; }
+  .dropdown__icon {
+    fill: #555;
+    width: 25px;
+    height: 25px; }
+  .dropdown:hover {
+    cursor: pointer; }
+  .dropdown__content {
+    min-width: 100px;
+    border-radius: 4px;
+    margin-top: -2px;
+    position: absolute;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.4);
+    z-index: 10; }
+    .dropdown__content > * {
+      display: block;
+      padding: 5px 10px;
+      color: #555; }
+  .dropdown__item:hover {
+    color: #000;
+    cursor: pointer; }
+
+.modal {
+  position: fixed;
+  z-index: 500;
+  background-color: white;
+  width: 60%;
+  box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.4);
+  padding: 20px;
+  left: 20%;
+  top: 20%;
+  box-sizing: border-box;
+  transition: all 0.2s ease-out; }
+  .modal__main-content {
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+  .modal__content-title {
+    text-align: center;
+    font-size: 1.8em;
+    font-weight: 400; }
+
+.report__type-input, .report__type-textarea {
+  width: 100%;
+  color: #555;
+  border: 1px solid #a3a3a3;
+  transition: all .3s;
+  box-sizing: border-box;
+  border-radius: 4px; }
+  .report__type-input:focus, .report__type-textarea:focus {
+    outline: none;
+    border: 1px solid #005abb; }
+  .report__type-input__label, .report__type-textarea__label {
+    color: #555;
+    margin-bottom: 5px; }
+
+.report__type-textarea {
+  padding: 10px 12px;
+  font-size: .9em; }
+
+.report__type-form {
+  width: 70%;
+  padding: 5px; }
+
+.report__type-selector {
+  display: block;
+  font-size: 1em;
+  font-weight: 400;
+  width: 30%;
+  min-width: 150px;
+  color: #555;
+  border: 1px solid #a3a3a3; }
+  .report__type-selector:hover {
+    cursor: pointer; }
+  .report__type-selector:focus, .report__type-selector:hover {
+    outline: none;
+    border: 1px solid #005abb; }
+
+.report__btn {
+  background-color: #005abb;
+  color: #fff;
+  border-radius: 4px;
+  margin-top: 10px;
+  display: flex;
+  align-items: center; }
+  .report__btn:disabled {
+    cursor: not-allowed;
+    opacity: .8; }
+
+.report__error, .report__success {
+  font-size: 1em;
+  padding: 10px;
+  text-align: center; }
+
+.report__error {
+  color: red; }
+
+.report__success {
+  color: #155724; }
+
+.report__spinner {
+  width: 30px;
+  height: 30px; }
+
+.report__reported-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 400px; }
+  .report__reported-wrapper--title {
+    margin-top: 30px;
+    font-weight: 300;
+    border-bottom: 1px solid black; }
+
+.report__reported {
+  padding: 3%;
+  width: 90%;
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  box-sizing: border-box; }
+  .report__reported-nav-wrapper {
+    border: 1px solid #dedede;
+    box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
+    padding: 4px;
+    margin: 4px;
+    margin-bottom: 20px;
+    width: 32.6%;
+    box-sizing: border-box; }
+    .report__reported-nav-wrapper:hover {
+      cursor: pointer;
+      border: 1px solid #005abb; }
+  .report__reported--nav-link {
+    color: #333;
+    font-size: 1em; }
+    .report__reported--nav-link div:not(:last-child) {
+      display: flex; }
+      .report__reported--nav-link div:not(:last-child) span {
+        margin-right: 5px; }
+    .report__reported--nav-link__value {
+      color: #555;
+      text-transform: capitalize; }
+    .report__reported--nav-link__section {
+      padding: 3px; }
+      .report__reported--nav-link__section p {
+        margin: 5px 10px 0 20px;
+        font-size: .9em;
+        font-weight: 300;
+        color: #555; }
+
 *,
 body {
   margin: 0;
