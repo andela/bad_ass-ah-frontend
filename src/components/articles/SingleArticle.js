@@ -26,6 +26,7 @@ import { highlightText, getUserHighlights } from '../../actions/highlight';
 import { markHighlightedText } from '../../utils/markHighlightedText';
 import { setLoginRedirectPath } from '../../actions/login';
 import Spinner from '../layouts/Spinner';
+import Report from './reporting/Report';
 
 const hashids = new Hashids('', 10);
 
@@ -147,17 +148,17 @@ export class SingleArticle extends Component {
     this.getArticle();
   };
 
-bookmarks = async () => {
-  if (this.props.isAuth) {
-    const { articleId } = this.state;
-    const { bookmarkArticle } = this.props;
-    await bookmarkArticle(articleId);
-    this.getArticle();
-  } else {
-    this.props.setLoginRedirectPath(window.location.pathname);
-    this.setState({ redirectOnBookmark: true });
+  bookmarks = async () => {
+    if (this.props.isAuth) {
+      const { articleId } = this.state;
+      const { bookmarkArticle } = this.props;
+      await bookmarkArticle(articleId);
+      this.getArticle();
+    } else {
+      this.props.setLoginRedirectPath(window.location.pathname);
+      this.setState({ redirectOnBookmark: true });
+    }
   }
-}
 
   onSelectedText = () => {
     const popup = document.getElementById('highlight-popup');
@@ -345,10 +346,11 @@ bookmarks = async () => {
                       )}
                       <div>{article.votes.dislikes}</div>
                     </div>
-                    <div id="bookmark-btn" className={`btn-bookmark ${this.state.hasbookmarkedClass}`} title="bookmark" onClick= {this.bookmarks}>
-                    {article.hasBookmarked === true ? <i class="icofont-book-mark changeColor"></i> : <i class="icofont-book-mark"></i>}
+                    <div id="bookmark-btn" className={`btn-bookmark ${this.state.hasbookmarkedClass}`} title="bookmark" onClick={this.bookmarks}>
+                      {article.hasBookmarked === true ? <i class="icofont-book-mark changeColor"></i> : <i class="icofont-book-mark"></i>}
+                    </div>
                   </div>
-                  </div>
+                  <Report articleId={this.state.articleId2} />
                 </div>
                 <ShareArticle shareArticleUrl={shareArticleUrl} />
                 <Comment articleId={articleId2} />

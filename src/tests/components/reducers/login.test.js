@@ -9,7 +9,8 @@ describe('Login reducer', () => {
       token: null,
       error: null,
       loginRedirectPath: '/',
-      isAuthenticated: false
+      isAuthenticated: false,
+      isAdmin: false
     };
   });
   it('should return the initial state', () => {
@@ -50,11 +51,13 @@ describe('Login reducer', () => {
     expect(reducer(initialState, {
       type: actionTypes.LOGIN_CHECK_STATE,
       isAuthenticated: 'authenticated',
-      token: 'a-token'
+      token: 'a-token',
+      isAdmin: undefined
     })).toEqual({
       ...initialState,
       isAuthenticated: 'authenticated',
-      token: 'a-token'
+      token: 'a-token',
+      isAdmin: undefined
     });
   });
 });

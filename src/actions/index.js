@@ -14,3 +14,10 @@ export {
   setReadingStats,
   getReadingStats
 } from './readingStats';
+
+export {
+  getReportTypes,
+  reportArticle,
+  setReportType,
+  getReportedArticles
+} from './reportArticle';

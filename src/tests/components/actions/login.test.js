@@ -29,7 +29,10 @@ describe('Login actions', () => {
         status: 200,
         response: {
           token: 'a-token',
-          openId: 'open'
+          openId: 'open',
+          user: {
+            isAdmin: null
+          }
         }
       });
     });
@@ -103,7 +106,8 @@ describe('Login actions', () => {
     const expectedState = {
       type: actionTypes.LOGIN_CHECK_STATE,
       isAuthenticated: token !== null,
-      token: 'a-token'
+      token: 'a-token',
+      isAdmin: 'null'
     };
     expect(actions.loginCheckState()).toEqual(expectedState);
   });

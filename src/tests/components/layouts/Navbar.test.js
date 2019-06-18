@@ -5,7 +5,10 @@ import { Navbar } from '../../../components/layouts/Navbar';
 const props = {
   getNotifications: jest.fn(),
   notifications: ['good', 'bad'],
-  readNotification: jest.fn()
+  readNotification: jest.fn(),
+  loginCheckState: jest.fn(),
+  isAdmin: 'true',
+  isAuthenticated: true
 };
 
 describe('Navbar Component', () => {
@@ -20,7 +23,7 @@ describe('Navbar Component', () => {
     }));
     jest.spyOn(component.instance(), 'onProfileOpen');
     const open = component.find('[data-test="openToggle"]');
-    open.simulate('click', () => {});
+    open.simulate('click', () => { });
     expect(open.length).toBe(1);
   });
 
@@ -30,7 +33,7 @@ describe('Navbar Component', () => {
     }));
     jest.spyOn(component.instance(), 'onNotificationsOpen');
     const open = component.find('[data-test="openNotificationToggle"]');
-    open.simulate('click', () => {});
+    open.simulate('click', () => { });
     expect(open.length).toBe(1);
   });
 
