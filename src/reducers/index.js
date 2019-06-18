@@ -8,6 +8,7 @@ import loginReducer from './login';
 import getAllArticle from './article';
 import profile from './profile';
 import comment from './comment/comments';
+import editedComments from './comment/editedComments';
 import errors from './errors/errors';
 import ratingReducer from './rateArticle';
 import readingStatsReducer from './readingStats';
@@ -28,6 +29,7 @@ const rootReducer = combineReducers({
   articles: getAllArticle,
   profile,
   comment,
+  editedComments,
   errors,
   rating: ratingReducer,
   readingStats: readingStatsReducer,

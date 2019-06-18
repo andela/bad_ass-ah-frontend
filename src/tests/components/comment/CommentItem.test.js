@@ -4,7 +4,13 @@ import { shallow } from 'enzyme';
 import { CommentItem } from '../../../components/comment/CommentItem';
 
 const props = {
-  comment: { author: 1, userfkey: { image: 'kllkjlk' } },
+  comment: {
+    id: 1,
+    author: 1,
+    userfkey: { image: 'kllkjlk' },
+    createdAt: 2,
+    updatedAt: 3
+  },
   login: { isAuthenticated: false },
   deleteComment: jest.fn(),
   getSingleComment: jest.fn(),
@@ -12,10 +18,12 @@ const props = {
   profile: { profile: { image: 'ddddddd' } },
   updateComment: jest.fn(),
   isAuthenticated: jest.fn(),
-  updatedComment: {},
+  updatedComment: [{ id: 1, body: 'body' }],
   onSubmit: jest.fn(),
   onChange: jest.fn(),
-  errors: {}
+  errors: {},
+  editedComments: { EditedComments: [{ id: 1 }] },
+  getEditedComments: jest.fn()
 };
 
 describe('<CommentItem />', () => {
@@ -36,11 +44,11 @@ describe('<CommentItem />', () => {
     expect(form.length).toBe(1);
     expect(spy).toHaveBeenCalled();
   });
-  it('should call fetchSingleArticle method when the button is clicked', () => {
+  it('should call fetchSingleComment method when the button is clicked', () => {
     const wrapper = shallow(<CommentItem {...props} />);
     props.login.isAuthenticated = true;
     wrapper.setState({ displayEditBox: false, userId: 1 });
-    const spy = jest.spyOn(wrapper.instance(), 'fetchSingleArticle');
+    const spy = jest.spyOn(wrapper.instance(), 'fetchSingleComment');
     wrapper.instance().forceUpdate();
 
     const fakeEvent = { preventDefault: () => {} };
@@ -78,6 +86,60 @@ describe('<CommentItem />', () => {
     expect(spy).toHaveBeenCalled();
   });
   it('should call the function componentWillReceiveProps', () => {
+    const wrapper = shallow(<CommentItem {...props} />);
+    wrapper.setState({ commentId: 1, body: 'body' });
     component.instance().componentWillReceiveProps(props);
+  });
+  it('should call fetchEditedComments method when the button is clicked', () => {
+    const wrapper = shallow(<CommentItem {...props} />);
+    props.login.isAuthenticated = true;
+    wrapper.setState({
+      displayEditBox: false,
+      idEditedComment: 1,
+      dipslayEditedButton: true
+    });
+    wrapper.setState({});
+    const spy = jest.spyOn(wrapper.instance(), 'fetchEditedComments');
+    wrapper.instance().forceUpdate();
+
+    const fakeEvent = { preventDefault: () => {} };
+    const btn = wrapper.find('.edited_comment_button');
+    btn.simulate('click', fakeEvent);
+    expect(btn.length).toBe(1);
+    expect(spy).toHaveBeenCalled();
+  });
+  it('should call onclose method when the button is clicked', () => {
+    props.login.isAuthenticated = true;
+    const wrapper = shallow(<CommentItem {...props} />);
+    wrapper.setState({
+      // displayEditBox: false,
+      idEditedComment: 1,
+      dipslayEditedButton: true
+    });
+    const spy = jest.spyOn(wrapper.instance(), 'onClose');
+    wrapper.instance().forceUpdate();
+
+    const fakeEvent = { preventDefault: () => {} };
+    const btn = wrapper.find('.close_modal_btnx');
+    btn.simulate('click', fakeEvent);
+    expect(btn.length).toBe(1);
+    expect(spy).toHaveBeenCalled();
+  });
+  it('should call onclose method when the button is clicked', () => {
+    props.login.isAuthenticated = true;
+    const wrapper = shallow(<CommentItem {...props} />);
+    wrapper.setState({
+      // displayEditBox: false,
+      idEditedComment: 1,
+      dipslayEditedButton: true
+    });
+    const spy = jest.spyOn(wrapper.instance(), 'onClose');
+    wrapper.instance().forceUpdate();
+
+    const fakeEvent = { preventDefault: () => {} };
+    const btn = wrapper.find('.close_modal_btnf');
+    btn.simulate('click', fakeEvent);
+    expect(btn.length).toBe(1);
+    expect(spy).toHaveBeenCalled();
   });
 });
