@@ -9,6 +9,7 @@ import postedCommentOption from '../../assets/Images/icons/comment_option.svg';
 import { isAuthenticated } from '../../helpers/jsonConfig';
 import { deleteComment, getSingleComment, updateComment } from '../../actions/comment/comment';
 import VoteComment from './VoteComment';
+import getEditedComments from '../../actions/comment/editedComments';
 
 export class CommentItem extends Component {
   state = {
@@ -18,7 +19,12 @@ export class CommentItem extends Component {
     errors: {},
     idArticle: null,
     commentId: null,
-    body: ''
+    body: '',
+    toggle: false,
+    display: 'none',
+    closeModal: ' ',
+    idEditedComment: null,
+    dipslayEditedButton: false
   };
 
   async componentWillMount() {
@@ -26,8 +32,15 @@ export class CommentItem extends Component {
     await this.setState({ userId: user.payload.id });
   }
 
+  componentDidMount() {
+    const { comment } = this.props;
+    if (comment.createdAt !== comment.updatedAt) {
+      this.setState({ dipslayEditedButton: true });
+    }
+  }
+
   componentWillReceiveProps(nextProps) {
-    const { singleComment, updatedComment } = nextProps;
+    const { singleComment, updatedComment, editedComments } = nextProps;
     const { commentId } = this.state;
 
     if (singleComment.id === commentId) {
@@ -37,6 +50,9 @@ export class CommentItem extends Component {
       if (updatedComment[0].id === commentId) {
         this.setState({ body: updatedComment[0].body });
       }
+    }
+    if (editedComments.EditedComments.length > 0) {
+      this.setState({ toggle: !this.state.toggle, display: 'flex' });
     }
   }
 
@@ -49,12 +65,11 @@ export class CommentItem extends Component {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  fetchSingleArticle = (articleId, commentId) => {
-    this.setState({ commentId, displayEditBox: true });
+  fetchSingleComment = (articleId, commentId) => {
+    this.setState({ commentId, displayEditBox: true, dipslayEditedButton: true });
 
     const { getSingleComment } = this.props;
     getSingleComment(articleId, commentId);
-    this.setState({ text: '' });
   };
 
   onSubmit = (e) => {
@@ -70,11 +85,33 @@ export class CommentItem extends Component {
     this.setState({ text: '', displayEditBox: false });
   };
 
+  fetchEditedComments = (commentId) => {
+    const { getEditedComments, comment } = this.props;
+    this.setState({ idEditedComment: commentId });
+    getEditedComments(comment.articleId, commentId);
+  };
+
+  onClose = (e) => {
+    e.preventDefault();
+    this.setState({ idEditedComment: null, display: 'none' });
+  };
+
   render() {
     const {
-      userId, displayEditBox, errors, text, commentId, body
+      userId,
+      displayEditBox,
+      errors,
+      text,
+      commentId,
+      body,
+      display,
+      idEditedComment,
+      dipslayEditedButton
     } = this.state;
-    const { login, comment, profile } = this.props;
+    const {
+      login, comment, editedComments, profile
+    } = this.props;
+    const { EditedComments } = editedComments;
 
     const editeCommentBox = (
       <div className="comment_form">
@@ -105,6 +142,8 @@ export class CommentItem extends Component {
     );
 
     let postedCommentOptionalButton;
+    let editedCommentButton;
+
     if (login.isAuthenticated) {
       postedCommentOptionalButton = (
         <div className="posted_comment_option">
@@ -114,7 +153,7 @@ export class CommentItem extends Component {
             <button
               className="edit_comment"
               type="button"
-              onClick={this.fetchSingleArticle.bind(this, comment.articleId, comment.id)}
+              onClick={this.fetchSingleComment.bind(this, comment.articleId, comment.id)}
             >
               <i className="icofont-ui-edit editIcon" /> Update
             </button>
@@ -129,12 +168,23 @@ export class CommentItem extends Component {
           </div>
         </div>
       );
+      editedCommentButton = (
+        <a
+          id={comment.id}
+          className="edited_comment_button"
+          onClick={this.fetchEditedComments.bind(this, comment.id)}
+        >
+          Edited
+        </a>
+      );
     } else {
       postedCommentOptionalButton = '';
+      editedCommentButton = '';
     }
 
     return (
       <Fragment>
+        <div id="overlay" className="overlay" />
         {!displayEditBox ? (
           <div className="posted_comment">
             <div className="user_posted_avatar">
@@ -152,13 +202,18 @@ export class CommentItem extends Component {
                   {' '}
                   <Moment fromNow>{comment.createdAt}</Moment>
                 </i>{' '}
+                {' . '} {dipslayEditedButton === true ? editedCommentButton : ' '}
                 {comment.author === userId ? postedCommentOptionalButton : ''}
               </div>
               {commentId !== comment.id ? comment.body : body}
               <div className="posted_comment_content" />
               <div className="posted_comment_footer">
-                <VoteComment allVotes={comment.votecomments} userId={userId}
-                commentId={comment.id} articleID= {comment.articleId} />
+                <VoteComment
+                  allVotes={comment.votecomments}
+                  userId={userId}
+                  commentId={comment.id}
+                  articleID={comment.articleId}
+                />
                 <div className="reply_to_comment" />
               </div>
             </div>
@@ -167,6 +222,68 @@ export class CommentItem extends Component {
           editeCommentBox
         ) : (
           ''
+        )}
+        {idEditedComment === comment.id && (
+          <Fragment>
+            {EditedComments.length > 0 && (
+              <Fragment>
+                <div
+                  id="edited_comment_history_modal"
+                  className="edited_comment_history_modal"
+                  style={{ display }}
+                >
+                  <div className="edited_comment_history_modal_content">
+                    <div className="edited_comment_modal_header">
+                      <div className="modal_title">Edited comment history</div>
+                      <div className="close_modal">
+                        <span onClick={this.onClose.bind(this)} className="close_modal_btnx">
+                          &times;
+                        </span>
+                      </div>
+                    </div>
+                    {EditedComments.map(
+                      commentEdited => commentEdited.commentId === comment.id && (
+                          <div className="edited_comment_modal_body">
+                            <div className="content-header">
+                              <div className="user_posted_avatar">
+                                <img
+                                  src={
+                                    comment.author === commentEdited.userId
+                                      ? comment.userfkey.image
+                                        ? comment.userfkey.image
+                                        : userCommentAvatar
+                                      : userCommentAvatar
+                                  }
+                                  alt=""
+                                />
+                              </div>
+                              <div className="posted_comment_title">
+                                {' '}
+                                {comment.userfkey.username}
+                                <i className="posted_comment_time">
+                                  {' '}
+                                  <Moment fromNow>{commentEdited.createdAt}</Moment>
+                                </i>{' '}
+                              </div>
+                            </div>
+                            <div className="editedcomment_body">{commentEdited.body}</div>
+                          </div>
+                      )
+                    )}
+                    <div className="edited_comment_modal_footer">
+                      <button
+                        id="close_modal_btn"
+                        onClick={this.onClose.bind(this)}
+                        className="close_modal_btnf"
+                      >
+                        close
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </Fragment>
+            )}
+          </Fragment>
         )}
       </Fragment>
     );
@@ -182,14 +299,17 @@ CommentItem.propTypes = {
   profile: PropTypes.object.isRequired,
   updateComment: PropTypes.func.isRequired,
   updatedComment: PropTypes.object.isRequired,
+  getEditedComments: PropTypes.func.isRequired,
+  editedComments: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   login: state.login,
   errors: state.errors,
-  profile: state.profile,
+  profile: state.profile.profile,
   singleComment: state.comment.singleComment,
-  updatedComment: state.comment.updatedComment
+  updatedComment: state.comment.updatedComment,
+  editedComments: state.editedComments
 });
 
 export default connect(
@@ -197,6 +317,7 @@ export default connect(
   {
     deleteComment,
     getSingleComment,
-    updateComment
+    updateComment,
+    getEditedComments
   }
 )(CommentItem);
