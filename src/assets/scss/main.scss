@@ -26,6 +26,10 @@
 @import 'modal';
 @import 'reportArticle';
 
+@import 'popup';
+@import 'activate';
+@import 'style';
+@import 'article';
 *,
 body {
   margin: 0;
@@ -41,5 +45,3 @@ body {
     text-decoration: none;
   }
 }
-@import 'style';
-@import 'article';
