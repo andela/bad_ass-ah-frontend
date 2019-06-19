@@ -8,7 +8,9 @@ const props = {
   readNotification: jest.fn(),
   loginCheckState: jest.fn(),
   isAdmin: 'true',
-  isAuthenticated: true
+  isAuthenticated: true,
+  getCurrentProfile: jest.fn(),
+  subscribe: jest.fn()
 };
 
 describe('Navbar Component', () => {
@@ -47,5 +49,31 @@ describe('Navbar Component', () => {
     const notification = component.find('#one-not').at(0);
     notification.simulate('click');
     expect(props.readNotification).toHaveBeenCalled();
+  });
+
+  it('should call onChange method when the toggle value is changed', () => {
+    const spy = jest.spyOn(component.instance(), 'onChange');
+    component.instance().forceUpdate();
+
+    const event = {
+      target: { value: true }
+    };
+
+    const input = component.find('input').at(1);
+    input.simulate('change', event);
+    expect(input.length).toBe(1);
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should call componentWillReceiveProps', () => {
+    const profile = {
+      username: 'John Doe',
+      image: 'image',
+      bio: 'My bio',
+      allowNotifications: true
+    };
+    component.setProps({ profile });
+    const { props } = component.instance();
+    expect(props.profile).toBe(profile);
   });
 });

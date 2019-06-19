@@ -9,10 +9,9 @@ import {
 } from './types';
 
 const hashids = new Hashid('', 10);
-const BACKEND_URL = 'https://badass-ah-backend-staging.herokuapp.com';
 
 const bookmarkArticle = id => async (dispatch) => {
-  const url = `${BACKEND_URL}/api/articles/${hashids.decode(id)}/bookmark`;
+  const url = `/api/articles/${hashids.decode(id)}/bookmark`;
   try {
     const Bookmark = await axios.post(url, '', config);
     dispatch(PassDispatch(BOOKMARK_ARTICLE_SUCCESS, Bookmark.data));
