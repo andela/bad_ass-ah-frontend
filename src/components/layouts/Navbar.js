@@ -20,7 +20,7 @@ import SingleSearch from '../search/Search';
 export class Navbar extends Component {
   state={
     open: false,
-    searchInput: '',
+    searchInput: null,
     searchItem: null,
     loading: false,
     openProfile: false,

@@ -19,6 +19,8 @@ import EditArticle from '../components/articles/EditArticle';
 import ReportedArticles from '../components/articles/reporting/ReportedArticles';
 import Search from '../components/search/AllSearch';
 import ViewSingleUser from '../components/search/ViewSingleUser';
+import Followers from '../components/users/profile/Followers';
+import Following from '../components/users/profile/Following';
 
 const Routes = () => (
   <Router>
@@ -37,6 +39,8 @@ const Routes = () => (
       <Route exact path="/story/edit/:handle" component={EditArticle} />
       <Route exact path="/reported/stories" component={ReportedArticles} />
       <Route exact path="/story/edit/:handle" component={EditArticle}/>
+      <Route exact path="/profile/followers" component={Followers}/>
+      <Route exact path="/profile/Following" component={Following}/>
       <Route exact path="/search" component={Search}/>
       <Route exact path="/:handle/:handleId" component = {ViewSingleUser} />
     </Switch>

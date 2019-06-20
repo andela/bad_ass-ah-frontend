@@ -20,6 +20,7 @@ import reportArticleReducer from './reportArticle';
 import subscribtion from './subscribtion';
 import getBookmarks from './fetchBookmark';
 import search from './search';
+import follow from './users/followUser';
 
 // @create root reducer
 
@@ -43,7 +44,8 @@ const rootReducer = combineReducers({
   reportArticle: reportArticleReducer,
   subscribtion,
   getBookmarks,
-  search
+  search,
+  follow
 });
 
 export default rootReducer;
