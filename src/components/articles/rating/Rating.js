@@ -115,15 +115,25 @@ export class Rating extends Component {
     }
 
     let displayStart = [...ratingStars];
+    let rateTitle = <h2 className={'star-rating__title'}>Please rate this article:</h2>;
     if (showStars === false && userPreviousRating !== null) {
+      rateTitle = null;
       displayStart = <Button btnClass='star-rating__btn-edit' onClick={() => this.displayRatingStar()}>Edit rating</Button>;
+    }
+
+    let showAverageRating = null;
+    if (averageRating !== null) {
+      showAverageRating = <span className='star-rating__average-rating'>
+        <span>{averageRating}</span>
+        <Star className='star-rating__star star-rating__yellow-star' />
+      </span>;
     }
 
     return (
       <>
         {loginRedirect}
         < div className={'star-rating__container'} >
-          <h2 className={'star-rating__title'}>Please rate this article:</h2>
+          {rateTitle}
           <div className={'star-rating__container-rating'}>
             <div className={'star-rating__ratings'}>
               <div className={'star-rating'}>
@@ -135,9 +145,9 @@ export class Rating extends Component {
                 <span>Your rating: {userPreviousRating !== null ? userPreviousRating : 'None'}</span>
               </div>
             </div>
-            <div className={'star-rating__average-rating'}>
-              <span>Average: {averageRating !== null ? averageRating : 'None'}</span>
-              <span>{totalRatings !== null ? `(${totalRatings} Ratings)` : null}</span>
+            <div className={'star-rating__average'}>
+              {showAverageRating}
+              <span>{totalRatings !== null ? `${totalRatings} Reviews` : null}</span>
             </div>
           </div>
         </div>

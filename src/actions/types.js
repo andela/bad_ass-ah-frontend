@@ -7,6 +7,7 @@ export const REMOVE_ALERT = 'REMOVE_ALERT';
 export const LOGIN = 'LOGIN';
 export const LOGIN_FAIL = 'LOGIN_FAIL';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_START = 'LOGIN_START';
 export const SET_LOGIN_REDIRECT_PATH = 'SET_LOGIN_REDIRECT_PATH';
 export const LOGIN_CHECK_STATE = 'LOGIN_CHECK_STATE';
 export const GET_PROFILE = 'GET_PROFILE';

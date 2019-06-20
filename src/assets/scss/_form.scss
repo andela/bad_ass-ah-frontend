@@ -52,8 +52,9 @@
     margin: 15px 0 25px 0;
 
     & a {
-      color: $color-blue-light-1;
+      color: $color-blue-light-2;
       letter-spacing: 0.1em;
+      font-weight: 700;
 
       &:hover {
         text-decoration: underline;
