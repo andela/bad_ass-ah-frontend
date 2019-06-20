@@ -42,7 +42,11 @@ const props = {
   }
   ],
   message: 'Good',
-  getBookmarks: [{ article: { title: 'this is a title', body: 'this is the body', image: 'http://image.com', authorfkey: { image: 'http://garage48.org/blog/garage48-to-re-invent-africa' } } }]
+  getBookmarks: [{
+    article: {
+      title: 'this is a title', body: 'this is the body', image: 'http://image.com', authorfkey: { image: 'http://garage48.org/blog/garage48-to-re-invent-africa' }
+    }
+  }]
 };
 
 const window = {

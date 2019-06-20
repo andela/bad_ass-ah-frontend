@@ -18,7 +18,7 @@
     "moxios": "^0.4.0",
     "node-sass": "^4.12.0",
     "prop-types": "^15.7.2",
-    "query-string": "^6.5.0",
+    "query-string": "^6.7.0",
     "react": "^16.8.6",
     "react-animated-slider": "^1.1.4",
     "react-dom": "^16.8.6",
@@ -35,6 +35,8 @@
     "redux-thunk": "^2.3.0",
     "serve": "^11.0.0",
     "sinon": "^7.3.2",
+    "slugify": "^1.3.4",
+    "ucfirst": "^1.0.0",
     "uuid": "^3.3.2"
   },
   "scripts": {

@@ -4,6 +4,7 @@
 import React, { Component, Fragment } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import UpperCase from 'ucfirst';
 import htmlParser from 'html-react-parser';
 import stringParser from 'react-to-string';
 import Hashids from 'hashids';
@@ -254,7 +255,6 @@ export class SingleArticle extends Component {
     if (redirectOnBookmark) {
       redirectOnBookmarkURL = <Redirect to='/auth' />;
     }
-
     return (
       <Layout>
         {redirectOnBookmarkURL}
@@ -267,7 +267,7 @@ export class SingleArticle extends Component {
               <div className="G-create-article" data-test="G-create-article">
                 <Alert />
                 <div className="G-form-group">
-                  <h1 className="G-storyTitle">{stringParser(htmlParser(single.title))}</h1>
+                  <h1 className="G-storyTitle">{stringParser(htmlParser(UpperCase(single.title)))}</h1>
                   <p className='reading-time'>reading time: {single.readingTime}</p>
                   {userId === single.authorfkey.id && (
                     <div className="drop-article singleDrop">

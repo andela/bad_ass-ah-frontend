@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
@@ -13,22 +14,25 @@ import { getCurrentProfile } from '../../actions/profile';
 import { getNotifications, readNotification } from '../../actions/notification';
 import { loginCheckState } from '../../actions/login';
 import { subscribe } from '../../actions/subscribtion';
+import searching from '../../actions/search';
+import SingleSearch from '../search/Search';
 
 export class Navbar extends Component {
-  state = {
+  state={
+    open: false,
+    searchInput: '',
+    searchItem: null,
+    loading: false,
     openProfile: false,
     openNotifications: false,
     allowNotifications: false
   };
 
-  componentDidMount() {
-    const { getCurrentProfile, getNotifications, loginCheckState } = this.props;
-    loginCheckState();
-    getCurrentProfile();
-    getNotifications();
-  }
-
   componentWillReceiveProps(nextProps) {
+    const { searchAll } = nextProps;
+    if (searchAll.search) {
+      this.setState({ searchItem: searchAll.search, loading: true });
+    }
     if (nextProps.profile) {
       const { profile } = nextProps;
 
@@ -36,6 +40,13 @@ export class Navbar extends Component {
         allowNotifications: profile.allowNotifications
       });
     }
+  }
+
+  componentDidMount() {
+    const { getCurrentProfile, getNotifications, loginCheckState } = this.props;
+    loginCheckState();
+    getCurrentProfile();
+    getNotifications();
   }
 
   onProfileOpen = () => {
@@ -64,6 +75,13 @@ export class Navbar extends Component {
     window.location.reload(true);
   };
 
+  searchData = (e) => {
+    const data = e.target.value;
+    this.setState({ searchInput: data });
+    const { searching } = this.props;
+    searching(data);
+  }
+
   // eslint-disable-next-line class-methods-use-this
   render() {
     const { openProfile, openNotifications, allowNotifications } = this.state;
@@ -76,6 +94,11 @@ export class Navbar extends Component {
       : '';
     // @check if user if authenticatedd
 
+    const {
+      searchItem, searchInput
+    } = this.state;
+    const { display } = this.props;
+    // @check if user if authenticatedd
     let displayRepotedArticlesLink = null;
     if (isAdmin === 'true' && isAuthenticated) {
       displayRepotedArticlesLink = (
@@ -85,6 +108,7 @@ export class Navbar extends Component {
       );
     }
 
+    // @check if user if authenticated
     return (
       <header>
         <div className="top-header">
@@ -99,11 +123,14 @@ export class Navbar extends Component {
               <img src={facebook} alt="Facebook" />
             </div>
           </div>
-          <div className="top-search">
+          <div className="top-search" style={{ display }}>
             <div className="top-search-grid">
-              <input type="text" name="search" placeholder="search" className="search-input" />
+              <input type="text" name="search" placeholder="search"
+              className="search-input" value={searchInput} data-test="Gsearch-input"
+              onChange={this.searchData}/>
               <img src={search} alt="" className="search-icon" />
             </div>
+           {searchItem && <SingleSearch item={searchItem} searchInput={searchInput}/>}
           </div>
         </div>
         <div className="top-menu-section">
@@ -269,19 +296,26 @@ Navbar.propTypes = {
   isAuthenticated: PropTypes.bool,
   readNotification: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
-  subscribe: PropTypes.func.isRequired
+  subscribe: PropTypes.func.isRequired,
+  searching: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   notifications: state.notification.notifications,
   isAuthenticated: state.login.isAuthenticated,
   isAdmin: state.login.isAdmin,
-  profile: state.profile.profile
+  profile: state.profile.profile,
+  searchAll: state.search
 });
 
 export default connect(
   mapStateToProps,
   {
-    loginCheckState, getCurrentProfile, getNotifications, readNotification, subscribe
+    loginCheckState,
+    getCurrentProfile,
+    getNotifications,
+    readNotification,
+    subscribe,
+    searching
   }
 )(Navbar);

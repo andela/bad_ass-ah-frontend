@@ -70,4 +70,22 @@ describe('Votes comment', () => {
     expect(component.find('[data-test="dislike-comment"]').length).toBe(1);
     expect(spy).toHaveBeenCalled();
   });
+  it('should test componentWillReceiveProps', () => {
+    const instance = component.instance();
+    const nextProps = {
+      userId: 12,
+      votes: {
+        hasLiked: true,
+        hasDisLiked: false,
+        userId: 12,
+        comentId: 10,
+        comment: {
+          comentId: 10
+        }
+      },
+      commentId: 10
+    };
+    instance.componentWillReceiveProps(nextProps);
+    expect(instance).toBeDefined();
+  });
 });

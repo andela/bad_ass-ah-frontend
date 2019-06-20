@@ -1,5 +1,10 @@
+/* eslint-disable valid-jsdoc */
 /* eslint-disable jsx-a11y/label-has-for */
 
+/**
+ * creating article
+ * gratien
+ */
 import React, { Component } from 'react';
 import PropType from 'prop-types';
 import ReactFileReader from 'react-file-reader';
@@ -9,6 +14,7 @@ import Layout from '../layouts/Layout';
 import Loading from '../layouts/Loading';
 import ArticleValidation from '../../helpers/Article';
 import EditorCommand from './EditorCommand';
+
 
 export class CreateArticle extends Component {
  state = {

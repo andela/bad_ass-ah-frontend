@@ -10,11 +10,13 @@ const props = {
   isAdmin: 'true',
   isAuthenticated: true,
   getCurrentProfile: jest.fn(),
-  subscribe: jest.fn()
+  subscribe: jest.fn(),
+  searching: jest.fn(),
+  searchAll: {}
 };
 
 describe('Navbar Component', () => {
-  const component = shallow(<Navbar {...props} />);
+  const component = shallow(<Navbar {...props}/>);
   it('renders without crashing', () => {
     expect(component).toMatchSnapshot();
   });
@@ -75,5 +77,29 @@ describe('Navbar Component', () => {
     component.setProps({ profile });
     const { props } = component.instance();
     expect(props.profile).toBe(profile);
+  });
+  it('should test logout method', () => {
+    const notification = component.find('#one-not').at(0);
+    notification.simulate('click');
+    expect(props.readNotification).toHaveBeenCalled();
+  });
+  it('should test search data', () => {
+    const instance = component.instance();
+    const fakeEvent = { target: { value: 'tag' } };
+    instance.searchData(fakeEvent);
+    expect(instance).toBeDefined();
+  });
+  it('should test componentWillReceiveProps', () => {
+    const instance = component.instance();
+    const nextProps = {
+      searchAll: {
+        search: {
+          user: [{ username: 'abana' }],
+          article: [{ title: 'yes man' }]
+        }
+      }
+    };
+    instance.componentWillReceiveProps(nextProps);
+    expect(instance).toBeDefined();
   });
 });

@@ -5,10 +5,11 @@ import NavBar from './Navbar';
 
 
 const Layout = (props) => {
-  const { children } = props;
+  // eslint-disable-next-line react/prop-types
+  const { children, display } = props;
   return (
     <Fragment>
-      <NavBar />
+      <NavBar display={display}/>
       {children}
       <Footer />
     </Fragment>

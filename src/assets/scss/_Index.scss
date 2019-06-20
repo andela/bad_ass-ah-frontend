@@ -1,0 +1,22 @@
+.slide-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(#4429dc52, #1d1d4830, #221fea2e, #25195424);
+    z-index: 1;
+    border-radius: 4px;
+  }
+  .article-img::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: linear-gradient(#4429dc52, #1d1d4830, #221fea2e, #25195424);
+    z-index: 10;
+  }
