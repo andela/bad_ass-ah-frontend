@@ -3,7 +3,7 @@
   background: $blackColor;
   padding: 20px;
   padding-left: 50px;
-  font-family: 'Rokkit',sans-serif!important;
+  font-family: 'Rokkit', sans-serif !important;
 
   .top-icon {
     display: grid;
@@ -105,19 +105,18 @@
       }
 
       .auth-link {
-        position: absolute;
-        right: 0;
-        margin-right: 150px !important;
+        li {
+          margin-top: 3px;
 
-        a {
-          padding: 15px;
-          border-radius: 2px;
-          padding-left: 30px;
-          padding-right: 30px;
-          color: $whitecolor;
-          margin-left: 20px;
-          padding-bottom: 12px;
-          padding-top: 12px;
+          a {
+            color: $bluecolor;
+          }
+        }
+        li:nth-child(2) {
+          margin-top: -6px;
+          border: 1px solid $bluecolor;
+          border-radius: 5px;
+          padding: 7px 10px;
         }
 
         .headerIcon {
@@ -130,7 +129,7 @@
 }
 .toggleNavBar {
   position: absolute;
-  right: 0;
+  right: -11px;
   margin-right: 100px;
   background: #fff;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 0 1px rgba(0, 0, 0, 0.35);
@@ -152,12 +151,13 @@
 }
 
 .toggleNotification {
-  right: 157px;
+  right: 107px;
   z-index: 110;
   background: $graycolor;
   width: 20%;
   padding: 0px;
   box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  cursor: pointer;
 
   ul {
     li {

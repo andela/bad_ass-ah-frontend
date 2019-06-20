@@ -1,11 +1,6 @@
 import React from 'react';
-import {
-  shallow
-} from 'enzyme';
-import {
-  ViewBookmark,
-  mapStateToProps
-} from '../../../../components/users/profile/ViewBookmarks';
+import { shallow } from 'enzyme';
+import { ViewBookmark, mapStateToProps } from '../../../../components/users/profile/ViewBookmarks';
 
 const props = {
   getCurrentProfile: jest.fn(),
@@ -28,25 +23,31 @@ const props = {
   following: {
     numberOfFollowing: 2
   },
-  articles: [{
-    title: 'article 1',
-    body: 'body of article1',
-    image: null,
-    tag: ['tag1', 'tag2']
-  },
-  {
-    title: 'article 2',
-    body: 'body of article2',
-    image: null,
-    tag: ['tag1', 'tag2']
-  }
+  articles: [
+    {
+      title: 'article 1',
+      body: 'body of article1',
+      image: null,
+      tag: ['tag1', 'tag2']
+    },
+    {
+      title: 'article 2',
+      body: 'body of article2',
+      image: null,
+      tag: ['tag1', 'tag2']
+    }
   ],
   message: 'Good',
-  getBookmarks: [{
-    article: {
-      title: 'this is a title', body: 'this is the body', image: 'http://image.com', authorfkey: { image: 'http://garage48.org/blog/garage48-to-re-invent-africa' }
+  getBookmarks: [
+    {
+      article: {
+        title: 'this is a title',
+        body: 'this is the body',
+        image: 'http://image.com',
+        authorfkey: { image: 'http://garage48.org/blog/garage48-to-re-invent-africa' }
+      }
     }
-  }]
+  ]
 };
 
 const window = {
@@ -61,21 +62,20 @@ Object.defineProperty(global, 'window', {
 
 describe('ViewBookmark component', () => {
   jest.useFakeTimers();
-  const component = shallow(< ViewBookmark {
-          ...props
-        }
-        />);
+  const component = shallow(<ViewBookmark {...props} />);
 
   it('renders without crashing', () => {
     jest.runAllTimers();
     expect(component).toMatchSnapshot();
     expect(setTimeout).toHaveBeenCalledTimes(1);
-  }); it('should call onUnbookmark method', async () => {
+  });
+  it('should call onUnbookmark method', async () => {
     const spy = jest.spyOn(component.instance(), 'onUnbookmark');
     component.instance().forceUpdate();
     await component.instance().onUnbookmark();
     expect(spy).toHaveBeenCalled();
-  }); it('should call map state to props', () => {
+  });
+  it('should call map state to props', () => {
     const state = mapStateToProps({
       getBookmarks: {
         bookmark: 12
