@@ -22,7 +22,7 @@ import {
 } from '../../../actions/profile';
 import { getReadingStats } from '../../../actions';
 import { deleteArticle } from '../../../actions/article';
-import Spinner from '../../layouts/Spinner';
+import spinner from '../../../assets/Images/spinner.gif';
 import Alert from '../../layouts/Alert';
 
 const hashids = new Hashid('', 10);
@@ -90,9 +90,11 @@ export class ViewProfile extends Component {
 
     return (
       <Layout>
-        {loading === true || profile === null ? (
+        {loading === true || profile === null || articles === undefined || articles === null ? (
           <section className="profile-section">
-            <Spinner />
+            <div className="loadingSpinner">
+              <img src={spinner} alt="spinner" />
+            </div>
           </section>
         ) : (
           <Fragment>

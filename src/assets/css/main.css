@@ -1811,6 +1811,10 @@ footer h1 {
   padding: 4px;
   color: #555; }
 
+.no-bookmarks {
+  text-align: center;
+  color: silver; }
+
 /*@gratian*/
 .G-showcase {
   position: relative;
