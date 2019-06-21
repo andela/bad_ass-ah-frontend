@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import { Login } from '../../../../components/users/login/Login';
+import { Login, mapStateToProps, mapDispatchToProps } from '../../../../components/users/login/Login';
 import Input from '../../../../components/common/input/Input';
 import Button from '../../../../components/common/button/Button';
 
@@ -10,7 +10,8 @@ describe('<Login />', () => {
   const props = {
     onLogin: jest.fn(),
     loginRedirectPath: '',
-    isAuthenticated: true
+    isAuthenticated: true,
+    isLogging: true
   };
 
   beforeEach(() => {
@@ -64,5 +65,20 @@ describe('<Login />', () => {
     form.simulate('submit', fakeEvent);
     expect(form.length).toBe(1);
     expect(spy).toHaveBeenCalled();
+  });
+
+  it('should map state to props', () => {
+    const initialState = {
+      login: {
+        isAuthenticated: true
+      }
+    };
+    expect(mapStateToProps(initialState)).toMatchSnapshot();
+  });
+
+  it('should map dispatch to props', () => {
+    const dispatch = jest.fn();
+    mapDispatchToProps(dispatch).onLogin('email', 'password');
+    expect(dispatch.mock.calls).toMatchSnapshot();
   });
 });

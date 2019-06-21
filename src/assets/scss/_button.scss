@@ -13,7 +13,7 @@
     font-family: 'Open Sans', sans-serif;
   }
 
-  &:hover {
+  &:hover:enabled {
     opacity: .8;
   }
 
@@ -27,8 +27,8 @@
     color: $whitecolour;
 
     &:disabled {
-      opacity: 1;
       cursor: not-allowed;
+      background-color: $color-blue-light-3;
     }
   }
 }

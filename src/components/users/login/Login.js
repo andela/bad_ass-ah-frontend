@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Input from '../../common/input/Input';
 import Button from '../../common/button/Button';
+import Loading from '../../layouts/Loading';
 import * as actions from '../../../actions';
 import * as validate from '../../../helpers/validate';
 
@@ -84,8 +85,14 @@ export class Login extends Component {
     // eslint-disable-next-line max-len
     if (this.props.isAuthenticated) loginRedirect = window.location.replace(this.props.loginRedirectPath);
 
+    let showSpinner = null;
+    if (this.props.isLogging) {
+      showSpinner = <Loading loading={true} />;
+    }
+
     return (
       <>
+        {showSpinner}
         {loginRedirect}
         <form onSubmit={this.submitHandler} id='login-form'>
           <div className={'form__group'}>
@@ -127,12 +134,13 @@ export class Login extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   isAuthenticated: state.login.token !== null,
-  loginRedirectPath: state.login.loginRedirectPath
+  loginRedirectPath: state.login.loginRedirectPath,
+  isLogging: state.login.isLogging
 });
 
-const mapDispatchToProps = dispatch => ({
+export const mapDispatchToProps = dispatch => ({
   onLogin: (email, password) => dispatch(actions.login(email, password))
 });
 
@@ -140,7 +148,8 @@ Login.propTypes = {
   error: PropTypes.string,
   isAuthenticated: PropTypes.bool,
   loginRedirectPath: PropTypes.string,
-  onLogin: PropTypes.func
+  onLogin: PropTypes.func,
+  isLogging: PropTypes.bool
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

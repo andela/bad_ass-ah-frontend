@@ -28,7 +28,7 @@ describe('<Rating />', () => {
 
   it('should render <Star /> component', () => {
     wrapper.setState({ showStars: true });
-    expect(wrapper.find(Star)).toHaveLength(5);
+    expect(wrapper.find(Star)).toHaveLength(6);
   });
 
   it('should call rate method when a star clicked', () => {
