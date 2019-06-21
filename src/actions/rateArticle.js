@@ -52,7 +52,7 @@ export const getArticleAverageRating = articleId => (dispatch) => {
   checkToken();
   return axios.get(`/api/articles/${hashId.decode(articleId)}/average-rating`)
     .then((response) => {
-      dispatch(getAverageRating(response.data.rating.average, response.data.rating.rates));
+      dispatch(getAverageRating(response.data.rating.average, response.data.rating.raters));
     })
     .catch((error) => {
       if (error.response.status === 404) {

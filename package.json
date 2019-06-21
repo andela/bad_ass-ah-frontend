@@ -72,6 +72,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^1.0.4",
     "coveralls": "^3.0.3",
     "cross-env": "^5.2.0",
     "enzyme": "^3.9.0",

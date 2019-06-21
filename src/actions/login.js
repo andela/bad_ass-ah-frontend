@@ -6,12 +6,18 @@ export const loginFail = error => ({
   error
 });
 
+export const loginStart = () => ({
+  type: actionTypes.LOGIN_START,
+  isLogging: true
+});
+
 export const loginSuccess = token => ({
   type: actionTypes.LOGIN_SUCCESS,
   token
 });
 
 export const login = (email, password) => (dispatch) => {
+  dispatch(loginStart());
   const data = {
     email,
     password

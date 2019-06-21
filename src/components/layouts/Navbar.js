@@ -29,7 +29,8 @@ export class Navbar extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    const { searchAll } = nextProps;
+    const { searchAll, onHide } = nextProps;
+    const { openNotifications, openProfile } = this.state;
     if (searchAll.search) {
       this.setState({ searchItem: searchAll.search, loading: true });
     }
@@ -39,6 +40,11 @@ export class Navbar extends Component {
       this.setState({
         allowNotifications: profile.allowNotifications
       });
+    }
+    if (onHide) {
+      if (openProfile || openNotifications) {
+        this.setState({ openProfile: false, openNotifications: false });
+      }
     }
   }
 

@@ -1,10 +1,11 @@
 .star-rating {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 
   &__container {
     
     &-rating {
        display: flex;
+       align-items: center;
        width: fit-content;
     }
   }
@@ -56,13 +57,27 @@
   }
 
   &__description,
-  &__average-rating {
+  &__average {
     color: $color-grey-dark-3;
     font-size: 1.1em;
-    font-style: italic;
+  }
 
-    & span:not(:last-child){
-      margin-right: 10px;
+  &__average {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 2px;
+
+    &-rating {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 4px;
+      margin-bottom: 7px;
+
+      & span {
+        margin-right: 3px;
+      }
     }
   }
 
@@ -80,6 +95,10 @@
       color: $color-yellow-dark-1;
       border: 1px solid $color-yellow-dark-1;
     }
+  }
+
+  &__yellow-star {
+    fill: $color-orange-dark-1;
   }
 
 }

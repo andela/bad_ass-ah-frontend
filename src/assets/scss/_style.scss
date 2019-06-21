@@ -102,7 +102,6 @@ a {
   margin-top: 55px !important;
   z-index: 100;
   right: 0;
-  margin-right: 100px;
   .auth-path {
     padding: 15px;
     border-radius: 2px;
@@ -140,7 +139,7 @@ a {
   justify-content: center;
 }
 .slider {
-  height: 450px !important;
+  height: 450px;
 }
 svg {
   fill: #fff;
@@ -255,12 +254,12 @@ svg {
 /* main-body */
 .main-body {
   display: grid;
-  grid-template-columns: 70% 28.5%;
+  grid-template-columns: 100%;
   grid-gap: 20px;
 }
 .article-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 30px;
   margin-top: 20px;
 }

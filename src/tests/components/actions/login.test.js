@@ -8,12 +8,7 @@ const mockStore = configureStore([thunk]);
 const store = mockStore();
 
 describe('Login actions', () => {
-  let expectedState;
   beforeEach(() => {
-    expectedState = [{
-      type: actionTypes.LOGIN_SUCCESS,
-      token: 'a-token'
-    }];
     moxios.install();
     store.clearActions();
   });
@@ -23,6 +18,17 @@ describe('Login actions', () => {
   });
 
   it('should dispatch "loginSuccess" action', () => {
+    const expectedState = [
+      {
+        type: actionTypes.LOGIN_START,
+        isLogging: true
+      },
+      {
+        type: actionTypes.LOGIN_SUCCESS,
+        token: 'a-token'
+      }
+    ];
+
     moxios.wait(() => {
       const request = moxios.requests.mostRecent();
       request.respondWith({

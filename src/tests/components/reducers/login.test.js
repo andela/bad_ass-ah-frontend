@@ -10,7 +10,8 @@ describe('Login reducer', () => {
       error: null,
       loginRedirectPath: '/',
       isAuthenticated: false,
-      isAdmin: false
+      isAdmin: false,
+      isLogging: false,
     };
   });
   it('should return the initial state', () => {
@@ -23,7 +24,8 @@ describe('Login reducer', () => {
       token: 'a-token'
     })).toEqual({
       ...initialState,
-      token: 'a-token'
+      token: 'a-token',
+      isLogging: false,
     });
   });
 
@@ -43,7 +45,8 @@ describe('Login reducer', () => {
       error: 'an-error'
     })).toEqual({
       ...initialState,
-      error: 'an-error'
+      error: 'an-error',
+      isLogging: false,
     });
   });
 
@@ -58,6 +61,16 @@ describe('Login reducer', () => {
       isAuthenticated: 'authenticated',
       token: 'a-token',
       isAdmin: undefined
+    });
+  });
+
+  it('should set isLogging when user is logging in', () => {
+    expect(reducer(initialState, {
+      type: actionTypes.LOGIN_START,
+      isLogging: true
+    })).toEqual({
+      ...initialState,
+      isLogging: true
     });
   });
 });
