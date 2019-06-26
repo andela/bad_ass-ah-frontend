@@ -299,7 +299,7 @@ export class SingleArticle extends Component {
     if (single !== undefined) {
       followBox = (
         <div className="follow_box" onClick={this.followAUser.bind(this, single.author)}>
-          follow
+          Follow
         </div>
       );
     }
@@ -307,7 +307,7 @@ export class SingleArticle extends Component {
     if (followOneUser !== null) {
       followBox = (
         <div className="unfollow_box" onClick={this.unfollowAUser.bind(this, single.author)}>
-          unfollow
+          Unfollow
         </div>
       );
     }
