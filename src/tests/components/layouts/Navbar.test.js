@@ -102,4 +102,9 @@ describe('Navbar Component', () => {
     instance.componentWillReceiveProps(nextProps);
     expect(instance).toBeDefined();
   });
+  it('should test _close method', () => {
+    const instance = component.instance();
+    instance._close();
+    expect(instance).toBeDefined();
+  });
 });

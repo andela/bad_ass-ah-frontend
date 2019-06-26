@@ -1,14 +1,17 @@
+/* eslint-disable no-unused-expressions */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import checkPropTypes from 'check-prop-types';
 import { shallow } from 'enzyme';
 import Layout from '../../../components/layouts/Layout';
 
-const props = {
-  children: jest.fn()
+const propData = {
+  children: jest.fn(),
+  display: 'none'
 };
 describe('<Layout /> render layout without crashing', () => {
+  const component = shallow(<Layout {...propData} />);
   it('renders without crashing', () => {
-    const component = shallow(<Layout {...props} />);
     expect(component).toMatchSnapshot();
   });
   it('should renders without error from prop children', () => {
