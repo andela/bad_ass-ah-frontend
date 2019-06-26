@@ -9,7 +9,10 @@ const props = {
   loadUser: jest.fn(),
   isAuthenticated: false,
   location: {
-    search: '?token=jhjhgjhg&username=jaman'
+    search: '?token=jhjhgjhg&username=jaman',
+    pathname: {
+      substring: jest.fn()
+    }
   }
 };
 

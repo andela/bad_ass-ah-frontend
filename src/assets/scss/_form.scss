@@ -25,7 +25,7 @@
     width: 100%;
     background-color: transparent;
     border-bottom: 1px solid $color-grey-dark-1;
-    padding: 10px 0;
+    padding: 10px 10px;
 
     &--invalid {
       border-bottom: 1px solid red;
@@ -52,7 +52,7 @@
     margin: 15px 0 25px 0;
 
     & a {
-      color: $color-blue-light-2;
+      color: #f3f3f3;
       letter-spacing: 0.1em;
       font-weight: 700;
 

@@ -25,7 +25,7 @@ import Following from '../components/users/profile/Following';
 const Routes = () => (
   <Router>
     <Switch>
-      <Route exact path="/auth" component={Authenticate} />
+      <Route exact path="/register" component={Authenticate} />
       <Route exact path="/login" component={Authenticate} />
       <Route exact path="/" component={Index} />
       <Route exact path="/forgot-password" component={SendEmail} />

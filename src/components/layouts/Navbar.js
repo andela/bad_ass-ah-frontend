@@ -86,13 +86,12 @@ export class Navbar extends Component {
   render() {
     const { openProfile, openNotifications, allowNotifications } = this.state;
     const {
-      notifications, readNotification, isAdmin, isAuthenticated
+      notifications, readNotification, isAdmin, isAuthenticated, profile
     } = this.props;
     const dropdownHeight = notifications !== undefined
      && notifications !== null && notifications.length > 5
       ? 'dropdownHeight'
       : '';
-    // @check if user if authenticatedd
 
     const {
       searchItem, searchInput
@@ -108,7 +107,11 @@ export class Navbar extends Component {
       );
     }
 
-    // @check if user if authenticated
+    let avatar = user;
+    if (profile !== undefined && profile !== null) {
+      if (profile.image !== null) avatar = profile.image;
+    }
+
     return (
       <header>
         <div className="top-header">
@@ -164,85 +167,75 @@ export class Navbar extends Component {
                 </li>
                 {displayRepotedArticlesLink}
               </ul>
-              <div className="auth-link">
-                <div
-                  className="auth-path notification-badge"
-                  onClick={this.onNotificationsOpen}
-                  data-test="openNotificationToggle"
-                >
-                  <i className="fas fa-bell" />
-                  {notifications !== undefined
-                    && notifications !== null
-                    && notifications.length > 0 && <span>{notifications.length}</span>}
+              {isAuthenticated ? (
+                <div className="auth-link">
+                  <div
+                    className="auth-path notification-badge"
+                    onClick={this.onNotificationsOpen}
+                    data-test="openNotificationToggle"
+                  >
+                    <i className="fas fa-bell" />
+                    {notifications !== undefined
+                      && notifications !== null
+                      && notifications.length > 0 && <span>{notifications.length}</span>}
+                  </div>
+                  <div className="auth-path" title="profile">
+                    <img
+                      src={avatar}
+                      alt=""
+                      className="headerIcon headerAvatar"
+                      onClick={this.onProfileOpen}
+                      data-test="openToggle"
+                    />
+                  </div>
                 </div>
-                <div className="auth-path" title="profile">
-                  <img
-                    src={user}
-                    alt=""
-                    className="headerIcon headerAvatar"
-                    onClick={this.onProfileOpen}
-                    data-test="openToggle"
-                  />
+              ) : (
+                <div class="auth-link">
+                  <ul>
+                    <li className="login">
+                      <Link to="/login">Sign in</Link>
+                    </li>
+                    <li>
+                      <Link to="/register">Get started</Link>
+                    </li>
+                  </ul>
                 </div>
-              </div>
+              )}
             </div>
             {openProfile && (
               <div className="toggleNavBar">
-                {localStorage.getItem('token') ? (
-                  <ul>
-                    <li>
-                      <Link to="/story/new-story">
-                        <i className="icofont-artichoke" />
-                        New Article
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/">
-                        <i className="icofont-brand-appstore" />
-                        Articles
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/view-profile">
-                        <i className="icofont-ui-user" />
-                        My Profile
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/">
-                        <i className="icofont-settings" />
-                        Settings
-                      </Link>
-                    </li>
-                    <li onClick={this.logout} data-test="logout" className="logout">
-                      <Link to="/">
-                        <i className="icofont-logout" />
-                        Logout
-                      </Link>
-                    </li>
-                  </ul>
-                ) : (
-                  <ul>
-                    <li>
-                      <Link to="/auth">
-                        <i className="icofont-sign-in" />
-                        SignIn
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/register">
-                        <i className="icofont-sign-out" />
-                        SignUp
-                      </Link>
-                    </li>
-                    <li>
-                      <Link to="/forgot-password">
-                        <i className="icofont-ui-password" />
-                        Forgot password
-                      </Link>
-                    </li>
-                  </ul>
-                )}
+                <ul>
+                  <li>
+                    <Link to="/story/new-story">
+                      <i className="icofont-artichoke" />
+                      New Article
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/">
+                      <i className="icofont-brand-appstore" />
+                      Articles
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/view-profile">
+                      <i className="icofont-ui-user" />
+                      My Profile
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to="/">
+                      <i className="icofont-settings" />
+                      Settings
+                    </Link>
+                  </li>
+                  <li onClick={this.logout} data-test="logout" className="logout">
+                    <Link to="/">
+                      <i className="icofont-logout" />
+                      Logout
+                    </Link>
+                  </li>
+                </ul>
               </div>
             )}
             {openNotifications && (

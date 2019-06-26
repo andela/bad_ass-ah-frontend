@@ -12,14 +12,14 @@ import Registration from '../registration/Registration';
 
 export class Authenticate extends Component {
   state = {
-    currentForm: 'login'
-  }
+    currentForm: this.props.location.pathname.substring(1)
+  };
 
   switchForm = (currentForm) => {
     this.setState({
-      currentForm,
+      currentForm
     });
-  }
+  };
 
   render() {
     const { props } = this;
@@ -41,30 +41,38 @@ export class Authenticate extends Component {
     if (this.props.error) errorMessage = <p className={'form__error'}>{this.props.error}</p>;
 
     return (
-      <div className='auth'>
-        <div className='auth__left-side'>
-          <div className='auth__logo-box'>
+      <div className="auth">
+        <div className="auth__left-side">
+          <div className="auth__logo-box">
             <img src={logo} className="auth__logo" alt="logo" />
           </div>
         </div>
-        <div className='auth__right-side'>
-          <div className='auth__switcher'>
+        <div className="auth__right-side">
+          <div className="auth__switcher">
             <Button
               disabled={false}
-              btnClass={`btn auth__switcher-btn${currentForm === 'login' ? ' auth__switcher-btn--active' : ''}`}
+              btnClass={`btn auth__switcher-btn${
+                currentForm === 'login' ? ' auth__switcher-btn--active' : ''
+              }`}
               onClick={() => this.switchForm('login')}
-              btnType='button'>Sign In</Button>
+              btnType="button"
+            >
+              Sign In
+            </Button>
             <Button
               disabled={false}
-              btnClass={`btn auth__switcher-btn${currentForm === 'register' ? ' auth__switcher-btn--active' : ''}`}
+              btnClass={`btn auth__switcher-btn${
+                currentForm === 'register' ? ' auth__switcher-btn--active' : ''
+              }`}
               onClick={() => this.switchForm('register')}
-              btnType='button'>Sign Up</Button>
+              btnType="button"
+            >
+              Sign Up
+            </Button>
           </div>
-          <div className='auth__form-wrapper'>
-            <div className='auth__form-error'>
-              {errorMessage}
-            </div>
-            {currentForm === 'login' ? <Login /> : <Registration/>}
+          <div className="auth__form-wrapper">
+            <div className="auth__form-error">{errorMessage}</div>
+            {currentForm === 'login' ? <Login /> : <Registration />}
             <SocialLogin />
           </div>
         </div>
@@ -75,6 +83,7 @@ export class Authenticate extends Component {
 
 Authenticate.propTypes = {
   error: PropTypes.objectOf(PropTypes.object).isRequired,
+  location: PropTypes.objectOf(PropTypes.object).isRequired
 };
 const mapStateToProps = state => ({
   isAuthenticated: state.socialAuth.isAuthenticated,
@@ -82,7 +91,7 @@ const mapStateToProps = state => ({
 });
 
 Authenticate.propTypes = {
-  error: PropTypes.string,
+  error: PropTypes.string
 };
 
 export default connect(
