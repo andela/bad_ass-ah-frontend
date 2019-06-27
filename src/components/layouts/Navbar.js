@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import ClickOutside from 'react-simple-click-outside';
 import instagram from '../../assets/Images/icons/instagram.svg';
 import twitter from '../../assets/Images/icons/twitter.svg';
 import facebook from '../../assets/Images/icons/facebook.svg';
@@ -18,14 +19,14 @@ import searching from '../../actions/search';
 import SingleSearch from '../search/Search';
 
 export class Navbar extends Component {
-  state={
+  state = {
     open: false,
     searchInput: null,
     searchItem: null,
     loading: false,
     openProfile: false,
     openNotifications: false,
-    allowNotifications: false
+    allowNotifications: false,
   };
 
   componentWillReceiveProps(nextProps) {
@@ -43,7 +44,9 @@ export class Navbar extends Component {
   }
 
   componentDidMount() {
-    const { getCurrentProfile, getNotifications, loginCheckState } = this.props;
+    const {
+      getCurrentProfile, getNotifications, loginCheckState
+    } = this.props;
     loginCheckState();
     getCurrentProfile();
     getNotifications();
@@ -82,9 +85,15 @@ export class Navbar extends Component {
     searching(data);
   }
 
+  _close = () => {
+    this.setState({ openProfile: false, openNotifications: false });
+  }
+
   // eslint-disable-next-line class-methods-use-this
   render() {
-    const { openProfile, openNotifications, allowNotifications } = this.state;
+    const {
+      openProfile, openNotifications, allowNotifications
+    } = this.state;
     const {
       notifications, readNotification, isAdmin, isAuthenticated, profile
     } = this.props;
@@ -111,7 +120,6 @@ export class Navbar extends Component {
     if (profile !== undefined && profile !== null) {
       if (profile.image !== null) avatar = profile.image;
     }
-
     return (
       <header>
         <div className="top-header">
@@ -133,7 +141,7 @@ export class Navbar extends Component {
               onChange={this.searchData}/>
               <img src={search} alt="" className="search-icon" />
             </div>
-           {searchItem && <SingleSearch item={searchItem} searchInput={searchInput}/>}
+          {searchItem && <SingleSearch item={searchItem} searchInput={searchInput}/>}
           </div>
         </div>
         <div className="top-menu-section">
@@ -168,8 +176,8 @@ export class Navbar extends Component {
                 {displayRepotedArticlesLink}
               </ul>
               {isAuthenticated ? (
-                <div className="auth-link">
-                  <div
+                  <div className="auth-link">
+                   <div
                     className="auth-path notification-badge"
                     onClick={this.onNotificationsOpen}
                     data-test="openNotificationToggle"
@@ -179,7 +187,7 @@ export class Navbar extends Component {
                       && notifications !== null
                       && notifications.length > 0 && <span>{notifications.length}</span>}
                   </div>
-                  <div className="auth-path" title="profile">
+                <div className="auth-path" title="profile">
                     <img
                       src={avatar}
                       alt=""
@@ -204,7 +212,8 @@ export class Navbar extends Component {
             </div>
             {openProfile && (
               <div className="toggleNavBar">
-                <ul>
+                   <ClickOutside close={this._close}>
+                   <ul>
                   <li>
                     <Link to="/story/new-story">
                       <i className="icofont-artichoke" />
@@ -236,11 +245,13 @@ export class Navbar extends Component {
                     </Link>
                   </li>
                 </ul>
+                   </ClickOutside>
               </div>
             )}
             {openNotifications && (
               <div className={`toggleNavBar toggleNotification ${dropdownHeight}`}>
-                <div className="notifications-opt">
+              <ClickOutside close={this._close}>
+              <div className="notifications-opt">
                   <span className="label">
                     <i className="far fa-bell" />
                     <span>Notifications</span>
@@ -271,6 +282,7 @@ export class Navbar extends Component {
                       <li className="no-notification">No notification</li>
                   )}
                 </ul>
+              </ClickOutside>
               </div>
             )}
           </div>
