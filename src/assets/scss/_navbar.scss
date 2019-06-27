@@ -105,6 +105,7 @@
       }
 
       .auth-link {
+        margin-right: 5%;
         li {
           margin-top: 3px;
 
@@ -130,9 +131,9 @@
 .toggleNavBar {
   position: absolute;
   right: -11px;
-  margin-right: 100px;
+  margin-right: 5%;
   background: #fff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.25), 0 0 1px rgba(0, 0, 0, 0.35);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.45), 0 0 1px rgba(0, 0, 0, 0);
   padding: 5px;
   top: 0;
   z-index: 10;

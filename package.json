@@ -28,6 +28,7 @@
     "react-router-dom": "^5.0.0",
     "react-scripts": "3.0.1",
     "react-share": "^3.0.0",
+    "react-simple-click-outside": "^1.0.5",
     "react-to-string": "^0.1.1",
     "redux": "^4.0.1",
     "redux-devtools-extension": "^2.13.8",
@@ -72,6 +73,7 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/react-hooks": "^1.0.4",
     "coveralls": "^3.0.3",
     "cross-env": "^5.2.0",
     "enzyme": "^3.9.0",
