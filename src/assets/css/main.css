@@ -386,8 +386,8 @@ footer {
   font-size: 12px;
   font-family: 'Open Sans', sans-serif; }
   .auth__left-side {
-    flex: 0 0 50%;
-    background-image: linear-gradient(to right bottom, rgba(255, 255, 255, 0.8), rgba(0, 0, 0, 0.7)), url("https://res.cloudinary.com/badass/image/upload/v1559251948/jon-tyson-762619-unsplash.jpg");
+    flex: 0 0 45%;
+    background-image: linear-gradient(to right bottom, rgba(0, 123, 255, 0.24), #15004a), url(https://res.cloudinary.com/badass/image/upload/v1559251948/jon-tyson-762619-unsplash.jpg);
     background-size: cover;
     background-position: top;
     position: relative; }
@@ -402,7 +402,7 @@ footer {
     top: 40px;
     left: 40px; }
   .auth__logo {
-    width: 100px; }
+    width: 80px; }
   .auth__switcher {
     display: flex;
     justify-content: flex-end;
@@ -431,6 +431,23 @@ footer {
     justify-content: center;
     margin-top: 20px;
     padding: 10px; }
+  .auth .welcome-auth {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: normal;
+    font-family: 'Rokkitt', serif; }
+    .auth .welcome-auth .welcome-logo {
+      margin-bottom: 20px; }
+    .auth .welcome-auth h1 {
+      margin-bottom: 10px;
+      font-size: 2rem; }
+    .auth .welcome-auth h5 {
+      font-size: 18px; }
 
 .form__group {
   margin-top: 30px; }
@@ -1492,12 +1509,12 @@ svg {
   position: absolute;
   width: 100%;
   z-index: 10;
-  margin-top: -60px; }
+  margin-top: -80px; }
 
 .descriptions {
   background: #ffff;
   position: relative;
-  height: 125px;
+  height: 110px;
   width: 83%;
   margin: auto;
   box-shadow: 1px 1px 20px 0px #100a0c26;
@@ -1710,7 +1727,6 @@ footer h1 {
   top: 0;
   margin-left: 30px; }
 
-/*  */
 .people-follower {
   border: 1px solid #ddd;
   border-radius: 3px;
@@ -1832,7 +1848,7 @@ footer h1 {
     margin: auto;
     padding-left: 95px; }
     .G-showcase .G-create-article .G-containers {
-      box-shadow: 0px 0px 1px 0px #dddddd57; }
+      box-shadow: 0px 0px 500px 0px #dddddda6; }
     .G-showcase .G-create-article .G-form-group {
       margin-bottom: 0.5rem;
       padding: 10px;
@@ -2123,9 +2139,60 @@ footer h1 {
   line-height: 36px;
   width: 20px;
   padding-left: 10px;
-  padding-right: 10px; }
+  padding-right: 10px;
+  /*@Copain*/ }
   .btn-bookmark i {
     padding-right: 2px; }
+  .btn-bookmark .clear {
+    clear: both !important; }
+  .btn-bookmark .C-like {
+    position: fixed center;
+    right: 15px;
+    bottom: 15px;
+    z-index: 100; }
+  .btn-bookmark .c-like-grid {
+    display: grid;
+    grid-template-columns: 0fr 0fr;
+    grid-gap: 10px; }
+  .btn-bookmark .turnLike {
+    border: 1px solid red !important; }
+  .btn-bookmark .turnBlack {
+    color: black !important; }
+  .btn-bookmark .changeColor {
+    color: red; }
+  .btn-bookmark .btn-heart {
+    font-family: "Rokkitt", serif;
+    border-radius: 10px;
+    cursor: pointer;
+    border: 1px solid #ddd;
+    background: #ffff;
+    line-height: 36px;
+    width: 30px;
+    padding-left: 10px;
+    padding-right: 10px; }
+    .btn-bookmark .btn-heart i {
+      padding-right: 2px; }
+    .btn-bookmark .btn-heart div {
+      display: inline-block; }
+
+.pagination {
+  width: 100% !important;
+  padding: 10px 0;
+  position: absolute;
+  bottom: -20px;
+  z-index: 100; }
+
+.pagination span {
+  background: #cdcdcd;
+  padding: 5px 15px;
+  font-weight: bold;
+  border-radius: 3px;
+  margin: auto 4px;
+  cursor: pointer; }
+
+.pagination span.active {
+  background: #343434;
+  color: #ffffff; }
 
 *,
 body {

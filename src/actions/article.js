@@ -21,9 +21,15 @@ import { checkToken } from '../utils/checkToken';
 dotenv.config();
 const hashids = new Hashid('', 10);
 
+// @loading
+const loading = () => ({
+  type: LOADING
+});
+
 // @get all article actions
-const getAllArticle = () => async (dispatch) => {
-  const url = '/api/articles';
+const getAllArticle = pageNumber => async (dispatch) => {
+  const url = `/api/articles?page=${pageNumber}&limit=6`;
+  dispatch(loading());
   try {
     const res = await axios.get(url);
     dispatch(PassDispatch(GET_ALL_ARTICLE, res.data));
@@ -33,10 +39,6 @@ const getAllArticle = () => async (dispatch) => {
     }
   }
 };
-// @loading
-const loading = () => ({
-  type: LOADING
-});
 // @create article
 const createArticle = data => async (dispatch) => {
   const url = '/api/articles';

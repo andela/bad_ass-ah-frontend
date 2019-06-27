@@ -22,7 +22,11 @@ import '../assets/scss/_Index.scss';
 export class Index extends Component {
   componentDidMount() {
     const { getAllArticle } = this.props;
-    getAllArticle();
+    getAllArticle(1);
+  }
+
+  loadPage = (pageNumber) => {
+    this.props.getAllArticle(pageNumber);
   }
 
   render() {
@@ -34,10 +38,23 @@ export class Index extends Component {
     const {
       allArticle: { allArticles }
     } = this.props;
+    let numberOfPages = null;
     if (allArticles && allArticles.length !== 0) {
       all = allArticles[0].articles;
       slide = allArticles[0].articles.slice(0, size);
+      numberOfPages = allArticles[0].metaData.totalPages;
     }
+
+    const pagination = [];
+    const currentPage = parseInt(allArticles[0] ? allArticles[0].metaData.currentPage : 1, 10);
+
+    if (numberOfPages !== null) {
+      for (let i = 1; i <= numberOfPages; i += 1) {
+        const pageBtn = <span key={i} id={`page-${i}`} className={`${currentPage === i ? 'active' : ''}`} onClick={() => this.loadPage(i)}>{i}</span>;
+        pagination.push(pageBtn);
+      }
+    }
+
     return (
       <Layout>
         <Fragment>
@@ -166,6 +183,9 @@ export class Index extends Component {
                           </Link>
                         </div>
                       ))}
+                <div className="pagination">
+                {pagination}
+                </div>
                     </div>
                   </div>
                 </div>

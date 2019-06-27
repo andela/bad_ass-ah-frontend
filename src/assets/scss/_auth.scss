@@ -7,8 +7,8 @@
   font-family: 'Open Sans', sans-serif;
 
   &__left-side {
-    flex: 0 0 50%;
-    background-image: linear-gradient(to right bottom, rgba($whitecolor, 0.8), rgba($blackcolour, 0.7)), url($backImage);
+    flex: 0 0 45%;
+    background-image: linear-gradient(to right bottom, rgba(0, 123, 255, 0.24), #15004a), url(https://res.cloudinary.com/badass/image/upload/v1559251948/jon-tyson-762619-unsplash.jpg);
     background-size: cover;
     background-position: top;
     position: relative;
@@ -29,7 +29,7 @@
   }
 
   &__logo {
-    width: 100px;
+    width: 80px;
   }
 
   &__switcher {
@@ -72,5 +72,26 @@
     justify-content: center;
     margin-top: 20px;
     padding: 10px;
+  }
+  .welcome-auth{
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    height: 80vh;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-weight: normal;
+    font-family: 'Rokkitt', serif;
+    .welcome-logo{
+      margin-bottom: 20px;
+    }
+    h1{
+      margin-bottom: 10px;
+      font-size: 2rem;
+    }
+    h5{
+      font-size: 18px;
+    }
   }
 }

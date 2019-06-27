@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 import { loadUser } from '../../../actions/socialAuth';
 import SocialLogin from '../sociaLogin/SociaLogin';
 import Login from '../login/Login';
-import logo from '../../../assets/Images/icons/world.svg';
 import Button from '../../common/button/Button';
 import Registration from '../registration/Registration';
 
@@ -27,6 +26,7 @@ export class Authenticate extends Component {
     const userData = queryString.parse(url);
     const { username, token } = userData;
     const { currentForm } = this.state;
+    const logos = 'https://res.cloudinary.com/badass/image/upload/v1561644494/world_1.png';
 
     if (username && token) {
       props.loadUser(token, username);
@@ -43,8 +43,12 @@ export class Authenticate extends Component {
     return (
       <div className="auth">
         <div className="auth__left-side">
-          <div className="auth__logo-box">
-            <img src={logo} className="auth__logo" alt="logo" />
+          <div className="welcome-auth">
+          <div className="welcome-logo">
+            <img src={logos} className="auth__logo" alt="logo" />
+          </div>
+            <h1>Welcome to Authors Haven</h1>
+            <h5><i>A place for those that are creative at heart.</i></h5>
           </div>
         </div>
         <div className="auth__right-side">
