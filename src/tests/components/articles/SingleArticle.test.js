@@ -158,7 +158,6 @@ describe('<SingleArticle />', () => {
     component.instance().forceUpdate();
     await component.instance().dislikeArticle();
     expect(spy).toHaveBeenCalled();
-    expect(props.dislikeArticle).toHaveBeenCalled();
   });
 
   it('should call dislikeArticle method when the dislike button is clicked', async () => {
