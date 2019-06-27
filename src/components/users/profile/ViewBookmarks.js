@@ -24,7 +24,7 @@ import {
 import { getReadingStats } from '../../../actions';
 import { deleteArticle } from '../../../actions/article';
 import { fetchBookmarks, unBookmark } from '../../../actions/bookmarkArticle';
-import Spinner from '../../layouts/Spinner';
+import spinner from '../../../assets/Images/spinner.gif';
 import Alert from '../../layouts/Alert';
 
 const hashids = new Hashid('', 10);
@@ -33,7 +33,6 @@ export class ViewBookmark extends Component {
     startLoading: false
   };
 
-
   componentDidMount() {
     const {
       getCurrentProfile,
@@ -41,7 +40,7 @@ export class ViewBookmark extends Component {
       getUserFollowing,
       getUserArticles,
       getReadingStats,
-      fetchBookmarks,
+      fetchBookmarks
     } = this.props;
     getCurrentProfile();
     getUserFollowers();
@@ -58,12 +57,7 @@ export class ViewBookmark extends Component {
 
   render() {
     let successMessage;
-    const {
-      loading,
-      profile,
-      message,
-      getBookmarks,
-    } = this.props;
+    const { message, getBookmarks, loading } = this.props;
     const { startLoading } = this.state;
     if (message !== '') {
       setTimeout(() => {
@@ -72,9 +66,11 @@ export class ViewBookmark extends Component {
     }
     return (
       <Layout>
-        {loading === true || profile === null ? (
+        {loading === true ? (
           <section className="profile-section">
-            <Spinner />
+            <div className="loadingSpinner">
+              <img src={spinner} alt="spinner" />
+            </div>
           </section>
         ) : (
           <Fragment>
@@ -84,65 +80,87 @@ export class ViewBookmark extends Component {
               <div className="user-profile">
                 <div className="user-articles">
                   <div className="pro-article-title">My bookmarks</div>
-                  <div className="user-blogs">
-                    {getBookmarks !== undefined
-                      && getBookmarks !== null
-                      && getBookmarks.length > 0
-                      && getBookmarks.map((article, index) => (
-                        <div key={index} className="blogs-article">
-                          <div className="blogs-avatar-info">
-                            <div className="blog-avatar">
-                              <img src={article.article.authorfkey.image === null ? avatar : article.article.authorfkey.image} alt="" />
-                            </div>
-                            <div className="blog-info">
-                              <span>{article.article.authorfkey.username}</span>
-                              <span>
-                                created on <Moment date={article.article.createdAt} format="D MMM YYYY" />
-                              </span>
-                            </div>
-                            <div className="drop-article">
-                              <button
-                                type="button"
-                                onClick={this.onUnbookmark.bind(
-                                  this,
-                                  hashids.encode(article.article.article_id), article.id
-                                )}
-                              >
-                                {' '}
-                                <span>Unbookmark</span>
-                                <i class="icofont-book-mark" />
-                              </button>
-                            </div>
-                          </div>
-                          <div className="blogs-descriptive">
-                            {article.article.image === null ? (
-                              ''
-                            ) : (
-                              <div className="desc-image">
-                                <img src={article.article.image} alt="article1" />
+                  {getBookmarks === null || getBookmarks.length === 0 ? (
+                    <div className="user-blogs no-bookmarks">
+                      <h3>No Bookmarked article found.</h3>
+                    </div>
+                  ) : (
+                    <div className="user-blogs">
+                      {getBookmarks !== undefined
+                        && getBookmarks !== null
+                        && getBookmarks.length > 0
+                        && getBookmarks.map((article, index) => (
+                          <div key={index} className="blogs-article">
+                            <div className="blogs-avatar-info">
+                              <div className="blog-avatar">
+                                <img
+                                  src={
+                                    article.article.authorfkey.image === null
+                                      ? avatar
+                                      : article.article.authorfkey.image
+                                  }
+                                  alt=""
+                                />
                               </div>
-                            )}
-                            <div className="desc-articles">
-                              <div className="desc-articles-titles">
-                                <Link
-                                  to={{
-                                    pathname: `/story/${hashids.encode(article.article.article_id)}`,
-                                    state: { prevPath: window.location.pathname }
-                                  }}
+                              <div className="blog-info">
+                                <span>{article.article.authorfkey.username}</span>
+                                <span>
+                                  created on{' '}
+                                  <Moment date={article.article.createdAt} format="D MMM YYYY" />
+                                </span>
+                              </div>
+                              <div className="drop-article">
+                                <button
+                                  type="button"
+                                  onClick={this.onUnbookmark.bind(
+                                    this,
+                                    hashids.encode(article.article.article_id),
+                                    article.id
+                                  )}
                                 >
-                                  <h1>{StringParser(Parser(article.article.title))
-                                    .substring(0, 70)}</h1>
-                                  <div>
-                                    <p>{StringParser(Parser(article.article.body))
-                                      .substring(0, 90)}</p>
-                                  </div>
-                                </Link>
+                                  {' '}
+                                  <span>Unbookmark</span>
+                                  <i class="icofont-book-mark" />
+                                </button>
+                              </div>
+                            </div>
+                            <div className="blogs-descriptive">
+                              {article.article.image === null ? (
+                                ''
+                              ) : (
+                                <div className="desc-image">
+                                  <img src={article.article.image} alt="article1" />
+                                </div>
+                              )}
+                              <div className="desc-articles">
+                                <div className="desc-articles-titles">
+                                  <Link
+                                    to={{
+                                      pathname: `/story/${hashids.encode(
+                                        article.article.article_id
+                                      )}`,
+                                      state: { prevPath: window.location.pathname }
+                                    }}
+                                  >
+                                    <h1>
+                                      {StringParser(Parser(article.article.title)).substring(0, 70)}
+                                    </h1>
+                                    <div>
+                                      <p>
+                                        {StringParser(Parser(article.article.body)).substring(
+                                          0,
+                                          90
+                                        )}
+                                      </p>
+                                    </div>
+                                  </Link>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
-                  </div>
+                        ))}
+                    </div>
+                  )}
                 </div>
               </div>
             </section>
@@ -170,12 +188,12 @@ ViewBookmark.propTypes = {
   errorGetReadingStats: PropTypes.string,
   fetchBookmarks: PropTypes.func,
   unBookmark: PropTypes.func,
-  getBookmarks: PropTypes.func,
+  getBookmarks: PropTypes.func
 };
 
 export const mapStateToProps = state => ({
   profile: state.profile.profile,
-  loading: state.profile.loading,
+  loading: state.getBookmarks.loading,
   followers: state.profile.followers,
   following: state.profile.following,
   articles: state.profile.articles.articles,
