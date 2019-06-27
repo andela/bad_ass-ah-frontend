@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
@@ -8,6 +9,7 @@ import Layout from '../../layouts/Layout';
 import defaultAvatar from '../../../assets/Images/avatar.svg';
 import PageNotFound from '../../NotFound';
 import './Followers.scss';
+import Spinner from '../../layouts/Spinner';
 
 class Followers extends Component {
   render() {
@@ -15,7 +17,44 @@ class Followers extends Component {
       profile: { profile, followers, following }
     } = this.props;
     let followersArray = null;
-    if (followers !== null) followersArray = followers.followers;
+    let followersContent = (
+      <div className="displayspinner">
+        <Spinner />;
+      </div>
+    );
+    if (followers !== {}) {
+      followersArray = followers.followers;
+      followersContent = followersArray !== undefined ? (
+        followersArray.length > 0 ? (
+          followersArray.map(myfollowers => (
+              <div class="people-follower">
+                <div class="follower-img">
+                  <img
+                    src={
+                      myfollowers.followedFkey.image
+                        ? myfollowers.followedFkey.image
+                        : defaultAvatar
+                    }
+                    alt=""
+                  />
+                </div>
+                <div class="follow-info">
+                  <h3>{myfollowers.followedFkey.username}</h3>
+                  <span>{myfollowers.followedFkey.email}</span>
+                </div>
+              </div>
+          ))
+        ) : (
+            <center>
+              <PageNotFound error="Sorry, currently you are not following any one" />
+            </center>
+        )
+      ) : (
+        followersContent
+      );
+    } else {
+      followersContent = <Spinner />;
+    }
     return (
       <Layout>
         <section class="profile-section">
@@ -53,35 +92,8 @@ class Followers extends Component {
               </div>
             </div>
             <div class="user-articles">
-              <div class="pro-article-title">My followers.</div>
-              <div class="user-blog">
-                {followersArray !== null
-                && followersArray !== undefined
-                && followersArray.length > 0 ? (
-                    followersArray.map(myfollowers => (
-                    <div class="people-follower">
-                      <div class="follower-img">
-                        <img
-                          src={
-                            myfollowers.followedFkey.image
-                              ? myfollowers.followedFkey.image
-                              : defaultAvatar
-                          }
-                          alt=""
-                        />
-                      </div>
-                      <div class="follow-info">
-                        <h3>{myfollowers.followedFkey.username}</h3>
-                        <span>{myfollowers.followedFkey.email}</span>
-                      </div>
-                    </div>
-                    ))
-                  ) : (
-                  <center>
-                    <PageNotFound error="Sorry, currently none is following you" />
-                  </center>
-                  )}
-              </div>
+              <div class="pro-article-title">Followers</div>
+              <div class="user-blog">{followersContent}</div>
             </div>
           </div>
         </section>
