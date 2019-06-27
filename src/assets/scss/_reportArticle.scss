@@ -38,6 +38,7 @@
       min-width: 150px;
       color: $color-grey-dark-3;
       border: 1px solid $color-grey-light-1;
+      text-transform: capitalize;
 
       &:hover {
         cursor: pointer;
@@ -87,32 +88,48 @@
 
   &__reported-wrapper {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+    padding: 2%;
     min-height: 400px;
 
     &--title {
       margin-top: 30px;
+      margin-bottom: 30px;
       font-weight: 300;
       border-bottom: 1px solid black;
     }
   }
 
+  &__reported-all {
+    width: 59%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 1%;
+  }
+
+  &__reported-most {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
   &__reported {
-    padding: 3%;
-    width: 90%;
     display: flex;
     flex-flow: row wrap;
+    justify-content: center;
     align-items: center;
     box-sizing: border-box;
 
-    &-nav-wrapper {
+    &-nav-wrapper,
+    &-nav-wrapper-most {
        border: 1px solid $color-grey-light-2;
        box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.2);
        padding: 4px;
        margin: 4px;
        margin-bottom: 20px;
-       width: 32.6%;
        box-sizing: border-box;
 
        &:hover {
@@ -120,6 +137,15 @@
          border: 1px solid $color-blue-dark-1;
        }
     }
+
+    &-nav-wrapper {
+      width: 48%;
+    }
+
+    &-nav-wrapper-most {
+      width: 95%;
+    }
+
     &--nav-link {
       color: $darkcolour;
       font-size: 1em;
@@ -133,6 +159,12 @@
       &__value {
         color: $color-grey-dark-3;
         text-transform: capitalize;
+      }
+
+      &__times {
+        color: $color-grey-dark-3;
+        font-size: 1.2em;
+        margin-left: 20px;
       }
 
       &__section {

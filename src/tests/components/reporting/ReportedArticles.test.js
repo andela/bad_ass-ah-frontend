@@ -16,6 +16,16 @@ describe('<ReportedArticles />', () => {
       article: {
         title: 'title'
       }
+    },
+    {
+      articleId: 123,
+      comment: 'comment',
+      reportType: {
+        type: 'type'
+      },
+      article: {
+        title: 'title'
+      }
     }],
     errorGettingReportedArticles: 'error',
   };
