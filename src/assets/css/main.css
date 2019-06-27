@@ -1077,7 +1077,8 @@ footer {
   width: 30%;
   min-width: 150px;
   color: #555;
-  border: 1px solid #a3a3a3; }
+  border: 1px solid #a3a3a3;
+  text-transform: capitalize; }
   .report__type-selector:hover {
     cursor: pointer; }
   .report__type-selector:focus, .report__type-selector:hover {
@@ -1112,32 +1113,49 @@ footer {
 
 .report__reported-wrapper {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-direction: row;
+  justify-content: center;
+  padding: 2%;
   min-height: 400px; }
   .report__reported-wrapper--title {
     margin-top: 30px;
+    margin-bottom: 30px;
     font-weight: 300;
     border-bottom: 1px solid black; }
 
+.report__reported-all {
+  width: 59%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 1%; }
+
+.report__reported-most {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  align-items: center; }
+
 .report__reported {
-  padding: 3%;
-  width: 90%;
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
   align-items: center;
   box-sizing: border-box; }
-  .report__reported-nav-wrapper {
+  .report__reported-nav-wrapper, .report__reported-nav-wrapper-most {
     border: 1px solid #dedede;
     box-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.2);
     padding: 4px;
     margin: 4px;
     margin-bottom: 20px;
-    width: 32.6%;
     box-sizing: border-box; }
-    .report__reported-nav-wrapper:hover {
+    .report__reported-nav-wrapper:hover, .report__reported-nav-wrapper-most:hover {
       cursor: pointer;
       border: 1px solid #005abb; }
+  .report__reported-nav-wrapper {
+    width: 48%; }
+  .report__reported-nav-wrapper-most {
+    width: 95%; }
   .report__reported--nav-link {
     color: #333;
     font-size: 1em; }
@@ -1148,6 +1166,10 @@ footer {
     .report__reported--nav-link__value {
       color: #555;
       text-transform: capitalize; }
+    .report__reported--nav-link__times {
+      color: #555;
+      font-size: 1.2em;
+      margin-left: 20px; }
     .report__reported--nav-link__section {
       padding: 3px; }
       .report__reported--nav-link__section p {
@@ -1710,7 +1732,6 @@ footer h1 {
   top: 0;
   margin-left: 30px; }
 
-/*  */
 .people-follower {
   border: 1px solid #ddd;
   border-radius: 3px;

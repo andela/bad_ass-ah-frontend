@@ -74,14 +74,18 @@ export class ReportArticle extends Component {
       const options = [];
       for (let i = 0; i < reportTypes.length; i += 1) {
         options.push(
-          <option key={reportTypes[i].id} value={reportTypes[i].id}>{reportTypes[i].type}</option>
+          <option
+            key={reportTypes[i].id}
+            value={reportTypes[i].id}>
+            {reportTypes[i].type}
+          </option>
         );
       }
       modelContent = <form onSubmit={this.submitReportedStoryHandler} className='report__type-form'>
         <div className={'form__group'}>
           <label className={'form__label report__type-input__label'} htmlFor='reportType'>Select report type</label>
           <select className='report__type-selector' value={valueSelectedType} onChange={this.selectedTypeHandler}>
-            <option key={0} value=''>Select type</option>
+            <option key={0} value=''>Select Type</option>
             {options}
           </select>
         </div>

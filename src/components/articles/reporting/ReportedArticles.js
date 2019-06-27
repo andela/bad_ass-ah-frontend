@@ -20,6 +20,7 @@ export class ReportedArticles extends Component {
     const { isGettingReportedArticle, reportedArticles, errorGettingReportedArticles } = this.props;
 
     const layoutReportedArticles = [];
+    const withoutDuplicates = [];
     if (reportedArticles !== null) {
       for (let i = 0; i < reportedArticles.length; i += 1) {
         const articleId = hashId.encode(reportedArticles[i].articleId);
@@ -40,8 +41,41 @@ export class ReportedArticles extends Component {
             </div>
           </Link>
         </div>;
-
         layoutReportedArticles.push(layout);
+        const index = withoutDuplicates
+          .findIndex(article => article.articleId === reportedArticles[i].articleId);
+        if (index === -1) {
+          withoutDuplicates.push(reportedArticles[i]);
+        }
+      }
+    }
+
+    const mostReportedArticles = [];
+
+    if (withoutDuplicates.length !== 0) {
+      for (let i = 0; i < withoutDuplicates.length; i += 1) {
+        const reportedArticle = withoutDuplicates[i];
+        const filteredArticles = reportedArticles
+          .filter(a => a.articleId === reportedArticle.articleId);
+
+        if (filteredArticles.length > 1) {
+          const articleId = hashId.encode(withoutDuplicates[i].articleId);
+          const title = stringParser(htmlParser(withoutDuplicates[i].article.title));
+          const layout = <div className='report__reported-nav-wrapper-most'>
+            <Link to={`/story/${articleId}`} className='report__reported--nav-link'>
+              <div className='report__reported--nav-link__section'>
+                <span>Article:</span>
+                <span className='report__reported--nav-link__value'>{title}</span>
+              </div>
+              <div className='report__reported--nav-link__section'>
+                <span>Reported times:</span>
+                <span className='report__reported--nav-link__times'>{filteredArticles.length}</span>
+              </div>
+            </Link>
+          </div>;
+
+          mostReportedArticles.push(layout);
+        }
       }
     }
 
@@ -51,8 +85,10 @@ export class ReportedArticles extends Component {
     }
 
     let tittle = null;
+    let titleMostReported = null;
     if (!isGettingReportedArticle && errorGettingReportedArticles === null) {
-      tittle = 'Reported articles';
+      tittle = 'Reported stories';
+      titleMostReported = 'Most reported stories';
     }
 
     let displayError = null;
@@ -62,12 +98,20 @@ export class ReportedArticles extends Component {
 
     return (
       <Layout>
+        {loadingSpinner}
         <div className='report__reported-wrapper'>
-          <h2 className='report__reported-wrapper--title'>{tittle}</h2>
-          {displayError}
-          <div className='report__reported'>
-            {loadingSpinner}
-            {layoutReportedArticles}
+          <div className='report__reported-all'>
+            <h2 className='report__reported-wrapper--title'>{tittle}</h2>
+            {displayError}
+            <div className='report__reported'>
+              {layoutReportedArticles}
+            </div>
+          </div>
+          <div className='report__reported-most'>
+            <h2 className='report__reported-wrapper--title'>{titleMostReported}</h2>
+            <div className='report__reported'>
+              {mostReportedArticles}
+            </div>
           </div>
         </div>
       </Layout>

@@ -288,12 +288,12 @@ export class SingleArticle extends Component {
 
     let redirectOnBookmarkURL = null;
     if (redirectOnBookmark) {
-      redirectOnBookmarkURL = <Redirect to="/auth" />;
+      redirectOnBookmarkURL = <Redirect to="/login" />;
     }
     let redirect = null;
     let followBox = null;
     if (redirectOnFollow) {
-      redirect = <Redirect to="/auth" />;
+      redirect = <Redirect to="/login" />;
     }
 
     if (single !== undefined) {
@@ -345,7 +345,7 @@ export class SingleArticle extends Component {
                 <Alert />
                 <div className="G-form-group">
                   <h1 className="G-storyTitle">{stringParser(htmlParser(UpperCase(single.title)))}</h1>
-                   <div className="author_in_top">
+                  <div className="author_in_top">
                     <div className="author_avatar">
                       <img src={single.authorfkey.image || userDefaulAvatar} alt="" />
                     </div>
@@ -354,7 +354,7 @@ export class SingleArticle extends Component {
                     </div>
                     {followBox}
                   </div>
-                  <p className='reading-time'>reading time: {single.readingTime}</p>
+                  <p className='reading-time'>Read time: {single.readingTime}</p>
                   {userId === single.authorfkey.id && (
                     <div className="drop-article singleDrop">
                       <Link to={`/story/edit/${hashids.encode(single.article_id)}`}>
@@ -415,7 +415,7 @@ export class SingleArticle extends Component {
                       {article.votes.hasLiked === true ? (
                         <i className="icofont-heart changeColor" />
                       ) : (
-                        <i className="icofont-heart" />
+                          <i className="icofont-heart" />
                       )}
                       <div>{article.votes.likes}</div>
                     </div>
@@ -428,7 +428,7 @@ export class SingleArticle extends Component {
                       {article.votes.hasDisliked === true ? (
                         <i className="icofont-ui-love-broken changeColor" />
                       ) : (
-                        <i className="icofont-ui-love-broken" />
+                          <i className="icofont-ui-love-broken" />
                       )}
                       <div>{article.votes.dislikes}</div>
                     </div>
@@ -441,7 +441,7 @@ export class SingleArticle extends Component {
                       {article.hasBookmarked === true ? (
                         <i class="icofont-book-mark changeColor" />
                       ) : (
-                        <i class="icofont-book-mark" />
+                          <i class="icofont-book-mark" />
                       )}
                     </div>
                   </div>
@@ -451,9 +451,9 @@ export class SingleArticle extends Component {
                 <Comment articleId={articleId2} />
               </div>
             ) : (
-              <center>
-                {error && error.errors !== undefined && <NotFound error={error.errors.body[0]} />}
-              </center>
+                <center>
+                  {error && error.errors !== undefined && <NotFound error={error.errors.body[0]} />}
+                </center>
             )}
           </Fragment>
         </div>
