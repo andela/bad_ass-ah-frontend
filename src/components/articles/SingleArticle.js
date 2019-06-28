@@ -31,6 +31,7 @@ import Report from './reporting/Report';
 import followUser, { unfollowUser } from '../../actions/user/followUser';
 import userDefaulAvatar from '../../assets/Images/icons/boy.svg';
 import { getUserFollowing } from '../../actions/profile';
+import spinner from '../../assets/Images/spinner.gif';
 
 const hashids = new Hashids('', 10);
 
@@ -453,6 +454,9 @@ export class SingleArticle extends Component {
             ) : (
                 <center>
                   {error && error.errors !== undefined && <NotFound error={error.errors.body[0]} />}
+                  {<div className="loadingSpinner">
+                  <img src={spinner} alt="spinner" />
+                </div>}
                 </center>
             )}
           </Fragment>
