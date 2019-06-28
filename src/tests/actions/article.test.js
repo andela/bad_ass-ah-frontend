@@ -38,7 +38,7 @@ describe('Article', () => {
       });
     });
     return Store.dispatch(getAllArticle()).then(() => {
-      expect(Store.getActions().length).toBe(1);
+      expect(Store.getActions().length).toBe(2);
     });
   });
 
@@ -51,7 +51,7 @@ describe('Article', () => {
       });
     });
     return Store.dispatch(getAllArticle()).then(() => {
-      expect(Store.getActions().length).toBe(1);
+      expect(Store.getActions().length).toBe(2);
     });
   });
 

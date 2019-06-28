@@ -8,7 +8,7 @@ import {
 const initialState = {
   allArticles: [],
   newArticle: null,
-  loading: true,
+  loading: false,
   error: {},
   newTag: [],
   article: null,
@@ -42,7 +42,8 @@ const getAllArticle = (state = initialState, action) => {
     case LOADING:
       return {
         ...state,
-        loading: false
+        loading: true,
+        allArticles: []
       };
     case ADD_TAG:
       return {

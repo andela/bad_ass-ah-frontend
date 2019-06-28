@@ -17,13 +17,25 @@ const props = {
             username: 'username'
           }
         }
-      ]
+      ],
+      metaData: {
+        prevPage: 2,
+        nextPage: 4,
+        currentPage: 3,
+        totalPages: 4,
+        limit: 6
+      }
     }]
-  }
+  },
 };
 describe('<AllArticle />', () => {
   const component = shallow(<Index {...props} />);
   it('should render without crashing', () => {
     expect(component).toMatchSnapshot();
+  });
+  it('should load pages', () => {
+    const instance = component.instance();
+    instance.loadPage();
+    expect(instance).toBeDefined();
   });
 });

@@ -1,8 +1,15 @@
 import getAllArticle from '../../../reducers/article';
 import {
-  GET_ALL_ARTICLE, CREATE_ARTICLE, ARTICLE_FAILURE, LOADING, ADD_TAG,
-  REMOVE_TAG, VOTE_ARTICLES, DELETE_ARTICLE,
-  UPDATE_ARTICLE, GET_SINGLE_ARTICLE,
+  GET_ALL_ARTICLE,
+  CREATE_ARTICLE,
+  ARTICLE_FAILURE,
+  LOADING,
+  ADD_TAG,
+  REMOVE_TAG,
+  VOTE_ARTICLES,
+  DELETE_ARTICLE,
+  UPDATE_ARTICLE,
+  GET_SINGLE_ARTICLE,
   BOOKMARK_ARTICLE_SUCCESS
 } from '../../../actions/types';
 
@@ -28,7 +35,9 @@ describe('Article reducer', () => {
       type: GET_ALL_ARTICLE,
       payload
     });
-    expect(state).toEqual({ allArticles: [payload] });
+    expect(state).toEqual({
+      allArticles: [payload]
+    });
   });
   it('should return state when CREATE_ARTICLE actions from reducers', () => {
     const payload = {
@@ -41,7 +50,10 @@ describe('Article reducer', () => {
       type: CREATE_ARTICLE,
       payload
     });
-    expect(state).toEqual({ newArticle: payload, loading: false });
+    expect(state).toEqual({
+      newArticle: payload,
+      loading: false
+    });
   });
   it('should return authentication error when ARTICLE_ERROR action called', () => {
     const payload = {
@@ -51,11 +63,14 @@ describe('Article reducer', () => {
       type: ARTICLE_FAILURE,
       payload
     });
-    expect(state).toEqual({ error: payload });
+    expect(state).toEqual({
+      error: payload
+    });
   });
   it('should load data from state when LOADING action called', () => {
     const payload = {
-      loading: false
+      allArticles: [],
+      loading: true
     };
     const state = getAllArticle([], {
       type: LOADING,
@@ -72,18 +87,28 @@ describe('Article reducer', () => {
       type: ADD_TAG,
       payload: [...initialState.newTag, payload]
     });
-    expect(data).toEqual({ newTag: [[payload]] });
+    expect(data).toEqual({
+      newTag: [
+        [payload]
+      ]
+    });
   });
   it('should remove tag when REMOVE_TAG action called', () => {
     const payload = 'laravel';
     const initialState = {
-      newTag: [{ tag: 'laravel' }]
+      newTag: [{
+        tag: 'laravel'
+      }]
     };
     const state = getAllArticle(initialState, {
       type: REMOVE_TAG,
       payload: [...initialState.newTag.filter(tag => tag !== payload)]
     });
-    expect(state).toEqual({ newTag: [{ tag: payload }] });
+    expect(state).toEqual({
+      newTag: [{
+        tag: payload
+      }]
+    });
   });
   it('should like an article when VOTE_ARTICLE is called', () => {
     const initialState = {
@@ -107,31 +132,53 @@ describe('Article reducer', () => {
     expect(state.voteMessage).toEqual(payload.message);
   });
   it('should get single article', () => {
-    const payload = { title: 'laravel' };
-    const initialState = { article: { article: { title: 'laravel' } } };
+    const payload = {
+      title: 'laravel'
+    };
+    const initialState = {
+      article: {
+        article: {
+          title: 'laravel'
+        }
+      }
+    };
     const state = getAllArticle(initialState, {
       type: GET_SINGLE_ARTICLE,
       payload
     });
-    expect(state).toEqual({ article: payload });
+    expect(state).toEqual({
+      article: payload
+    });
   });
   it('should update article using UPDAT_ARTICLE action', () => {
-    const payload = { title: 'laravel' };
-    const initialState = { updatedArticle: { title: 'laravel' } };
+    const payload = {
+      title: 'laravel'
+    };
+    const initialState = {
+      updatedArticle: {
+        title: 'laravel'
+      }
+    };
     const state = getAllArticle(initialState, {
       type: UPDATE_ARTICLE,
       payload
     });
-    expect(state).toEqual({ updatedArticle: payload });
+    expect(state).toEqual({
+      updatedArticle: payload
+    });
   });
   it('should delete article', () => {
     const payload = 'deleted successfully';
-    const initialState = { message: payload };
+    const initialState = {
+      message: payload
+    };
     const state = getAllArticle(initialState, {
       type: DELETE_ARTICLE,
       payload
     });
-    expect(state).toEqual({ message: payload });
+    expect(state).toEqual({
+      message: payload
+    });
   });
   it('should like an article when BOOKMARK_ARTICLE_SUCCESS is called', () => {
     const initialState = {

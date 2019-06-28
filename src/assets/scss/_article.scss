@@ -3,7 +3,6 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat|PT+Sans|Slabo+27px');
 @import url('https://fonts.googleapis.com/css?family=Anton|Cantora+One');
 @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro&display=swap');
-
 /*@gratian*/
 .G-showcase {
   position: relative;
@@ -17,7 +16,7 @@
     margin: auto;
     padding-left: 95px;
     .G-containers {
-      box-shadow: 0px 0px 1px 0px #dddddd57;
+      box-shadow: 0px 0px 500px 0px #dddddda6;
     }
     .G-form-group {
       margin-bottom: 0.5rem;
@@ -361,4 +360,65 @@
   i {
     padding-right: 2px;
   }
+    .clear{clear: both!important;}
+            /*@Copain*/
+            
+            .C-like {
+                position: fixed center;
+                right: 15px;
+                bottom: 15px;
+                z-index: 100;
+            }
+            .c-like-grid{
+                display: grid;
+                grid-template-columns: 0fr 0fr;
+                grid-gap: 10px;
+            }
+            .turnLike{
+                border: 1px solid red!important;
+            }
+            .turnBlack{
+                color: black!important;
+            }
+            .changeColor{
+                color: red;
+            }
+            .btn-heart {
+                font-family: $rokitFont;
+                border-radius: 10px;
+                cursor: pointer;
+                border: 1px solid #ddd;
+                background: #ffff;
+                line-height: 36px;
+                width: 30px;
+                padding-left: 10px;
+                padding-right: 10px;
+                i{
+                    padding-right: 2px;
+                }
+                div{
+                    display: inline-block;
+                }
+            }
 }
+.pagination{
+  width: 100% !important;
+  padding: 10px 0;
+  position: absolute;
+  bottom: -20px;
+  z-index: 100;
+}
+.pagination span{
+    background: #cdcdcd;
+    padding:5px 15px;
+    font-weight: bold;
+    border-radius:3px;
+    margin:auto 4px;
+    cursor: pointer;
+    
+}
+.pagination span.active{
+    background: #343434;
+    color:#ffffff
+}
+//this
