@@ -52,6 +52,8 @@ export class SingleArticle extends Component {
     comment: '',
     handle: this.props.match.params.handle,
     redirectOnBookmark: false,
+    redirectOnLike: false,
+    redirectOnDislike: false,
     displayFollowUserBox: false,
     redirectOnFollow: false
   };
@@ -144,17 +146,27 @@ export class SingleArticle extends Component {
   };
 
   likeArticle = async () => {
-    const { articleId } = this.state;
-    const { likeArticle } = this.props;
-    await likeArticle(articleId);
-    this.getArticle();
+    if (this.props.isAuth) {
+      const { articleId } = this.state;
+      const { likeArticle } = this.props;
+      await likeArticle(articleId);
+      this.getArticle();
+    } else {
+      this.props.setLoginRedirectPath(window.location.pathname);
+      this.setState({ redirectOnLike: true });
+    }
   };
 
   dislikeArticle = async () => {
-    const { articleId } = this.state;
-    const { dislikeArticle } = this.props;
-    await dislikeArticle(articleId);
-    this.getArticle();
+    if (this.props.isAuth) {
+      const { articleId } = this.state;
+      const { dislikeArticle } = this.props;
+      await dislikeArticle(articleId);
+      this.getArticle();
+    } else {
+      this.props.setLoginRedirectPath(window.location.pathname);
+      this.setState({ redirectOnDislike: true });
+    }
   };
 
   bookmarks = async () => {
@@ -268,6 +280,8 @@ export class SingleArticle extends Component {
       articleId2,
       shareArticleUrl,
       redirectOnBookmark,
+      redirectOnLike,
+      redirectOnDislike,
       displayFollowUserBox,
       redirectOnFollow
     } = this.state;
@@ -288,8 +302,17 @@ export class SingleArticle extends Component {
     this.onSelectedText();
 
     let redirectOnBookmarkURL = null;
+    let redirectOnLikeURL = null;
+    let redirectOnDislikeURL = null;
+
     if (redirectOnBookmark) {
       redirectOnBookmarkURL = <Redirect to="/login" />;
+    }
+    if (redirectOnDislike) {
+      redirectOnDislikeURL = <Redirect to="/login" />;
+    }
+    if (redirectOnLike) {
+      redirectOnLikeURL = <Redirect to="/login" />;
     }
     let redirect = null;
     let followBox = null;
@@ -335,6 +358,8 @@ export class SingleArticle extends Component {
     return (
       <Layout>
         {redirectOnBookmarkURL}
+        {redirectOnLikeURL}
+        {redirectOnDislikeURL}
         {redirect}
         {message !== '' && window.location.replace(prevPath)}
         <HighlightPopover onHighlight={this.onHighlight} />
